@@ -4,554 +4,235 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>반응형 자기소개 포트폴리오</title>
+    <!-- Tailwind CSS CDN 로드 -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* 커스텀 스타일 및 애니메이션을 위한 공간 */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scroll */
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* 네비게이션 */
-        nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 20px;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .nav-links {
-            position: fixed;
-            top: 0;
-            right: -250px; /* Initially hidden */
-            width: 250px;
-            height: 100%;
-            background: #f8f9fa; /* Changed background color */
-            backdrop-filter: blur(15px);
-            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 5rem 2rem;
-            transition: right 0.3s ease-in-out;
-            list-style: none;
-            z-index: 999;
-            border-left: 1px solid rgba(0, 0, 0, 0.1); /* 햄버거 메뉴 경계선 */
-        }
-
-        .nav-links.active {
-            right: 0;
-        }
-
-        .nav-links li {
-            margin: 1.5rem 0;
-            border-bottom: 1px solid #eee; /* 메뉴 항목 구분선 */
-            padding-bottom: 1rem;
-        }
-        
-        .nav-links li:last-child {
-            border-bottom: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #667eea;
-        }
-
-        .hamburger {
-            display: flex; /* Always visible now */
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 3px 0;
-            transition: 0.4s;
-        }
-
-        .hamburger.open .bar1 {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .hamburger.open .bar2 {
-            opacity: 0;
-        }
-
-        .hamburger.open .bar3 {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-        
-        .main-content-wrapper {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .main-content-wrapper.menu-open {
-            transform: translateX(-250px);
-        }
-        
-        /* 페이지 섹션 */
-        .page {
-            display: none;
-            padding: 120px 0 80px;
-            min-height: 100vh;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .page-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            animation: fadeInUp 0.6s ease;
+        .page.active .page-content {
+            animation: fadeInUp 0.6s ease-out forwards;
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-            text-align: center;
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #764ba2;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        /* 소개 페이지 스타일 */
-        .intro-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            margin-top: 2rem;
-        }
-
-        .profile-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 20px;
-            object-fit: cover;
-        }
-
-        .intro-text {
-            padding: 1rem;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .skill-tag {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-        }
-
-        /* 미디어 컨테이너 */
-        .media-container {
-            margin: 2rem 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .audio-container,
-        .video-container {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .audio-container h4,
-        .video-container h4 {
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
-
-        audio,
-        video {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        /* 카드 스타일 */
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 25px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            margin-top: 1rem;
-        }
-        
-        .btn.github {
-            background: #333;
-            margin-left: 1rem;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .page-content {
-                padding: 2rem 1rem;
+        /* 데스크톱 메뉴 */
+        @media (min-width: 768px) {
+            .nav-links {
+                position: static !important;
+                flex-direction: row !important;
+                width: auto !important;
+                height: auto !important;
+                background: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                padding: 0 !important;
+                display: flex !important;
             }
-
-            .intro-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .nav-links li {
+                margin: 0 1rem;
+                border-bottom: none;
             }
-
-            .media-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .page-content {
-                padding: 1.5rem;
-                border-radius: 15px;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr;
+            .hamburger {
+                display: none !important;
             }
         }
     </style>
 </head>
-<body>
-    <nav>
-        <div class="container">
-            <div class="logo">Portfolio</div>
-            <div class="hamburger" id="hamburger">
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
+<body class="bg-gradient-to-br from-indigo-500 to-purple-600 min-h-screen">
+    <!-- 네비게이션 -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="logo text-2xl font-bold text-indigo-600">Portfolio</div>
+            <!-- 햄버거 메뉴 버튼 -->
+            <div class="hamburger md:hidden flex flex-col space-y-1.5 cursor-pointer z-[1001]" id="hamburger">
+                <span class="block w-6 h-0.5 bg-gray-800 transition-transform duration-300 transform-gpu bar1"></span>
+                <span class="block w-6 h-0.5 bg-gray-800 transition-opacity duration-300 opacity-100 bar2"></span>
+                <span class="block w-6 h-0.5 bg-gray-800 transition-transform duration-300 transform-gpu bar3"></span>
             </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="nav-link active" data-page="intro">소개</a></li>
-                <li><a href="#" class="nav-link" data-page="reports">레포트</a></li>
-                <li><a href="#" class="nav-link" data-page="projects">프로젝트</a></li>
-                <li><a href="#" class="nav-link" data-page="portfolio">포트폴리오</a></li>
+            <!-- 네비게이션 링크 -->
+            <ul class="nav-links fixed top-0 right-[-250px] w-[250px] h-full bg-gray-100/90 backdrop-blur-md shadow-xl flex flex-col p-8 transition-all duration-300 ease-in-out md:static md:w-auto md:h-auto md:bg-transparent md:flex-row md:p-0 md:shadow-none" id="navLinks">
+                <li class="my-4 md:my-0 md:mx-2 border-b md:border-b-0 border-gray-300 pb-4 md:pb-0"><a href="#" class="nav-link text-lg text-gray-800 hover:text-indigo-600 font-medium transition-colors active" data-page="intro">소개</a></li>
+                <li class="my-4 md:my-0 md:mx-2 border-b md:border-b-0 border-gray-300 pb-4 md:pb-0"><a href="#" class="nav-link text-lg text-gray-800 hover:text-indigo-600 font-medium transition-colors" data-page="reports">레포트</a></li>
+                <li class="my-4 md:my-0 md:mx-2 border-b md:border-b-0 border-gray-300 pb-4 md:pb-0"><a href="#" class="nav-link text-lg text-gray-800 hover:text-indigo-600 font-medium transition-colors" data-page="projects">프로젝트</a></li>
+                <li class="my-4 md:my-0 md:mx-2 border-b md:border-b-0 border-gray-300 pb-4 md:pb-0"><a href="#" class="nav-link text-lg text-gray-800 hover:text-indigo-600 font-medium transition-colors" data-page="portfolio">포트폴리오</a></li>
             </ul>
         </div>
     </nav>
 
-    <main class="main-content-wrapper container">
+    <main class="main-content-wrapper container mx-auto px-4">
         <!-- 소개 페이지 -->
-        <section id="intro" class="page active">
-            <div class="page-content">
-                <h1>안녕하세요! 저는 허윤입니다</h1>
-                <div class="intro-grid">
-                    <div class="profile-image">
-                        <img src="증명사진.jpg" alt="증명사진">
+        <section id="intro" class="page min-h-screen pt-28 pb-16 flex flex-col justify-center active">
+            <div class="page-content bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-xl">
+                <h1 class="text-4xl font-extrabold text-center text-indigo-600 mb-6">안녕하세요! 저는 허윤입니다</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="profile-image rounded-3xl overflow-hidden shadow-lg border border-gray-200">
+                        <!-- 이미지 로드 실패 시 대체 메시지 -->
+                        <img src="https://placehold.co/400x400/667eea/ffffff?text=증명사진" alt="허윤 증명사진" class="w-full h-auto object-cover" onerror="this.src='https://placehold.co/400x400/667eea/ffffff?text=증명사진'; this.alt='사진을 찾을 수 없습니다.'">
                     </div>
                     <div class="intro-text">
-                        <h3>자기소개</h3>
-                        <p>안녕하세요! 저는 동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 허윤입니다. 
-                        AI와 데이터베이스 분야에 깊은 관심을 가지고 있으며, 새로운 지식을 배우고 도전하는 것을 즐깁니다.</p>
-                        
-                        <p>저의 주요 관심 분야는 **AI, 데이터베이스, 백엔드 개발** 입니다. 
-                        끊임없이 배우고 성장하는 것을 좋아하며, 새로운 도전을 두려워하지 않습니다.</p>
-
-                        <div class="skills">
-                            <span class="skill-tag">AI</span>
-                            <span class="skill-tag">Database</span>
-                            <span class="skill-tag">Backend</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">MySQL</span>
-                            <span class="skill-tag">Python</span>
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-4">자기소개</h3>
+                        <p class="text-gray-700 text-lg mb-4">안녕하세요! 저는 동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 허윤입니다. AI와 데이터베이스 분야에 깊은 관심을 가지고 있으며, 새로운 지식을 배우고 도전하는 것을 즐깁니다.</p>
+                        <p class="text-gray-700 text-lg mb-6">저의 주요 관심 분야는 <strong class="text-indigo-600">AI, 데이터베이스, 백엔드 개발</strong> 입니다. 끊임없이 배우고 성장하는 것을 좋아하며, 새로운 도전을 두려워하지 않습니다.</p>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-tag bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">AI</span>
+                            <span class="skill-tag bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Database</span>
+                            <span class="skill-tag bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Backend</span>
+                            <span class="skill-tag bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Java</span>
+                            <span class="skill-tag bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">MySQL</span>
+                            <span class="skill-tag bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Python</span>
                         </div>
-                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn">GitHub 바로가기</a>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-full mt-6 shadow-md hover:bg-indigo-700 transition-colors duration-300">GitHub 바로가기</a>
                     </div>
                 </div>
 
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🎵 자기소개 음성</h4>
-                        <audio controls>
-                            <source src="audio/intro-audio.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                    <div class="audio-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">🎵 자기소개 음성</h4>
+                        <!-- 실제 오디오 파일 대신 링크 표시 -->
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
-                    <div class="video-container">
-                        <h4>📹 소개 영상</h4>
-                        <video controls>
-                            <source src="video/intro-video.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
+                    <div class="video-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">📹 소개 영상</h4>
+                        <!-- 실제 비디오 파일 대신 링크 표시 -->
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 레포트 페이지 -->
-        <section id="reports" class="page">
-            <div class="page-content">
-                <h1>레포트</h1>
-                
-                <div class="card">
-                    <h3>모바일 앱 개발 기초 레포트</h3>
-                    <p><strong>제목:</strong> 모바일 앱 개발 기초 학습 및 학습 도우미 앱 구상</p>
-                    <p><strong>과목:</strong> 모바일 앱 개발 기초</p>
-                    <p><strong>작성일:</strong> 2025년 7월 5일</p>
-                    <p><strong>요약:</strong> 모바일 앱 개발의 기본 원리를 학습하고, 이를 활용해 사용자의 학습을 돕는 '학습 도우미' 앱을 구상했습니다. 앱의 주요 기능과 구조를 설계하고, 실제 구현을 위한 기술 스택을 정의했습니다.</p>
-                    <a href="https://github.com/heoheoyun/mobileapp.git" target="_blank" class="btn">전문 보기</a>
+        <section id="reports" class="page hidden min-h-screen pt-28 pb-16 flex flex-col justify-center">
+            <div class="page-content bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-xl">
+                <h1 class="text-4xl font-extrabold text-center text-indigo-600 mb-6">레포트</h1>
+                <div class="card bg-white rounded-2xl p-6 mb-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <h3 class="text-2xl font-bold text-indigo-600 mb-2">모바일 앱 개발 기초 레포트</h3>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">제목:</strong> 모바일 앱 개발 기초 학습 및 학습 도우미 앱 구상</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">과목:</strong> 모바일 앱 개발 기초</p>
+                    <p class="text-gray-700 mb-4"><strong class="font-semibold">작성일:</strong> 2025년 7월 5일</p>
+                    <p class="text-gray-700 mb-4"><strong>요약:</strong> 모바일 앱 개발의 기본 원리를 학습하고, 이를 활용해 사용자의 학습을 돕는 '학습 도우미' 앱을 구상했습니다. 앱의 주요 기능과 구조를 설계하고, 실제 구현을 위한 기술 스택을 정의했습니다.</p>
+                    <a href="https://github.com/heoheoyun/mobileapp.git" target="_blank" class="btn inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-full shadow-md hover:bg-indigo-700 transition-colors duration-300">전문 보기</a>
                 </div>
-
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🎙️ 레포트 발표</h4>
-                        <audio controls>
-                            <source src="audio/report-presentation.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="audio-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">🎙️ 레포트 발표</h4>
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
-                    <div class="video-container">
-                        <h4>📊 연구 발표 영상</h4>
-                        <video controls>
-                            <source src="video/research-presentation.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
+                    <div class="video-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">📊 연구 발표 영상</h4>
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 프로젝트 페이지 -->
-        <section id="projects" class="page">
-            <div class="page-content">
-                <h1>프로젝트</h1>
-                
-                <div class="project-grid">
-                    <div class="card">
-                        <h3>반려동물 통합 커뮤니티 게시판</h3>
-                        <p><strong>프로젝트명:</strong> 반려동물 통합 커뮤니티 게시판</p>
-                        <p><strong>팀원:</strong> 김건엽, 강민우, 허윤</p>
-                        <p><strong>기술 스택:</strong> Backend/DB</p>
-                        <p><strong>설명:</strong> 반려동물 입양, 위탁, 용품 구매가 가능한 통합 커뮤니티 게시판 시스템 개발 프로젝트입니다. 백엔드 개발과 데이터베이스 설계를 담당하여, 사용자들이 편리하게 입양, 위탁, 정보 공유, 구매까지 한 곳에서 이용할 수 있는 시스템을 구현했습니다.</p>
-                        <p><strong>역할:</strong></p>
-                        <ul>
+        <section id="projects" class="page hidden min-h-screen pt-28 pb-16 flex flex-col justify-center">
+            <div class="page-content bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-xl">
+                <h1 class="text-4xl font-extrabold text-center text-indigo-600 mb-6">프로젝트</h1>
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-6 mt-8">
+                    <div class="card bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-2">반려동물 통합 커뮤니티 게시판</h3>
+                        <p class="text-gray-700 mb-2"><strong class="font-semibold">프로젝트명:</strong> 반려동물 통합 커뮤니티 게시판</p>
+                        <p class="text-gray-700 mb-2"><strong class="font-semibold">팀원:</strong> 김건엽, 강민우, 허윤</p>
+                        <p class="text-gray-700 mb-4"><strong class="font-semibold">기술 스택:</strong> Backend/DB</p>
+                        <p class="text-gray-700 mb-4"><strong>설명:</strong> 반려동물 입양, 위탁, 용품 구매가 가능한 통합 커뮤니티 게시판 시스템 개발 프로젝트입니다. 백엔드 개발과 데이터베이스 설계를 담당하여, 사용자들이 편리하게 입양, 위탁, 정보 공유, 구매까지 한 곳에서 이용할 수 있는 시스템을 구현했습니다.</p>
+                        <p class="text-gray-700 mb-4"><strong class="font-semibold">역할:</strong></p>
+                        <ul class="list-disc list-inside text-gray-700 ml-4">
                             <li>백엔드 및 DB 설계</li>
                             <li>관리자 기능 및 테스트</li>
                         </ul>
-                        <a href="https://github.com/heoheoyun/KHK.git" target="_blank" class="btn">GitHub 보기</a>
+                        <a href="https://github.com/heoheoyun/KHK.git" target="_blank" class="btn inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-full mt-6 shadow-md hover:bg-indigo-700 transition-colors duration-300">GitHub 보기</a>
                     </div>
                 </div>
 
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🔊 프로젝트 설명</h4>
-                        <audio controls>
-                            <source src="audio/project-demo.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="audio-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">🔊 프로젝트 설명</h4>
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
-                    <div class="video-container">
-                        <h4>📱 프로젝트 데모</h4>
-                        <video controls>
-                            <source src="video/project-demo.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
+                    <div class="video-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">📱 프로젝트 데모</h4>
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- 포트폴리오 페이지 -->
-        <section id="portfolio" class="page">
-            <div class="page-content">
-                <h1>포트폴리오</h1>
-                
-                <h2>🏆 개발 경험 및 성과</h2>
-                <div class="card">
-                    <h3>📊 기술적 성장</h3>
-                    <p><strong>백엔드 개발:</strong> 반려동물 커뮤니티 게시판 프로젝트를 통해 RESTful API 설계 및 구현 능력을 향상시켰습니다.</p>
-                    <p><strong>데이터베이스:</strong> 효율적인 스키마 설계 및 쿼리 최적화 경험을 통해 안정적인 시스템을 구축했습니다.</p>
-                    <p><strong>AI/ML 학습:</strong> 머신러닝 기초 이론 학습 및 Python을 활용한 데이터 분석 능력을 키웠습니다.</p>
-                    <p><strong>협업:</strong> Git을 활용한 버전 관리 및 팀원 간의 원활한 코드 협업 경험을 쌓았습니다.</p>
-                    <p><strong>문제해결:</strong> 프로젝트 관리자 기능 구현 과정에서 발생한 이슈들을 분석하고 해결하는 능력을 길렀습니다.</p>
-                </div>
-
-                <div class="card">
-                    <h3>📚 학습한 기술 스택</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
-                        <span style="background: linear-gradient(45deg, #007396, #00a8cc); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Java</span>
-                        <span style="background: linear-gradient(45deg, #6db33f, #8bc34a); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Spring Boot</span>
-                        <span style="background: linear-gradient(45deg, #00758f, #009bb5); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">MySQL</span>
-                        <span style="background: linear-gradient(45deg, #3776ab, #4b8bbe); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Python</span>
-                        <span style="background: linear-gradient(45deg, #ff6f00, #ff8f00); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">TensorFlow</span>
-                        <span style="background: linear-gradient(45deg, #f7df1e, #ffeb3b); color: black; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">JavaScript</span>
-                        <span style="background: linear-gradient(45deg, #e34f26, #ff5722); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">HTML5</span>
-                        <span style="background: linear-gradient(45deg, #1572b6, #2196f3); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">CSS3</span>
-                        <span style="background: linear-gradient(45deg, #f05032, #ff6b35); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Git</span>
-                    </div>
+        <section id="portfolio" class="page hidden min-h-screen pt-28 pb-16 flex flex-col justify-center">
+            <div class="page-content bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-xl">
+                <h1 class="text-4xl font-extrabold text-center text-indigo-600 mb-6">포트폴리오</h1>
+                <div class="card bg-white rounded-2xl p-6 mb-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <h2 class="text-2xl font-bold text-purple-600 mb-4 border-b-2 border-indigo-600 pb-2">🏆 개발 경험 및 성과</h2>
+                    <h3 class="text-xl font-bold text-indigo-600 mb-2">📊 기술적 성장</h3>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">백엔드 개발:</strong> 반려동물 커뮤니티 게시판 프로젝트를 통해 RESTful API 설계 및 구현 능력을 향상시켰습니다.</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">데이터베이스:</strong> 효율적인 스키마 설계 및 쿼리 최적화 경험을 통해 안정적인 시스템을 구축했습니다.</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">AI/ML 학습:</strong> 머신러닝 기초 이론 학습 및 Python을 활용한 데이터 분석 능력을 키웠습니다.</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">협업:</strong> Git을 활용한 버전 관리 및 팀원 간의 원활한 코드 협업 경험을 쌓았습니다.</p>
+                    <p class="text-gray-700 mb-4"><strong class="font-semibold">문제해결:</strong> 프로젝트 관리자 기능 구현 과정에서 발생한 이슈들을 분석하고 해결하는 능력을 길렀습니다.</p>
                 </div>
                 
-                <div class="card">
-                    <h3>📜 자격증</h3>
-                    <p><strong>자격증명:</strong> 엔비디아 딥러닝 자격증 (Fundamentals of Deep Learning)</p>
-                    <p><strong>발급기관:</strong> NVIDIA</p>
-                    <p><strong>발급일:</strong> 2025년 7월 4일</p>
-                    <p><strong>설명:</strong> 딥러닝의 기본 개념, 훈련 방법, 데이터 전처리 및 GPU 가속화를 통한 모델 최적화에 대한 역량을 인정받았습니다.</p>
-                    <a href="https://www.linkedin.com/in/%EC%9C%A4-%ED%97%88-86b173373/" target="_blank" class="btn">자격증 확인</a>
-                </div>
-
-                <div class="card">
-                    <h3>🎯 학습 중인 분야</h3>
-                    <p><strong>인공지능:</strong> 머신러닝 알고리즘 이해 및 실습, 데이터 전처리 기법 학습</p>
-                    <p><strong>데이터베이스:</strong> 고급 쿼리 최적화, NoSQL 데이터베이스 학습</p>
-                    <p><strong>클라우드:</strong> AWS 기초 서비스 학습 및 배포 경험</p>
-                    <p><strong>새로운 기술:</strong> 최신 개발 트렌드와 프레임워크에 대한 지속적인 학습</p>
-                </div>
-
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🎤 포트폴리오 소개</h4>
-                        <audio controls>
-                            <source src="audio/portfolio-intro.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
+                <div class="card bg-white rounded-2xl p-6 mb-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <h3 class="text-xl font-bold text-indigo-600 mb-2">📚 학습한 기술 스택</h3>
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <span class="bg-gradient-to-r from-blue-700 to-cyan-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">Java</span>
+                        <span class="bg-gradient-to-r from-green-700 to-lime-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">Spring Boot</span>
+                        <span class="bg-gradient-to-r from-cyan-700 to-blue-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">MySQL</span>
+                        <span class="bg-gradient-to-r from-blue-900 to-blue-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">Python</span>
+                        <span class="bg-gradient-to-r from-orange-600 to-amber-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">TensorFlow</span>
+                        <span class="bg-gradient-to-r from-yellow-400 to-yellow-300 text-black px-4 py-2 rounded-2xl text-sm font-semibold">JavaScript</span>
+                        <span class="bg-gradient-to-r from-orange-700 to-orange-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">HTML5</span>
+                        <span class="bg-gradient-to-r from-blue-700 to-sky-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">CSS3</span>
+                        <span class="bg-gradient-to-r from-red-600 to-pink-500 text-white px-4 py-2 rounded-2xl text-sm font-semibold">Git</span>
                     </div>
-                    <div class="video-container">
-                        <h4>🎬 포트폴리오 하이라이트</h4>
-                        <video controls>
-                            <source src="video/portfolio-highlight.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
+                </div>
+
+                <div class="card bg-white rounded-2xl p-6 mb-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <h3 class="text-xl font-bold text-indigo-600 mb-2">📜 자격증</h3>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">자격증명:</strong> 엔비디아 딥러닝 자격증 (Fundamentals of Deep Learning)</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">발급기관:</strong> NVIDIA</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">발급일:</strong> 2025년 7월 4일</p>
+                    <p class="text-gray-700 mb-4"><strong>설명:</strong> 딥러닝의 기본 개념, 훈련 방법, 데이터 전처리 및 GPU 가속화를 통한 모델 최적화에 대한 역량을 인정받았습니다.</p>
+                    <!-- 업로드된 PDF 파일을 링크합니다. -->
+                    <a href="Heoyoon_ NVIDIA.pdf" target="_blank" class="btn inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-full shadow-md hover:bg-indigo-700 transition-colors duration-300">자격증 확인</a>
+                </div>
+
+                <div class="card bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <h3 class="text-xl font-bold text-indigo-600 mb-2">🎯 학습 중인 분야</h3>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">인공지능:</strong> 머신러닝 알고리즘 이해 및 실습, 데이터 전처리 기법 학습</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">데이터베이스:</strong> 고급 쿼리 최적화, NoSQL 데이터베이스 학습</p>
+                    <p class="text-gray-700 mb-2"><strong class="font-semibold">클라우드:</strong> AWS 기초 서비스 학습 및 배포 경험</p>
+                    <p class="text-gray-700 mb-4"><strong class="font-semibold">새로운 기술:</strong> 최신 개발 트렌드와 프레임워크에 대한 지속적인 학습</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="audio-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">🎤 포트폴리오 소개</h4>
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
+                    </div>
+                    <div class="video-container bg-gray-100 p-6 rounded-2xl text-center shadow-md">
+                        <h4 class="text-xl font-bold text-indigo-600 mb-4">🎬 포트폴리오 하이라이트</h4>
+                        <p class="text-sm text-gray-500 italic">로컬 파일이므로 재생할 수 없습니다. GitHub에서 직접 확인해주세요.</p>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn-sm text-indigo-500 hover:text-indigo-700 transition-colors duration-200">GitHub 바로가기</a>
                     </div>
                 </div>
             </div>
@@ -559,20 +240,27 @@
     </main>
 
     <script>
-        // 네비게이션 기능
+        // 네비게이션 및 페이지 전환 기능
         const navLinks = document.querySelectorAll('.nav-link');
         const pages = document.querySelectorAll('.page');
         const hamburger = document.getElementById('hamburger');
         const navLinksContainer = document.getElementById('navLinks');
-        const mainContentWrapper = document.querySelector('.main-content-wrapper');
+        const mainContentWrapper = document.querySelector('main');
+        const nav = document.querySelector('nav');
 
         // 페이지 전환 함수
         function showPage(pageId) {
-            pages.forEach(page => page.classList.remove('active'));
+            pages.forEach(page => page.classList.add('hidden'));
+            pages.forEach(page => page.classList.remove('active', 'flex'));
             navLinks.forEach(link => link.classList.remove('active'));
-            
-            document.getElementById(pageId).classList.add('active');
+
+            const selectedPage = document.getElementById(pageId);
+            selectedPage.classList.remove('hidden');
+            selectedPage.classList.add('active', 'flex');
             document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+
+            // 페이지 로딩 후 스크롤을 맨 위로 올립니다.
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // 네비게이션 클릭 이벤트
@@ -581,9 +269,10 @@
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
                 showPage(pageId);
-                
-                // 메뉴 닫기
-                navLinksContainer.classList.remove('active');
+
+                // 모바일 메뉴 닫기
+                navLinksContainer.classList.remove('right-0');
+                navLinksContainer.classList.add('right-[-250px]');
                 hamburger.classList.remove('open');
                 mainContentWrapper.classList.remove('menu-open');
             });
@@ -591,79 +280,29 @@
 
         // 햄버거 메뉴 토글
         hamburger.addEventListener('click', () => {
-            navLinksContainer.classList.toggle('active');
+            const isMenuOpen = navLinksContainer.classList.toggle('right-0');
+            navLinksContainer.classList.toggle('right-[-250px]', !isMenuOpen);
             hamburger.classList.toggle('open');
             mainContentWrapper.classList.toggle('menu-open');
         });
 
-        // 네비게이션 스크롤 효과
+        // 스크롤 시 네비게이션바 숨기기/보이기
         let lastScrollTop = 0;
-        const nav = document.querySelector('nav');
-
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
+            if (scrollTop > lastScrollTop && scrollTop > 50) {
                 nav.style.transform = 'translateY(-100%)';
             } else {
                 nav.style.transform = 'translateY(0)';
             }
-            lastScrollTop = scrollTop;
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
 
-        // 부드러운 페이지 전환 애니메이션
-        function animatePageTransition(pageId) {
-            const currentPage = document.querySelector('.page.active');
-            const nextPage = document.getElementById(pageId);
-            
-            if (currentPage === nextPage) return;
-            
-            currentPage.style.opacity = '0';
-            currentPage.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                currentPage.classList.remove('active');
-                nextPage.classList.add('active');
-                nextPage.style.opacity = '0';
-                nextPage.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    nextPage.style.opacity = '1';
-                    nextPage.style.transform = 'translateY(0)';
-                }, 50);
-            }, 200);
-        }
-
-        // 미디어 요소 로딩 에러 처리
-        document.addEventListener('DOMContentLoaded', () => {
-            const audioElements = document.querySelectorAll('audio');
-            const videoElements = document.querySelectorAll('video');
-            
-            audioElements.forEach(audio => {
-                audio.addEventListener('error', () => {
-                    const container = audio.parentElement;
-                    container.innerHTML += '<p style="color: #999; font-size: 0.9rem;">오디오 파일을 찾을 수 없습니다.</p>';
-                });
-            });
-            
-            videoElements.forEach(video => {
-                video.addEventListener('error', () => {
-                    const container = video.parentElement;
-                    container.innerHTML += '<p style="color: #999; font-size: 0.9rem;">비디오 파일을 찾을 수 없습니다.</p>';
-                });
-            });
+        // 초기 페이지 설정
+        window.addEventListener('load', () => {
+            showPage('intro');
         });
 
-        // 반응형 처리
-        function handleResize() {
-            if (window.innerWidth > 768) {
-                navLinksContainer.classList.remove('active');
-                hamburger.classList.remove('open');
-                mainContentWrapper.classList.remove('menu-open');
-            }
-        }
-
-        window.addEventListener('resize', handleResize);
     </script>
 </body>
 </html>
