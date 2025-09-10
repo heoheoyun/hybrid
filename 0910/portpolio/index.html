@@ -1,620 +1,620 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>반응형 자기소개 포트폴리오</title>
-    <style>
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반응형 자기소개 포트폴리오</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-        /* Navigation */
-        nav {
-            background: #f8f9fa;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
+        /* Navigation */
+        nav {
+            background: #f8f9fa;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 20px;
-        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
 
-        .logo {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
+        .logo {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
 
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
-        }
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
 
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 3px 0;
-            transition: 0.4s;
-        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
 
-        .hamburger.open .bar1 {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
+        .hamburger.open .bar1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
 
-        .hamburger.open .bar2 {
-            opacity: 0;
-        }
+        .hamburger.open .bar2 {
+            opacity: 0;
+        }
 
-        .hamburger.open .bar3 {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
+        .hamburger.open .bar3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
 
-        .nav-links {
-            list-style: none;
-            position: fixed;
-            top: 0;
-            right: -250px;
-            width: 250px;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(15px);
-            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-            flex-direction: column;
-            padding: 5rem 2rem;
-            transition: right 0.3s ease-in-out;
-            z-index: 999;
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
-            gap: 0; /* Remove gap */
-        }
+        .nav-links {
+            list-style: none;
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            padding: 5rem 2rem;
+            transition: right 0.3s ease-in-out;
+            z-index: 999;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            gap: 0; /* Remove gap */
+        }
 
-        .nav-links.active {
-            right: 0;
-        }
-        
-        .nav-links li {
-            margin: 1.5rem 0;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1rem;
-        }
+        .nav-links.active {
+            right: 0;
+        }
+        
+        .nav-links li {
+            margin: 1.5rem 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
 
-        .nav-links li:last-child {
-            border-bottom: none;
-        }
+        .nav-links li:last-child {
+            border-bottom: none;
+        }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            font-size: 1.2rem;
-            transition: color 0.3s ease;
-            position: relative;
-            padding: 0; /* Remove padding */
-        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0; /* Remove padding */
+        }
 
-        .nav-links a.active {
-            color: #667eea;
-        }
+        .nav-links a.active {
+            color: #667eea;
+        }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #667eea;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #667eea;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
 
-        .nav-links a.active::after {
-            transform: scaleX(1);
-        }
+        .nav-links a.active::after {
+            transform: scaleX(1);
+        }
 
-        /* Page Sections */
-        .page {
-            display: none;
-            padding: 120px 0 80px;
-            min-height: 100vh;
-        }
+        /* Page Sections */
+        .page {
+            display: none;
+            padding: 120px 0 80px;
+            min-height: 100vh;
+        }
 
-        .page.active {
-            display: block;
-        }
+        .page.active {
+            display: block;
+        }
 
-        .page-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            animation: fadeInUp 0.6s ease;
-        }
+        .page-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.6s ease;
+        }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-            text-align: center;
-        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            text-align: center;
+        }
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #764ba2;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #764ba2;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
 
-        h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
 
-        p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
 
-        /* Intro Section */
-        .intro-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            margin-top: 2rem;
-        }
+        /* Intro Section */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
 
-        .profile-image {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-            overflow: hidden;
-        }
+        .profile-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            overflow: hidden;
+        }
 
-        .profile-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 20px;
-            object-fit: cover;
-        }
+        .profile-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            object-fit: cover;
+        }
 
-        .intro-text {
-            padding: 1rem;
-        }
+        .intro-text {
+            padding: 1rem;
+        }
 
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
 
-        .skill-tag {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-        }
+        .skill-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
 
-        /* Media Containers */
-        .media-container {
-            margin: 2rem 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
+        /* Media Containers */
+        .media-container {
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
 
-        .audio-container,
-        .video-container {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-        }
+        .audio-container,
+        .video-container {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
 
-        .audio-container h4,
-        .video-container h4 {
-            margin-bottom: 1rem;
-            color: #667eea;
-        }
+        .audio-container h4,
+        .video-container h4 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
 
-        audio,
-        video {
-            width: 100%;
-            border-radius: 10px;
-        }
+        audio,
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
 
-        /* Card Styles */
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
 
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
 
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 25px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            margin-top: 1rem;
-        }
-        
-        .btn.github {
-            background: #333;
-            margin-left: 1rem;
-        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .btn.github {
+            background: #333;
+            margin-left: 1rem;
+        }
 
-        .btn:hover {
-            transform: scale(1.05);
-        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
 
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .page-content {
-                padding: 2rem 1rem;
-            }
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .page-content {
+                padding: 2rem 1rem;
+            }
 
-            .intro-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
+            .intro-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
 
-            .media-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+            .media-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
 
-            h1 {
-                font-size: 2rem;
-            }
+            h1 {
+                font-size: 2rem;
+            }
 
-            h2 {
-                font-size: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
 
-            .page-content {
-                padding: 1.5rem;
-                border-radius: 15px;
-            }
+            .page-content {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
 
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">Portfolio</div>
-            <div class="hamburger" id="hamburger">
-                <span class="bar1"></span>
-                <span class="bar2"></span>
-                <span class="bar3"></span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="nav-link active" data-page="intro">소개</a></li>
-                <li><a href="#" class="nav-link" data-page="reports">레포트</a></li>
-                <li><a href="#" class="nav-link" data-page="projects">프로젝트</a></li>
-                <li><a href="#" class="nav-link" data-page="portfolio">포트폴리오</a></li>
-            </ul>
-        </div>
-    </nav>
+    <nav>
+        <div class="container">
+            <div class="logo">Portfolio</div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar1"></span>
+                <span class="bar2"></span>
+                <span class="bar3"></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" data-page="intro">소개</a></li>
+                <li><a href="#" class="nav-link" data-page="reports">레포트</a></li>
+                <li><a href="#" class="nav-link" data-page="projects">프로젝트</a></li>
+                <li><a href="#" class="nav-link" data-page="portfolio">포트폴리오</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <main class="main-content-wrapper container">
-        <section id="intro" class="page active">
-            <div class="page-content">
-                <h1>안녕하세요! 저는 허윤입니다</h1>
-                <div class="intro-grid">
-                    <div class="profile-image">
-                        <img src="images/증명사진.jpg" alt="증명사진">
-                    </div>
-                    <div class="intro-text">
-                        <h3>자기소개</h3>
-                        <p>안녕하세요! 저는 동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 허윤입니다.
-                        AI와 데이터베이스 분야에 깊은 관심을 가지고 있으며, 새로운 지식을 배우고 도전하는 것을 즐깁니다.</p>
-                        
-                        <p>저의 주요 관심 분야는 **AI, 데이터베이스, 백엔드 개발** 입니다.
-                        끊임없이 배우고 성장하는 것을 좋아하며, 새로운 도전을 두려워하지 않습니다.</p>
+    <main class="main-content-wrapper container">
+        <section id="intro" class="page active">
+            <div class="page-content">
+                <h1>안녕하세요! 저는 허윤입니다</h1>
+                <div class="intro-grid">
+                    <div class="profile-image">
+                        <img src="images/증명사진.jpg" alt="증명사진">
+                    </div>
+                    <div class="intro-text">
+                        <h3>자기소개</h3>
+                        <p>안녕하세요! 저는 동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 허윤입니다.
+                        AI와 데이터베이스 분야에 깊은 관심을 가지고 있으며, 새로운 지식을 배우고 도전하는 것을 즐깁니다.</p>
+                        
+                        <p>저의 주요 관심 분야는 **AI, 데이터베이스, 백엔드 개발** 입니다.
+                        끊임없이 배우고 성장하는 것을 좋아하며, 새로운 도전을 두려워하지 않습니다.</p>
 
-                        <div class="skills">
-                            <span class="skill-tag">AI</span>
-                            <span class="skill-tag">Database</span>
-                            <span class="skill-tag">Backend</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">MySQL</span>
-                            <span class="skill-tag">Python</span>
-                        </div>
-                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn">GitHub 바로가기</a>
-                    </div>
-                </div>
+                        <div class="skills">
+                            <span class="skill-tag">AI</span>
+                            <span class="skill-tag">Database</span>
+                            <span class="skill-tag">Backend</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">Python</span>
+                        </div>
+                        <a href="https://github.com/heoheoyun/" target="_blank" class="btn">GitHub 바로가기</a>
+                    </div>
+                </div>
 
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🎵 자기소개 음성</h4>
-                        <audio controls>
-                            <source src="audio/자기소개.mp4" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
-                    </div>
-                    <div class="video-container">
-                        <h4>📹 소개 영상</h4>
-                        <video controls>
-                            <source src="video/자기소개.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="media-container">
+                    <div class="audio-container">
+                        <h4>🎵 자기소개 음성</h4>
+                        <audio controls>
+                            <source src="audio/자기소개.mp4" type="audio/mpeg">
+                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
+                        </audio>
+                    </div>
+                    <div class="video-container">
+                        <h4>📹 소개 영상</h4>
+                        <video controls>
+                            <source src="video/자기소개.mp4" type="video/mp4">
+                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="reports" class="page">
-            <div class="page-content">
-                <h1>레포트</h1>
-                
-                <div class="card">
-                    <h3>모바일 앱 개발 기초 레포트</h3>
-                    <p><strong>제목:</strong> 모바일 앱 개발 기초 학습 및 학습 도우미 앱 구상</p>
-                    <p><strong>과목:</strong> 모바일 앱 개발 기초</p>
-                    <p><strong>작성일:</strong> 2025년 7월 5일</p>
-                    <p><strong>요약:</strong> 모바일 앱 개발의 기본 원리를 학습하고, 이를 활용해 사용자의 학습을 돕는 '학습 도우미' 앱을 구상했습니다. 앱의 주요 기능과 구조를 설계하고, 실제 구현을 위한 기술 스택을 정의했습니다.</p>
-                    <a href="https://github.com/heoheoyun/mobileapp.git" target="_blank" class="btn">전문 보기</a>
-                </div>
+        <section id="reports" class="page">
+            <div class="page-content">
+                <h1>레포트</h1>
+                
+                <div class="card">
+                    <h3>모바일 앱 개발 기초 레포트</h3>
+                    <p><strong>제목:</strong> 모바일 앱 개발 기초 학습 및 학습 도우미 앱 구상</p>
+                    <p><strong>과목:</strong> 모바일 앱 개발 기초</p>
+                    <p><strong>작성일:</strong> 2025년 7월 5일</p>
+                    <p><strong>요약:</strong> 모바일 앱 개발의 기본 원리를 학습하고, 이를 활용해 사용자의 학습을 돕는 '학습 도우미' 앱을 구상했습니다. 앱의 주요 기능과 구조를 설계하고, 실제 구현을 위한 기술 스택을 정의했습니다.</p>
+                    <a href="https://github.com/heoheoyun/mobileapp.git" target="_blank" class="btn">전문 보기</a>
+                </div>
 
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🎙️ 레포트 발표</h4>
-                        <audio controls>
-                            <source src="report-presentation.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
-                    </div>
-                    <div class="video-container">
-                        <h4>📊 연구 발표 영상</h4>
-                        <video controls>
-                            <source src="research-presentation.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="media-container">
+                    <div class="audio-container">
+                        <h4>🎙️ 레포트 발표</h4>
+                        <audio controls>
+                            <source src="report-presentation.mp3" type="audio/mpeg">
+                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
+                        </audio>
+                    </div>
+                    <div class="video-container">
+                        <h4>📊 연구 발표 영상</h4>
+                        <video controls>
+                            <source src="research-presentation.mp4" type="video/mp4">
+                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="projects" class="page">
-            <div class="page-content">
-                <h1>프로젝트</h1>
-                
-                <div class="project-grid">
-                    <div class="card">
-                        <h3>반려동물 통합 커뮤니티 게시판</h3>
-                        <p><strong>프로젝트명:</strong> 반려동물 통합 커뮤니티 게시판</p>
-                        <p><strong>팀원:</strong> 김건엽, 강민우, 허윤</p>
-                        <p><strong>기술 스택:</strong> Backend/DB</p>
-                        <p><strong>설명:</strong> 반려동물 입양, 위탁, 용품 구매가 가능한 통합 커뮤니티 게시판 시스템 개발 프로젝트입니다. 백엔드 개발과 데이터베이스 설계를 담당하여, 사용자들이 편리하게 입양, 위탁, 정보 공유, 구매까지 한 곳에서 이용할 수 있는 시스템을 구현했습니다.</p>
-                        <p><strong>역할:</strong></p>
-                        <ul>
-                            <li>백엔드 및 DB 설계</li>
-                            <li>관리자 기능 및 테스트</li>
-                        </ul>
-                        <a href="https://github.com/heoheoyun/KHK.git" target="_blank" class="btn">GitHub 보기</a>
-                    </div>
-                </div>
+        <section id="projects" class="page">
+            <div class="page-content">
+                <h1>프로젝트</h1>
+                
+                <div class="project-grid">
+                    <div class="card">
+                        <h3>반려동물 통합 커뮤니티 게시판</h3>
+                        <p><strong>프로젝트명:</strong> 반려동물 통합 커뮤니티 게시판</p>
+                        <p><strong>팀원:</strong> 김건엽, 강민우, 허윤</p>
+                        <p><strong>기술 스택:</strong> Backend/DB</p>
+                        <p><strong>설명:</strong> 반려동물 입양, 위탁, 용품 구매가 가능한 통합 커뮤니티 게시판 시스템 개발 프로젝트입니다. 백엔드 개발과 데이터베이스 설계를 담당하여, 사용자들이 편리하게 입양, 위탁, 정보 공유, 구매까지 한 곳에서 이용할 수 있는 시스템을 구현했습니다.</p>
+                        <p><strong>역할:</strong></p>
+                        <ul>
+                            <li>백엔드 및 DB 설계</li>
+                            <li>관리자 기능 및 테스트</li>
+                        </ul>
+                        <a href="https://github.com/heoheoyun/KHK.git" target="_blank" class="btn">GitHub 보기</a>
+                    </div>
+                </div>
 
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🔊 프로젝트 설명</h4>
-                        <audio controls>
-                            <source src="project-demo.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
-                    </div>
-                    <div class="video-container">
-                        <h4>📱 프로젝트 데모</h4>
-                        <video controls>
-                            <source src="project-demo.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
-                    </div>
-            </div>
-        </section>
+                <div class="media-container">
+                    <div class="audio-container">
+                        <h4>🔊 프로젝트 설명</h4>
+                        <audio controls>
+                            <source src="project-demo.mp3" type="audio/mpeg">
+                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
+                        </audio>
+                    </div>
+                    <div class="video-container">
+                        <h4>📱 프로젝트 데모</h4>
+                        <video controls>
+                            <source src="project-demo.mp4" type="video/mp4">
+                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <section id="portfolio" class="page">
-            <div class="page-content">
-                <h1>포트폴리오</h1>
-                
-                <h2>🏆 개발 경험 및 성과</h2>
-                <div class="card">
-                    <h3>📊 기술적 성장</h3>
-                    <p><strong>백엔드 개발:</strong> 반려동물 커뮤니티 게시판 프로젝트를 통해 RESTful API 설계 및 구현 능력을 향상시켰습니다.</p>
-                    <p><strong>데이터베이스:</strong> 효율적인 스키마 설계 및 쿼리 최적화 경험을 통해 안정적인 시스템을 구축했습니다.</p>
-                    <p><strong>AI/ML 학습:</strong> 머신러닝 알고리즘 이해 및 실습, 데이터 전처리 기법 학습</p>
-                    <p><strong>협업:</strong> Git을 활용한 버전 관리 및 팀원 간의 원활한 코드 협업 경험을 쌓았습니다.</p>
-                    <p><strong>문제해결:</strong> 프로젝트 관리자 기능 구현 과정에서 발생한 이슈들을 분석하고 해결하는 능력을 길렀습니다.</p>
-                </div>
+        <section id="portfolio" class="page">
+            <div class="page-content">
+                <h1>포트폴리오</h1>
+                
+                <h2>🏆 개발 경험 및 성과</h2>
+                <div class="card">
+                    <h3>📊 기술적 성장</h3>
+                    <p><strong>백엔드 개발:</strong> 반려동물 커뮤니티 게시판 프로젝트를 통해 RESTful API 설계 및 구현 능력을 향상시켰습니다.</p>
+                    <p><strong>데이터베이스:</strong> 효율적인 스키마 설계 및 쿼리 최적화 경험을 통해 안정적인 시스템을 구축했습니다.</p>
+                    <p><strong>AI/ML 학습:</strong> 머신러닝 알고리즘 이해 및 실습, 데이터 전처리 기법 학습</p>
+                    <p><strong>협업:</strong> Git을 활용한 버전 관리 및 팀원 간의 원활한 코드 협업 경험을 쌓았습니다.</p>
+                    <p><strong>문제해결:</strong> 프로젝트 관리자 기능 구현 과정에서 발생한 이슈들을 분석하고 해결하는 능력을 길렀습니다.</p>
+                </div>
 
-                <div class="card">
-                    <h3>📚 학습한 기술 스택</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
-                        <span style="background: linear-gradient(45deg, #007396, #00a8cc); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Java</span>
-                        <span style="background: linear-gradient(45deg, #6db33f, #8bc34a); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Spring Boot</span>
-                        <span style="background: linear-gradient(45deg, #00758f, #009bb5); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">MySQL</span>
-                        <span style="background: linear-gradient(45deg, #3776ab, #4b8bbe); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Python</span>
-                        <span style="background: linear-gradient(45deg, #ff6f00, #ff8f00); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">TensorFlow</span>
-                        <span style="background: linear-gradient(45deg, #f7df1e, #ffeb3b); color: black; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">JavaScript</span>
-                        <span style="background: linear-gradient(45deg, #e34f26, #ff5722); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">HTML5</span>
-                        <span style="background: linear-gradient(45deg, #1572b6, #2196f3); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">CSS3</span>
-                        <span style="background: linear-gradient(45deg, #f05032, #ff6b35); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Git</span>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>📜 자격증</h3>
-                    <p><strong>자격증명:</strong> 엔비디아 딥러닝 자격증 (Fundamentals of Deep Learning)</p>
-                    <p><strong>발급기관:</strong> NVIDIA</p>
-                    <p><strong>발급일:</strong> 2025년 7월 4일</p>
-                    <p><strong>설명:</strong> 딥러닝의 기본 개념, 훈련 방법, 데이터 전처리 및 GPU 가속화를 통한 모델 최적화에 대한 역량을 인정받았습니다.</p>
-                    <a href="https://www.linkedin.com/in/%EC%9C%A4-%ED%97%88-86b173373/" target="_blank" class="btn">자격증 확인</a>
-                </div>
+                <div class="card">
+                    <h3>📚 학습한 기술 스택</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+                        <span style="background: linear-gradient(45deg, #007396, #00a8cc); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Java</span>
+                        <span style="background: linear-gradient(45deg, #6db33f, #8bc34a); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Spring Boot</span>
+                        <span style="background: linear-gradient(45deg, #00758f, #009bb5); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">MySQL</span>
+                        <span style="background: linear-gradient(45deg, #3776ab, #4b8bbe); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Python</span>
+                        <span style="background: linear-gradient(45deg, #ff6f00, #ff8f00); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">TensorFlow</span>
+                        <span style="background: linear-gradient(45deg, #f7df1e, #ffeb3b); color: black; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">JavaScript</span>
+                        <span style="background: linear-gradient(45deg, #e34f26, #ff5722); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">HTML5</span>
+                        <span style="background: linear-gradient(45deg, #1572b6, #2196f3); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">CSS3</span>
+                        <span style="background: linear-gradient(45deg, #f05032, #ff6b35); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">Git</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>📜 자격증</h3>
+                    <p><strong>자격증명:</strong> 엔비디아 딥러닝 자격증 (Fundamentals of Deep Learning)</p>
+                    <p><strong>발급기관:</strong> NVIDIA</p>
+                    <p><strong>발급일:</strong> 2025년 7월 4일</p>
+                    <p><strong>설명:</strong> 딥러닝의 기본 개념, 훈련 방법, 데이터 전처리 및 GPU 가속화를 통한 모델 최적화에 대한 역량을 인정받았습니다.</p>
+                    <a href="https://www.linkedin.com/in/%EC%9C%A4-%ED%97%88-86b173373/" target="_blank" class="btn">자격증 확인</a>
+                </div>
 
-                <div class="card">
-                    <h3>🎯 학습 중인 분야</h3>
-                    <p><strong>인공지능:</strong> 머신러닝 알고리즘 이해 및 실습, 데이터 전처리 기법 학습</p>
-                    <p><strong>데이터베이스:</strong> 고급 쿼리 최적화, NoSQL 데이터베이스 학습</p>
-                    <p><strong>클라우드:</strong> AWS 기초 서비스 학습 및 배포 경험</p>
-                    <p><strong>새로운 기술:</strong> 최신 개발 트렌드와 프레임워크에 대한 지속적인 학습</p>
-                </div>
+                <div class="card">
+                    <h3>🎯 학습 중인 분야</h3>
+                    <p><strong>인공지능:</strong> 머신러닝 알고리즘 이해 및 실습, 데이터 전처리 기법 학습</p>
+                    <p><strong>데이터베이스:</strong> 고급 쿼리 최적화, NoSQL 데이터베이스 학습</p>
+                    <p><strong>클라우드:</strong> AWS 기초 서비스 학습 및 배포 경험</p>
+                    <p><strong>새로운 기술:</strong> 최신 개발 트렌드와 프레임워크에 대한 지속적인 학습</p>
+                </div>
 
-                <div class="media-container">
-                    <div class="audio-container">
-                        <h4>🎤 포트폴리오 소개</h4>
-                        <audio controls>
-                            <source src="portfolio-intro.mp3" type="audio/mpeg">
-                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio>
-                    </div>
-                    <div class="video-container">
-                        <h4>🎬 포트폴리오 하이라이트</h4>
-                        <video controls>
-                            <source src="portfolio-highlight.mp4" type="video/mp4">
-                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
-                        </video>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+                <div class="media-container">
+                    <div class="audio-container">
+                        <h4>🎤 포트폴리오 소개</h4>
+                        <audio controls>
+                            <source src="portfolio-intro.mp3" type="audio/mpeg">
+                            <p>오디오를 지원하지 않는 브라우저입니다.</p>
+                        </audio>
+                    </div>
+                    <div class="video-container">
+                        <h4>🎬 포트폴리오 하이라이트</h4>
+                        <video controls>
+                            <source src="portfolio-highlight.mp4" type="video/mp4">
+                            <p>비디오를 지원하지 않는 브라우저입니다.</p>
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <script>
-        const navLinks = document.querySelectorAll('.nav-link');
-        const pages = document.querySelectorAll('.page');
-        const hamburger = document.getElementById('hamburger');
-        const navLinksContainer = document.getElementById('navLinks');
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const hamburger = document.getElementById('hamburger');
+        const navLinksContainer = document.getElementById('navLinks');
 
-        // 페이지 전환 함수
-        function showPage(pageId) {
-            pages.forEach(page => page.classList.remove('active'));
-            navLinks.forEach(link => link.classList.remove('active'));
-            
-            document.getElementById(pageId).classList.add('active');
-            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
-        }
+        // 페이지 전환 함수
+        function showPage(pageId) {
+            pages.forEach(page => page.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+        }
 
-        // 네비게이션 클릭 이벤트
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = link.getAttribute('data-page');
-                showPage(pageId);
-                
-                // 메뉴 닫기
-                navLinksContainer.classList.remove('active');
-                hamburger.classList.remove('open');
-            });
-        });
+        // 네비게이션 클릭 이벤트
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                showPage(pageId);
+                
+                // 메뉴 닫기
+                navLinksContainer.classList.remove('active');
+                hamburger.classList.remove('open');
+            });
+        });
 
-        // 햄버거 메뉴 토글
-        hamburger.addEventListener('click', () => {
-            navLinksContainer.classList.toggle('active');
-            hamburger.classList.toggle('open');
-        });
-        
-        // 미디어 요소 로딩 에러 처리
-        document.addEventListener('DOMContentLoaded', () => {
-            const audioElements = document.querySelectorAll('audio');
-            const videoElements = document.querySelectorAll('video');
-            
-            audioElements.forEach(audio => {
-                audio.addEventListener('error', () => {
-                    const container = audio.parentElement;
-                    container.innerHTML += '<p style="color: #999; font-size: 0.9rem;">오디오 파일을 찾을 수 없습니다.</p>';
-                });
-            });
-            
-            videoElements.forEach(video => {
-                video.addEventListener('error', () => {
-                    const container = video.parentElement;
-                    container.innerHTML += '<p style="color: #999; font-size: 0.9rem;">비디오 파일을 찾을 수 없습니다.</p>';
-                });
-            });
-        });
-
-    </script>
+        // 햄버거 메뉴 토글
+        hamburger.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+            hamburger.classList.toggle('open');
+        });
+        
+        // 미디어 요소 로딩 에러 처리
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioElements = document.querySelectorAll('audio');
+            const videoElements = document.querySelectorAll('video');
+            
+            audioElements.forEach(audio => {
+                audio.addEventListener('error', () => {
+                    const container = audio.parentElement;
+                    container.innerHTML += '<p style="color: #999; font-size: 0.9rem;">오디오 파일을 찾을 수 없습니다.</p>';
+                });
+            });
+            
+            videoElements.forEach(video => {
+                video.addEventListener('error', () => {
+                    const container = video.parentElement;
+                    container.innerHTML += '<p style="color: #999; font-size: 0.9rem;">비디오 파일을 찾을 수 없습니다.</p>';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
