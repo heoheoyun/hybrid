@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>반응형 자기소개 포트폴리오</title>
     <style>
+        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -15,9 +16,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
             min-height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         .container {
@@ -26,143 +27,69 @@
             padding: 0 20px;
         }
 
-        /* 네비게이션 */
+        /* Navigation */
         nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            position: fixed;
+            background: #f8f9fa;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
             top: 0;
             width: 100%;
             z-index: 1000;
-            transition: all 0.3s ease;
         }
 
         nav .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 1rem 20px;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
         }
 
         .nav-links {
-            position: fixed;
-            top: 0;
-            right: -250px; /* Initially hidden */
-            width: 250px;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(15px);
-            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            padding: 5rem 2rem;
-            transition: right 0.3s ease-in-out;
             list-style: none;
-            z-index: 999;
-            border-left: 1px solid rgba(0, 0, 0, 0.1); /* 햄버거 메뉴 경계선 */
-        }
-
-        .nav-links.active {
-            right: 0;
-        }
-
-        .nav-links li {
-            margin: 1.5rem 0;
-            border-bottom: 1px solid #eee; /* 메뉴 항목 구분선 */
-            padding-bottom: 1rem;
-        }
-        
-        .nav-links li:last-child {
-            border-bottom: none;
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #333;
             font-weight: 500;
-            font-size: 1.2rem;
+            font-size: 1rem;
             transition: color 0.3s ease;
-            cursor: pointer;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
-        .nav-links a:hover,
         .nav-links a.active {
             color: #667eea;
         }
 
-        .hamburger {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 1001;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #667eea;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #333;
-            margin: 3px 0;
-            transition: 0.4s;
+        .nav-links a.active::after {
+            transform: scaleX(1);
         }
 
-        .hamburger.open .bar1 {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .hamburger.open .bar2 {
-            opacity: 0;
-        }
-
-        .hamburger.open .bar3 {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-        
-        .main-content-wrapper {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .main-content-wrapper.menu-open {
-            transform: translateX(-250px);
-        }
-        
-        /* PC 버전 네비게이션 스타일 */
-        @media (min-width: 769px) {
-            .nav-links {
-                position: static;
-                width: auto;
-                height: auto;
-                background: transparent;
-                backdrop-filter: none;
-                box-shadow: none;
-                flex-direction: row;
-                padding: 0;
-                transition: none;
-                border-left: none; /* 경계선 제거 */
-            }
-
-            .nav-links li {
-                margin: 0 1rem;
-                padding: 0;
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                font-size: 1rem;
-            }
-
-            .hamburger {
-                display: none;
-            }
-        }
-
-        /* 페이지 섹션 */
+        /* Page Sections */
         .page {
             display: none;
             padding: 120px 0 80px;
@@ -220,7 +147,7 @@
             line-height: 1.8;
         }
 
-        /* 소개 페이지 스타일 */
+        /* Intro Section */
         .intro-grid {
             display: grid;
             grid-template-columns: 1fr 2fr;
@@ -269,7 +196,7 @@
             font-size: 0.9rem;
         }
 
-        /* 미디어 컨테이너 */
+        /* Media Containers */
         .media-container {
             margin: 2rem 0;
             display: grid;
@@ -297,7 +224,7 @@
             border-radius: 10px;
         }
 
-        /* 카드 스타일 */
+        /* Card Styles */
         .card {
             background: white;
             border-radius: 15px;
@@ -341,12 +268,80 @@
             transform: scale(1.05);
         }
 
-        /* 반응형 디자인 */
+        /* Responsive Mobile Styles (max-width: 768px) */
         @media (max-width: 768px) {
-            .nav-links {
-                display: flex;
+            nav .container {
+                justify-content: space-between;
             }
 
+            .logo {
+                display: block;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #667eea;
+            }
+
+            .hamburger {
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                z-index: 1001;
+            }
+
+            .hamburger span {
+                width: 25px;
+                height: 3px;
+                background: #333;
+                margin: 3px 0;
+                transition: 0.4s;
+            }
+
+            .hamburger.open .bar1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.open .bar2 {
+                opacity: 0;
+            }
+
+            .hamburger.open .bar3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -250px;
+                width: 250px;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                padding: 5rem 2rem;
+                transition: right 0.3s ease-in-out;
+                z-index: 999;
+                border-left: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1.5rem 0;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 1rem;
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+            
             .page-content {
                 padding: 2rem 1rem;
             }
@@ -369,7 +364,7 @@
                 font-size: 1.5rem;
             }
         }
-
+        
         @media (max-width: 480px) {
             .container {
                 padding: 0 15px;
@@ -405,7 +400,6 @@
     </nav>
 
     <main class="main-content-wrapper container">
-        <!-- 소개 페이지 -->
         <section id="intro" class="page active">
             <div class="page-content">
                 <h1>안녕하세요! 저는 허윤입니다</h1>
@@ -415,10 +409,10 @@
                     </div>
                     <div class="intro-text">
                         <h3>자기소개</h3>
-                        <p>안녕하세요! 저는 동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 허윤입니다. 
+                        <p>안녕하세요! 저는 동의과학대학교 컴퓨터소프트웨어학과에 재학 중인 허윤입니다.
                         AI와 데이터베이스 분야에 깊은 관심을 가지고 있으며, 새로운 지식을 배우고 도전하는 것을 즐깁니다.</p>
                         
-                        <p>저의 주요 관심 분야는 **AI, 데이터베이스, 백엔드 개발** 입니다. 
+                        <p>저의 주요 관심 분야는 **AI, 데이터베이스, 백엔드 개발** 입니다.
                         끊임없이 배우고 성장하는 것을 좋아하며, 새로운 도전을 두려워하지 않습니다.</p>
 
                         <div class="skills">
@@ -439,7 +433,7 @@
                         <audio controls>
                             <source src="intro-audio.mp3" type="audio/mpeg">
                             <p>오디오를 지원하지 않는 브라우저입니다.</p>
-                        </audio> 
+                        </audio>
                     </div>
                     <div class="video-container">
                         <h4>📹 소개 영상</h4>
@@ -452,7 +446,6 @@
             </div>
         </section>
 
-        <!-- 레포트 페이지 -->
         <section id="reports" class="page">
             <div class="page-content">
                 <h1>레포트</h1>
@@ -485,7 +478,6 @@
             </div>
         </section>
 
-        <!-- 프로젝트 페이지 -->
         <section id="projects" class="page">
             <div class="page-content">
                 <h1>프로젝트</h1>
@@ -525,7 +517,6 @@
             </div>
         </section>
 
-        <!-- 포트폴리오 페이지 -->
         <section id="portfolio" class="page">
             <div class="page-content">
                 <h1>포트폴리오</h1>
@@ -593,12 +584,10 @@
     </main>
 
     <script>
-        // 네비게이션 기능
         const navLinks = document.querySelectorAll('.nav-link');
         const pages = document.querySelectorAll('.page');
         const hamburger = document.getElementById('hamburger');
         const navLinksContainer = document.getElementById('navLinks');
-        const mainContentWrapper = document.querySelector('.main-content-wrapper');
 
         // 페이지 전환 함수
         function showPage(pageId) {
@@ -617,9 +606,10 @@
                 showPage(pageId);
                 
                 // 모바일에서 메뉴 닫기
-                navLinksContainer.classList.remove('active');
-                hamburger.classList.remove('open');
-                mainContentWrapper.classList.remove('menu-open');
+                if (window.innerWidth <= 768) {
+                    navLinksContainer.classList.remove('active');
+                    hamburger.classList.remove('open');
+                }
             });
         });
 
@@ -627,47 +617,8 @@
         hamburger.addEventListener('click', () => {
             navLinksContainer.classList.toggle('active');
             hamburger.classList.toggle('open');
-            mainContentWrapper.classList.toggle('menu-open');
         });
-
-        // 네비게이션 스크롤 효과
-        let lastScrollTop = 0;
-        const nav = document.querySelector('nav');
-
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                nav.style.transform = 'translateY(-100%)';
-            } else {
-                nav.style.transform = 'translateY(0)';
-            }
-            lastScrollTop = scrollTop;
-        });
-
-        // 부드러운 페이지 전환 애니메이션
-        function animatePageTransition(pageId) {
-            const currentPage = document.querySelector('.page.active');
-            const nextPage = document.getElementById(pageId);
-            
-            if (currentPage === nextPage) return;
-            
-            currentPage.style.opacity = '0';
-            currentPage.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                currentPage.classList.remove('active');
-                nextPage.classList.add('active');
-                nextPage.style.opacity = '0';
-                nextPage.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    nextPage.style.opacity = '1';
-                    nextPage.style.transform = 'translateY(0)';
-                }, 50);
-            }, 200);
-        }
-
+        
         // 미디어 요소 로딩 에러 처리
         document.addEventListener('DOMContentLoaded', () => {
             const audioElements = document.querySelectorAll('audio');
