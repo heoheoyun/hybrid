@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>동의과학대학교 소개</title>
+    <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css"/>
+    <script src="jquery-1.11.1.min.js"></script>
+    <script src="jquery.mobile-1.4.5.min.js"></script>
+<style>
+   li { list-style:none; }
+   .picture { list-style:none; padding:0; margin:0; }
+   .picture li { float:left; width:50%;}
+   .picture li a {display:block; margin:5px; border: 1px }
+   .picture li img { display:block; width:50%;  height:auto;}
+   .picture li img:hover { display:block; width:100%;  height:auto;} 
+
+   /* DIT 테마 스타일 */
+   .ui-bar-b, .ui-btn.ui-btn-b, .ui-header.ui-bar-b, .ui-footer.ui-bar-b {
+      background-color: #d90000 !important;
+      border-color: #d90000 !important;
+      color: white !important;
+   }
+   .ui-page-theme-b .ui-body-b {
+      background-color: white !important;
+      color: black !important;
+   }
+   .ui-page-theme-b .ui-listview > .ui-li-static, .ui-listview > li, .ui-listview > li .ui-btn {
+       background-color: #f5f5f5 !important;
+       color: #333 !important;
+       border-color: #ccc !important;
+   }
+   .ui-page-theme-b .ui-listview > li a.ui-link-inherit {
+       color: #333 !important;
+   }
+   .ui-collapsible-set .ui-collapsible-heading .ui-btn {
+       background-color: #333 !important;
+       color: white !important;
+       border-color: #333 !important;
+   }
+</style>
+</head>
+
+<body>
+<div data-theme="b">
+    <div data-role="page" id="home">
+        <div data-role="header" data-theme="b">
+            <h1>동의과학대학교 소개 앱</h1>
+        </div>
+        <div data-role="content" style="text-align:center">
+                <img src="Logo.jpg" style="width:10%; display: block; margin: 0 auto;"> <ul data-role="listview" data-inset="true">
+                <li><a href="#intro">학교 소개</a></li>
+                <li><a href="#movie" data-rel="dialog">홍보 영상</a></li>
+                <li><a href="#dit_song" data-rel="dialog">교가</a></li>
+                <li><a href="#gallery">캠퍼스 사진</a></li>
+            </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1>동의과학대학교</h1>
+        </div>
+    </div>
+    
+    <div data-role="page" id="intro" data-theme="b">
+        <div data-role="header" data-theme="b">
+            <a href="#home" data-icon="arrow-l" data-direction="reverse">처음</a>         
+            <h1>학교 소개</h1>
+        </div>
+        <div data-role="content">
+                <div  style="text-align:center">
+                    <img src="Logo.jpg" style="width:10%;">
+                </div>          
+            <div data-role="collapsible-set" data-theme="b" data-content-theme="e">
+                <div data-role="collapsible" data-collapsed="false">
+                    <h3>학교 연혁</h3>
+                    <h4>1966년 ~ 1979년</h4>
+                    <p>동의학원 설립자인 김정식 박사의 건학정신을 바탕으로 1966년 동의학원이 설립되었고, 1972년 동의전문학교 설립 인가를 받아 1973년에 개교했습니다.</p>
+                    <h4>1980년 ~ 1989년</h4>
+                    <p>개교 이후 33년간 학과를 증설하며 다양한 전문지식과 기술을 교육해왔습니다. 본관을 비롯한 9개 동의 건물을 건립하고 강의실, 실험실, 체육관 등 최적의 교육 시설을 갖추었습니다.</p>
+                    <h4>1990년 ~ 1999년</h4>
+                    <p>수요자 중심 교육을 실시하고 학사행정 전산화, 교육 환경 개선, 외국어 교육 강화, 산학협력 활성화 등을 통해 취업률을 높였습니다. 자체 교수진에 의해 학사 및 행정 정보 시스템을 구축했습니다.</p>
+                    <h4>2000년 ~ 2019년</h4>
+                    <p>7개 연구소와 산학협력 지원센터를 설치하여 애로기술 해결과 공동 기술 개발에 앞장섰습니다. 평생교육원 및 창업 보육센터를 운영하며 지역사회와 국가 발전에 기여했습니다.</p>
+                    <h4>2020년 ~ 현재</h4>
+                    <p>'ACE(Advanced Competency-based Education)' 비전을 선포하고 4차 산업혁명 시대에 대응하는 교육 혁신을 주도하고 있습니다. 교육품질 우수성을 인정받아 학생 역량 극대화를 위한 시스템을 구축하고 있습니다.</p>
+                </div>
+                <div data-role="collapsible">
+                    <h3>교육 이념</h3>
+                    <p>동의과학대학교의 교육 이념은 설립자인 故 석당 김임식 박사의 건학정신인 **동의지천(東義知天)**을 바탕으로 합니다.</p>
+                    <ul>
+                        <li><strong>동의(東義)</strong>: 새로운 도덕관, 바르고 참된 뜻을 펼치는 학문을 하는 곳을 의미합니다.</li>
+                        <li><strong>지천(知天)</strong>: 군자가 걸어야 할 지상의 목표를 뜻합니다.</li>
+                        <img src="Founding_Philosophy.png" alt="건학 이념 이미지" style="width: 80%; display: block; margin: 10px auto;">
+                    </ul>
+                    <p>이러한 이념을 토대로 **살아있는 가치관, 꿈을 이룰 수 있는 능력, 전문인**을 갖춘 인재 양성을 목표로 합니다.</p>
+                    <img src="mission.png" alt="사명 가치관 이미지" style="width: 90%; display: block; margin: 10px auto;">
+                </div>
+                <div data-role="collapsible" >
+                    <h3>주요 학과</h3>
+                    <p>동의과학대학교는 다음과 같은 다양한 계열의 학과를 운영하고 있습니다.</p>
+                    <img src="departments1.png" alt="학과 안내1" width="100%">
+                    <img src="departments2.png" alt="학과 안내2" width="100%">
+                </div>
+            </div>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1>동의과학대학교</h1>
+        </div>      
+    </div>
+    
+    <div data-role="page" id="movie" data-theme="b">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h1>DIT 홍보 영상</h1>
+        </div>
+        <div data-role="content" >
+            <div class="ui-bar ui-bar-a">2024 동의과학대학교 공식 홍보영상</div><br/>
+            <li><iframe width="100%" height="240" src="https://www.youtube.com/embed/nAOCy9xraZs"></iframe></li><br/>
+            <div class="ui-bar ui-bar-a">컴퓨터소프트웨어과 소개 영상</div><br/>
+            <li><iframe width="100%" height="240" src="https://www.youtube.com/embed/5DZtoD9njmA"></iframe></li>
+        </div>
+        <div data-role="footer" data-theme="b">
+        </div>
+    </div>
+    
+    <div data-role="page" id="dit_song">
+        <div data-role="header">
+            <h1>DIT 교가</h1>
+        </div>
+        <div data-role="content">
+            <div class="ui-bar ui-bar-e">DIT 교가</div><br/>
+            <audio controls width="100%" preload="metadata">
+                <source src="song.mp3" type="audio/mp3">
+            </audio>   
+            </div>
+        <div data-role="footer">
+            <a href="#home"  data-direction="reverse">처음으로</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="gallery"  data-theme="b">
+        <div data-role="header" data-position="fixed"  data-theme="b">
+            <a href="#home" data-icon="arrow-l" data-direction="reverse">처음</a>
+            <h1>캠퍼스 갤러리</h1>
+        </div>
+        <div data-role="content">
+            <ul class="picture">
+                <li><a href="미래관.jpg" rel="external"><img src="미래관.jpg" /></a></li>  
+                <li><a href="본관.jpg" rel="external"><img src="본관.jpg" /></a></li>  
+                <li><a href="석당문화관.jpg" rel="external"><img src="석당문화관.jpg" /></a></li>  
+                <li><a href="전경.jpg" rel="external"><img src="전경.jpg" /></a></li>  
+                <li><a href="정문.jpg" rel="external"><img src="정문.jpg" /></a></li>  
+                <li><a href="학생식당.jpg" rel="external"><img src="학생식당.jpg" /></a></li>  
+            </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1>동의과학대학교</h1>
+        </div>      
+    </div>
+</div>  
+</body>
+</html>
