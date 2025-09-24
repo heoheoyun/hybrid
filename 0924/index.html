@@ -223,20 +223,134 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <script>
-    // 1. 부산 도시철도 전체 역 정보 (CSV 파일 기반)
-    const lines = {
-        '1호선': [
-            { scd: '101', snm: '다대포해수욕장', lat: 35.0476, lng: 128.9715 }, { scd: '102', snm: '다대포항', lat: 35.0535, lng: 128.9774 }, { scd: '103', snm: '낫개', lat: 35.0645, lng: 128.9858 }, { scd: '104', snm: '신장림', lat: 35.0747, lng: 128.9934 }, { scd: '105', snm: '장림', lat: 35.0837, lng: 129.0016 }, { scd: '106', snm: '동매', lat: 35.0945, lng: 129.0118 }, { scd: '107', snm: '신평', lat: 35.1065, lng: 129.0197 }, { scd: '108', snm: '하단', lat: 35.1118, lng: 129.0191 }, { scd: '109', snm: '당리', lat: 35.1205, lng: 129.0163 }, { scd: '110', snm: '사하', lat: 35.1287, lng: 129.0195 }, { scd: '111', snm: '괴정', lat: 35.1378, lng: 129.0232 }, { scd: '112', snm: '대티', lat: 35.1437, lng: 129.0239 }, { scd: '113', snm: '서대신', lat: 35.1477, lng: 129.0298 }, { scd: '114', snm: '동대신', lat: 35.1481, lng: 129.0354 }, { scd: '115', snm: '토성', lat: 35.1051, lng: 129.0435 }, { scd: '116', snm: '자갈치', lat: 35.1452, lng: 129.0277 }, { scd: '117', snm: '남포', lat: 35.1378, lng: 129.0366 }, { scd: '118', snm: '중앙', lat: 35.1052, lng: 129.0445 }, { scd: '119', snm: '부산역', lat: 35.1147, lng: 129.0396 }, { scd: '120', snm: '초량', lat: 35.1206, lng: 129.0456 }, { scd: '121', snm: '좌천', lat: 35.1332, lng: 129.0561 }, { scd: '122', snm: '범일', lat: 35.1372, lng: 129.0645 }, { scd: '123', snm: '범내골', lat: 35.1451, lng: 129.0664 }, { scd: '124', snm: '서면', lat: 35.1578, lng: 129.0592 }, { scd: '125', snm: '부전', lat: 35.1663, lng: 129.0638 }, { scd: '126', snm: '양정', lat: 35.1706, lng: 129.0694 }, { scd: '127', snm: '시청', lat: 35.1772, lng: 129.0734 }, { scd: '128', snm: '연산', lat: 35.1884, lng: 129.0784 }, { scd: '129', snm: '교대', lat: 35.2012, lng: 129.0788 }, { scd: '130', snm: '동래', lat: 35.2017, lng: 129.0838 }, { scd: '131', snm: '명륜', lat: 35.2104, lng: 129.0827 }, { scd: '132', snm: '온천장', lat: 35.2152, lng: 129.0877 }, { scd: '133', snm: '부산대', lat: 35.2285, lng: 129.0831 }, { scd: '134', snm: '장전', lat: 35.2343, lng: 129.0911 }, { scd: '135', snm: '구서', lat: 35.2415, lng: 129.0916 }, { scd: '136', snm: '두실', lat: 35.2505, lng: 129.0924 }, { scd: '137', snm: '남산', lat: 35.2599, lng: 129.0927 }, { scd: '138', snm: '범어사', lat: 35.2711, lng: 129.0954 }, { scd: '139', snm: '노포', lat: 35.2892, lng: 129.0929 }
-        ],
-        '2호선': [
-            { scd: '201', snm: '장산', lat: 35.1729, lng: 129.1764 }, { scd: '202', snm: '중동', lat: 35.1687, lng: 129.1704 }, { scd: '203', snm: '해운대', lat: 35.1633, lng: 129.1627 }, { scd: '204', snm: '동백', lat: 35.1585, lng: 129.1554 }, { scd: '205', snm: '벡스코', lat: 35.1685, lng: 129.1352 }, { scd: '206', snm: '센텀시티', lat: 35.1691, lng: 129.1332 }, { scd: '207', snm: '민락', lat: 35.1611, lng: 129.1245 }, { scd: '208', snm: '수영', lat: 35.1673, lng: 129.1176 }, { scd: '209', snm: '광안', lat: 35.1541, lng: 129.1176 }, { scd: '210', snm: '금련산', lat: 35.1517, lng: 129.1105 }, { scd: '211', snm: '남천', lat: 35.1472, lng: 129.1037 }, { scd: '212', snm: '경성대부경대', lat: 35.1416, lng: 129.1012 }, { scd: '213', snm: '대연', lat: 35.1381, lng: 129.0954 }, { scd: '214', snm: '못골', lat: 35.1337, lng: 129.0903 }, { scd: '215', snm: '지게골', lat: 35.1306, lng: 129.0831 }, { scd: '216', snm: '문현', lat: 35.1274, lng: 129.0768 }, { scd: '217', snm: '국제금융센터·부산은행', lat: 35.1415, lng: 129.0683 }, { scd: '218', snm: '전포', lat: 35.1506, lng: 129.0645 }, { scd: '219', snm: '서면', lat: 35.1578, lng: 129.0592 }, { scd: '220', snm: '부암', lat: 35.1654, lng: 129.0543 }, { scd: '221', snm: '가야', lat: 35.1697, lng: 129.0475 }, { scd: '222', snm: '동의대', lat: 35.1764, lng: 129.0435 }, { scd: '223', snm: '개금', lat: 35.1841, lng: 129.0354 }, { scd: '224', snm: '냉정', lat: 35.1873, lng: 129.0277 }, { scd: '225', snm: '주례', lat: 35.1837, lng: 129.0195 }, { scd: '226', 'snm': '감전', lat: 35.1754, lng: 129.0097 }, { scd: '227', 'snm': '사상', lat: 35.1557, lng: 128.9818 }, { scd: '228', 'snm': '덕포', lat: 35.1664, lng: 128.9959 }, { scd: '229', 'snm': '모덕', lat: 35.1751, lng: 129.0018 }, { scd: '230', 'snm': '모라', lat: 35.1856, lng: 128.9955 }, { scd: '231', 'snm': '구남', lat: 35.1951, lng: 129.0014 }, { scd: '232', 'snm': '구명', lat: 35.2014, lng: 128.9972 }, { scd: '233', 'snm': '덕천', lat: 35.2104, lng: 129.0028 }, { scd: '234', 'snm': '수정', lat: 35.2163, lng: 129.0021 }, { scd: '235', 'snm': '화명', lat: 35.2241, lng: 129.0045 }, { scd: '236', 'snm': '율리', lat: 35.2325, lng: 129.0067 }, { scd: '237', 'snm': '동원', lat: 35.2427, lng: 129.0118 }, { scd: '238', 'snm': '금곡', lat: 35.2541, lng: 129.0142 }, { scd: '239', 'snm': '호포', lat: 35.2676, lng: 129.0121 }, { scd: '240', 'snm': '증산', lat: 35.2783, lng: 129.0084 }, { scd: '241', 'snm': '부산대양산캠퍼스', lat: 35.2865, lng: 129.0055 }, { scd: '242', 'snm': '남양산', lat: 35.3021, lng: 129.0135 }, { scd: '243', 'snm': '양산', lat: 35.3087, lng: 129.0223 }
-        ],
-        '3호선': [
-            { scd: '301', snm: '수영', lat: 35.1673, lng: 129.1176 }, { scd: '302', snm: '배산', lat: 35.1747, lng: 129.1037 }, { scd: '303', snm: '망미', lat: 35.1845, lng: 129.0965 }, { scd: '304', snm: '종합운동장', lat: 35.1904, lng: 129.0881 }, { scd: '305', snm: '사직', lat: 35.1953, lng: 129.0847 }, { scd: '306', snm: '미남', lat: 35.1979, lng: 129.0664 }, { scd: '307', snm: '덕천', lat: 35.2104, lng: 129.0028 }, { scd: '308', snm: '구포', lat: 35.2073, lng: 128.9959 }, { scd: '309', snm: '강서구청', lat: 35.2045, lng: 128.9818 }, { scd: '310', snm: '체육공원', lat: 35.2098, lng: 128.9712 }, { scd: '311', snm: '대저', lat: 35.2153, lng: 128.9664 }
-        ],
-        '4호선': [
-            { scd: '401', snm: '미남', lat: 35.1979, lng: 129.0664 }, { scd: '402', snm: '동래', lat: 35.2017, lng: 129.0838 }, { scd: '403', snm: '낙민', lat: 35.2072, lng: 129.0911 }, { scd: '404', snm: '충렬사', lat: 35.2151, lng: 129.1017 }, { scd: '405', snm: '명장', lat: 35.2205, lng: 129.1098 }, { scd: '406', snm: '서동', lat: 35.2255, lng: 129.1174 }, { scd: '407', snm: '금사', lat: 35.2307, lng: 129.1235 }, { scd: '408', snm: '반여농산물시장', lat: 35.2349, lng: 129.1305 }, { scd: '409', snm: '석대', lat: 35.2391, lng: 129.1386 }, { scd: '410', snm: '영산대', lat: 35.2443, lng: 129.1465 }, { scd: '411', snm: '동부산대학', lat: 35.2497, lng: 129.1541 }, { scd: '412', snm: '고촌', lat: 35.2534, lng: 129.1622 }, { scd: '413', snm: '안평', lat: 35.2582, lng: 129.1683 }
-        ]
+    // 1. 부산 도시철도 전체 역 정보 (제공된 '역 코드목록.xlsx - Sheet1.csv' 파일 기반)
+    const stationsData = [
+        { snm: '다대포해수욕장', scd: '95', lat: 35.0476, lng: 128.9715, line: '1호선' },
+        { snm: '다대포항', scd: '96', lat: 35.0535, lng: 128.9774, line: '1호선' },
+        { snm: '낫개', scd: '97', lat: 35.0645, lng: 128.9858, line: '1호선' },
+        { snm: '신장림', scd: '98', lat: 35.0747, lng: 128.9934, line: '1호선' },
+        { snm: '장림', scd: '99', lat: 35.0837, lng: 129.0016, line: '1호선' },
+        { snm: '동매', scd: '100', lat: 35.0945, lng: 129.0118, line: '1호선' },
+        { snm: '신평', scd: '101', lat: 35.1065, lng: 129.0197, line: '1호선' },
+        { snm: '하단', scd: '102', lat: 35.1118, lng: 129.0191, line: '1호선' },
+        { snm: '당리', scd: '103', lat: 35.1205, lng: 129.0163, line: '1호선' },
+        { snm: '사하', scd: '104', lat: 35.1287, lng: 129.0195, line: '1호선' },
+        { snm: '괴정', scd: '105', lat: 35.1378, lng: 129.0232, line: '1호선' },
+        { snm: '대티', scd: '106', lat: 35.1437, lng: 129.0239, line: '1호선' },
+        { snm: '서대신', scd: '107', lat: 35.1477, lng: 129.0298, line: '1호선' },
+        { snm: '동대신', scd: '108', lat: 35.1481, lng: 129.0354, line: '1호선' },
+        { snm: '토성', scd: '109', lat: 35.1051, lng: 129.0435, line: '1호선' },
+        { snm: '자갈치', scd: '110', lat: 35.1452, lng: 129.0277, line: '1호선' },
+        { snm: '남포', scd: '111', lat: 35.1378, lng: 129.0366, line: '1호선' },
+        { snm: '중앙', scd: '112', lat: 35.1052, lng: 129.0445, line: '1호선' },
+        { snm: '부산', scd: '113', lat: 35.1147, lng: 129.0396, line: '1호선' },
+        { snm: '초량', scd: '114', lat: 35.1206, lng: 129.0456, line: '1호선' },
+        { snm: '부산진', scd: '115', lat: 35.1332, lng: 129.0561, line: '1호선' },
+        { snm: '좌천', scd: '116', lat: 35.1372, lng: 129.0645, line: '1호선' },
+        { snm: '범일', scd: '117', lat: 35.1451, lng: 129.0664, line: '1호선' },
+        { snm: '범내골', scd: '118', lat: 35.1578, lng: 129.0592, line: '1호선' },
+        { snm: '서면(1)', scd: '119', lat: 35.1578, lng: 129.0592, line: '1호선' },
+        { snm: '부전', scd: '120', lat: 35.1663, lng: 129.0638, line: '1호선' },
+        { snm: '양정', scd: '121', lat: 35.1706, lng: 129.0694, line: '1호선' },
+        { snm: '시청', scd: '122', lat: 35.1772, lng: 129.0734, line: '1호선' },
+        { snm: '연산(1)', scd: '123', lat: 35.1884, lng: 129.0784, line: '1호선' },
+        { snm: '교대', scd: '124', lat: 35.2012, lng: 129.0788, line: '1호선' },
+        { snm: '동래(1)', scd: '125', lat: 35.2017, lng: 129.0838, line: '1호선' },
+        { snm: '명륜', scd: '126', lat: 35.2104, lng: 129.0827, line: '1호선' },
+        { snm: '온천장', scd: '127', lat: 35.2152, lng: 129.0877, line: '1호선' },
+        { snm: '부산대', scd: '128', lat: 35.2285, lng: 129.0831, line: '1호선' },
+        { snm: '장전', scd: '129', lat: 35.2343, lng: 129.0911, line: '1호선' },
+        { snm: '구서', scd: '130', lat: 35.2415, lng: 129.0916, line: '1호선' },
+        { snm: '두실', scd: '131', lat: 35.2505, lng: 129.0924, line: '1호선' },
+        { snm: '남산', scd: '132', lat: 35.2599, lng: 129.0927, line: '1호선' },
+        { snm: '범어사', scd: '133', lat: 35.2711, lng: 129.0954, line: '1호선' },
+        { snm: '노포', scd: '134', lat: 35.2892, lng: 129.0929, line: '1호선' },
+        { snm: '장산', scd: '201', lat: 35.1729, lng: 129.1764, line: '2호선' },
+        { snm: '중동', scd: '202', lat: 35.1687, lng: 129.1704, line: '2호선' },
+        { snm: '해운대', scd: '203', lat: 35.1633, lng: 129.1627, line: '2호선' },
+        { snm: '동백', scd: '204', lat: 35.1585, lng: 129.1554, line: '2호선' },
+        { snm: '벡스코(시립미술관)', scd: '205', lat: 35.1685, lng: 129.1352, line: '2호선' },
+        { snm: '센텀시티', scd: '206', lat: 35.1691, lng: 129.1332, line: '2호선' },
+        { snm: '민락', scd: '207', lat: 35.1611, lng: 129.1245, line: '2호선' },
+        { snm: '수영(2)', scd: '208', lat: 35.1673, lng: 129.1176, line: '2호선' },
+        { snm: '광안', scd: '209', lat: 35.1541, lng: 129.1176, line: '2호선' },
+        { snm: '금련산', scd: '210', lat: 35.1517, lng: 129.1105, line: '2호선' },
+        { snm: '남천', scd: '211', lat: 35.1472, lng: 129.1037, line: '2호선' },
+        { snm: '경성대.부경대', scd: '212', lat: 35.1416, lng: 129.1012, line: '2호선' },
+        { snm: '대연', scd: '213', lat: 35.1381, lng: 129.0954, line: '2호선' },
+        { snm: '못골', scd: '214', lat: 35.1337, lng: 129.0903, line: '2호선' },
+        { snm: '지게골', scd: '215', lat: 35.1306, lng: 129.0831, line: '2호선' },
+        { snm: '문현', scd: '216', lat: 35.1274, lng: 129.0768, line: '2호선' },
+        { snm: '국제금융센터·부산은행', scd: '217', lat: 35.1415, lng: 129.0683, line: '2호선' },
+        { snm: '전포', scd: '218', lat: 35.1506, lng: 129.0645, line: '2호선' },
+        { snm: '서면(2)', scd: '219', lat: 35.1578, lng: 129.0592, line: '2호선' },
+        { snm: '부암', scd: '220', lat: 35.1654, lng: 129.0543, line: '2호선' },
+        { snm: '가야', scd: '221', lat: 35.1697, lng: 129.0475, line: '2호선' },
+        { snm: '동의대', scd: '222', lat: 35.1764, lng: 129.0435, line: '2호선' },
+        { snm: '개금', scd: '223', lat: 35.1841, lng: 129.0354, line: '2호선' },
+        { snm: '냉정', scd: '224', lat: 35.1873, lng: 129.0277, line: '2호선' },
+        { snm: '주례', scd: '225', lat: 35.1837, lng: 129.0195, line: '2호선' },
+        { snm: '감전', scd: '226', lat: 35.1754, lng: 129.0097, line: '2호선' },
+        { snm: '사상(2)', scd: '227', lat: 35.1557, lng: 128.9818, line: '2호선' },
+        { snm: '덕포', scd: '228', lat: 35.1664, lng: 128.9959, line: '2호선' },
+        { snm: '모덕', scd: '229', lat: 35.1751, lng: 129.0018, line: '2호선' },
+        { snm: '모라', scd: '230', lat: 35.1856, lng: 128.9955, line: '2호선' },
+        { snm: '구남', scd: '231', lat: 35.1951, lng: 129.0014, line: '2호선' },
+        { snm: '구명', scd: '232', lat: 35.2014, lng: 128.9972, line: '2호선' },
+        { snm: '덕천(2)', scd: '233', lat: 35.2104, lng: 129.0028, line: '2호선' },
+        { snm: '수정', scd: '234', lat: 35.2163, lng: 129.0021, line: '2호선' },
+        { snm: '화명', scd: '235', lat: 35.2241, lng: 129.0045, line: '2호선' },
+        { snm: '율리', scd: '236', lat: 35.2325, lng: 129.0067, line: '2호선' },
+        { snm: '동원', scd: '237', lat: 35.2427, lng: 129.0118, line: '2호선' },
+        { snm: '금곡', scd: '238', lat: 35.2541, lng: 129.0142, line: '2호선' },
+        { snm: '호포', scd: '239', lat: 35.2676, lng: 129.0121, line: '2호선' },
+        { snm: '증산', scd: '240', lat: 35.2783, lng: 129.0084, line: '2호선' },
+        { snm: '부산대양산캠퍼스', scd: '241', lat: 35.2865, lng: 129.0055, line: '2호선' },
+        { snm: '남양산', scd: '242', lat: 35.3021, lng: 129.0135, line: '2호선' },
+        { snm: '양산', scd: '243', lat: 35.3087, lng: 129.0223, line: '2호선' },
+        { snm: '수영(3)', scd: '301', lat: 35.1673, lng: 129.1176, line: '3호선' },
+        { snm: '망미', scd: '302', lat: 35.1747, lng: 129.1037, line: '3호선' },
+        { snm: '배산', scd: '303', lat: 35.1845, lng: 129.0965, line: '3호선' },
+        { snm: '물만골', scd: '304', lat: 35.1904, lng: 129.0881, line: '3호선' },
+        { snm: '연산(3)', scd: '305', lat: 35.1884, lng: 129.0784, line: '3호선' },
+        { snm: '거제', scd: '306', lat: 35.1953, lng: 129.0847, line: '3호선' },
+        { snm: '종합운동장', scd: '307', lat: 35.1979, lng: 129.0664, line: '3호선' },
+        { snm: '사직', scd: '308', lat: 35.2104, lng: 129.0028, line: '3호선' },
+        { snm: '미남(3)', scd: '309', lat: 35.2073, lng: 128.9959, line: '3호선' },
+        { snm: '만덕', scd: '310', lat: 35.2045, lng: 128.9818, line: '3호선' },
+        { snm: '남산정', scd: '311', lat: 35.2098, lng: 128.9712, line: '3호선' },
+        { snm: '숙등', scd: '312', lat: 35.2153, lng: 128.9664, line: '3호선' },
+        { snm: '덕천(3)', scd: '313', lat: 35.1979, lng: 129.0664, line: '3호선' },
+        { snm: '구포', scd: '314', lat: 35.2017, lng: 129.0838, line: '3호선' },
+        { snm: '강서구청', scd: '315', lat: 35.2072, lng: 129.0911, line: '3호선' },
+        { snm: '체육공원', scd: '316', lat: 35.2151, lng: 129.1017, line: '3호선' },
+        { snm: '대저', scd: '317', lat: 35.2205, lng: 129.1098, line: '3호선' },
+        { snm: '미남(4)', scd: '401', lat: 35.1979, lng: 129.0664, line: '4호선' },
+        { snm: '동래(4)', scd: '402', lat: 35.2017, lng: 129.0838, line: '4호선' },
+        { snm: '수안', scd: '403', lat: 35.2072, lng: 129.0911, line: '4호선' },
+        { snm: '낙민', scd: '404', lat: 35.2151, lng: 129.1017, line: '4호선' },
+        { snm: '충렬사', scd: '405', lat: 35.2205, lng: 129.1098, line: '4호선' },
+        { snm: '명장', scd: '406', lat: 35.2255, lng: 129.1174, line: '4호선' },
+        { snm: '서동', scd: '407', lat: 35.2307, lng: 129.1235, line: '4호선' },
+        { snm: '금사', scd: '408', lat: 35.2349, lng: 129.1305, line: '4호선' },
+        { snm: '반여농산물시장', scd: '409', lat: 35.2391, lng: 129.1386, line: '4호선' },
+        { snm: '석대', scd: '410', lat: 35.2443, lng: 129.1465, line: '4호선' },
+        { snm: '영산대', scd: '411', lat: 35.2497, lng: 129.1541, line: '4호선' },
+        { snm: '동부산대학', scd: '412', lat: 35.2534, lng: 129.1622, line: '4호선' },
+        { snm: '고촌', scd: '413', lat: 35.2582, lng: 129.1683, line: '4호선' },
+        { snm: '안평', scd: '414', lat: 35.2582, lng: 129.1683, line: '4호선' }
+    ];
+
+    const lines = stationsData.reduce((acc, station) => {
+        if (!acc[station.line]) {
+            acc[station.line] = [];
+        }
+        acc[station.line].push(station);
+        return acc;
+    }, {});
+
+    const isTransferStation = (stationName) => {
+        return stationsData.filter(s => s.snm === stationName).length > 1;
     };
 
     // 2. Leaflet 지도 초기화
@@ -250,23 +364,14 @@
         '1호선': '#E63333',
         '2호선': '#00B168',
         '3호선': '#FF8F00',
-        '4호선': '#60469E',
-        '부산김해경전철': '#00A3DA'
+        '4호선': '#60469E'
     };
     
-    const allStations = Object.keys(lines).flatMap(lineName =>
-        lines[lineName].map(station => ({
-            ...station,
-            line: lineName,
-            isTransfer: ['서면', '수영', '미남', '덕천', '동래', '연산', '사상', '대저'].includes(station.snm)
-        }))
-    );
-    
-    allStations.forEach(station => {
+    stationsData.forEach(station => {
         let customIcon;
         const markerColor = lineColors[station.line] || '#6c757d';
 
-        if (station.isTransfer) {
+        if (isTransferStation(station.snm)) {
             customIcon = L.divIcon({
                 className: `leaflet-marker-icon transfer-marker-taegeuk`,
                 html: ``, 
@@ -285,7 +390,7 @@
         }
 
         const marker = L.marker([station.lat, station.lng], { icon: customIcon }).addTo(map);
-        const transferText = station.isTransfer ? '<br><b>환승 가능</b> 🔁' : '';
+        const transferText = isTransferStation(station.snm) ? '<br><b>환승 가능</b> 🔁' : '';
         marker.bindPopup(`<b>${station.snm}역</b><br>${station.line}${transferText}`);
     });
 
@@ -298,18 +403,14 @@
     const routeResultDiv = document.getElementById('routeResult');
     const resultContentDiv = document.getElementById('resultContent');
 
-    const originalStations = allStations.slice();
-
     function updateSelectOptions(inputElement, selectElement) {
         const searchTerm = inputElement.value.toLowerCase();
         
-        // 기존 옵션 제거
         while (selectElement.firstChild) {
             selectElement.removeChild(selectElement.firstChild);
         }
         
-        // 검색어에 맞는 역만 다시 추가
-        const filteredStations = originalStations.filter(station =>
+        const filteredStations = stationsData.filter(station =>
             station.snm.toLowerCase().includes(searchTerm)
         );
 
@@ -317,6 +418,7 @@
             const option = document.createElement('option');
             option.value = station.snm;
             option.textContent = `${station.snm} (${station.line})`;
+            option.dataset.scode = station.scd; // SCODE를 데이터 속성으로 저장
             selectElement.appendChild(option);
         });
     }
@@ -333,7 +435,7 @@
     searchBtn.addEventListener('click', async () => {
         const startStationName = startStationSelect.value;
         const endStationName = endStationSelect.value;
-        
+
         if (!startStationName || !endStationName) {
             alert('출발역과 도착역을 모두 선택해주세요.');
             return;
@@ -343,8 +445,9 @@
             return;
         }
 
-        const serviceKey = 'YOUR_SERVICE_KEY';
-        const apiUrl = `https://data.humetro.busan.kr/voc/api/open_api_distance.tnn?serviceKey=${serviceKey}&act=json&startSn=${startStationName}&endSn=${endStationName}`;
+        // 제공된 API 명세에 따라 요청 변수를 수정 [cite: 4]
+        const serviceKey = 'YOUR_SERVICE_KEY'; // 여기에 발급받은 서비스키를 입력하세요.
+        const apiUrl = `http://data.humetro.busan.kr/voc/api/open_api_distance.tnn?serviceKey=${serviceKey}&act=json&startSn=${startStationName}&endSn=${endStationName}`;
         
         routeResultDiv.classList.add('d-none');
         resultContentDiv.innerHTML = `<div class="text-center text-muted">경로를 검색 중입니다...</div>`;
@@ -394,7 +497,7 @@
 
         let stationListHtml = '';
         lineStations.forEach(station => {
-            const transferIcon = allStations.find(s => s.snm === station.snm && s.isTransfer) ? ' <i class="bi bi-arrow-right-circle-fill" style="color:#f39c12;"></i>' : '';
+            const transferIcon = isTransferStation(station.snm) ? ' <i class="bi bi-arrow-right-circle-fill" style="color:#f39c12;"></i>' : '';
             stationListHtml += `<li class="list-group-item">${station.snm} ${transferIcon}</li>`;
         });
 
