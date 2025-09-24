@@ -66,7 +66,7 @@
             padding: 1.5rem;
             border-radius: 8px;
         }
-        .form-select, .btn {
+        .form-select, .btn, .form-control {
             border-radius: 8px;
         }
         .btn-primary {
@@ -124,6 +124,20 @@
             justify-content: space-between;
             align-items: center;
         }
+        .search-container {
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+        .search-container input {
+            padding-right: 2.5rem;
+        }
+        .search-container .bi {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
     </style>
 </head>
 <body>
@@ -148,11 +162,19 @@
             <h2>경로 검색</h2>
             <div class="row g-3 align-items-end mb-3">
                 <div class="col-md-5">
-                    <label for="startStation" class="form-label">출발역</label>
+                    <label for="startStationSearch" class="form-label">출발역</label>
+                    <div class="search-container">
+                        <input type="text" class="form-control" id="startStationSearch" placeholder="역명 검색">
+                        <i class="bi bi-search"></i>
+                    </div>
                     <select id="startStation" class="form-select"></select>
                 </div>
                 <div class="col-md-5">
-                    <label for="endStation" class="form-label">도착역</label>
+                    <label for="endStationSearch" class="form-label">도착역</label>
+                    <div class="search-container">
+                        <input type="text" class="form-control" id="endStationSearch" placeholder="역명 검색">
+                        <i class="bi bi-search"></i>
+                    </div>
                     <select id="endStation" class="form-select"></select>
                 </div>
                 <div class="col-md-2 d-grid">
@@ -211,7 +233,7 @@
             { scd: '401', snm: '미남', lat: 35.1979, lng: 129.0664 }, { scd: '402', snm: '동래', lat: 35.2017, lng: 129.0838 }, { scd: '403', snm: '낙민', lat: 35.2072, lng: 129.0911 }, { scd: '404', snm: '충렬사', lat: 35.2151, lng: 129.1017 }, { scd: '405', snm: '명장', lat: 35.2205, lng: 129.1098 }, { scd: '406', snm: '서동', lat: 35.2255, lng: 129.1174 }, { scd: '407', snm: '금사', lat: 35.2307, lng: 129.1235 }, { scd: '408', snm: '반여농산물시장', lat: 35.2349, lng: 129.1305 }, { scd: '409', snm: '석대', lat: 35.2391, lng: 129.1386 }, { scd: '410', snm: '영산대', lat: 35.2443, lng: 129.1465 }, { scd: '411', snm: '동부산대학', lat: 35.2497, lng: 129.1541 }, { scd: '412', snm: '고촌', lat: 35.2534, lng: 129.1622 }, { scd: '413', snm: '안평', lat: 35.2582, lng: 129.1683 }
         ]
     };
-    
+
     // 2. Leaflet 지도 초기화
     const map = L.map('map').setView([35.1795, 129.0756], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -251,19 +273,45 @@
     });
 
     // 4. 경로 검색 폼 구성 및 기능 구현
+    const startStationSearch = document.getElementById('startStationSearch');
+    const endStationSearch = document.getElementById('endStationSearch');
     const startStationSelect = document.getElementById('startStation');
     const endStationSelect = document.getElementById('endStation');
     const searchBtn = document.getElementById('searchBtn');
     const routeResultDiv = document.getElementById('routeResult');
     const resultContentDiv = document.getElementById('resultContent');
 
-    allStations.forEach(station => {
-        const option = document.createElement('option');
-        option.value = station.snm;
-        option.textContent = `${station.snm} (${station.line})`;
-        startStationSelect.appendChild(option);
-        endStationSelect.appendChild(option.cloneNode(true));
-    });
+    const originalStations = allStations.slice();
+
+    function updateSelectOptions(inputElement, selectElement) {
+        const searchTerm = inputElement.value.toLowerCase();
+        
+        // 기존 옵션 제거
+        while (selectElement.firstChild) {
+            selectElement.removeChild(selectElement.firstChild);
+        }
+        
+        // 검색어에 맞는 역만 다시 추가
+        const filteredStations = originalStations.filter(station =>
+            station.snm.toLowerCase().includes(searchTerm)
+        );
+
+        filteredStations.forEach(station => {
+            const option = document.createElement('option');
+            option.value = station.snm;
+            option.textContent = `${station.snm} (${station.line})`;
+            selectElement.appendChild(option);
+        });
+    }
+
+    // 초기 드롭다운 메뉴 채우기
+    updateSelectOptions(startStationSearch, startStationSelect);
+    updateSelectOptions(endStationSearch, endStationSelect);
+
+    // 검색창 입력 이벤트
+    startStationSearch.addEventListener('input', () => updateSelectOptions(startStationSearch, startStationSelect));
+    endStationSearch.addEventListener('input', () => updateSelectOptions(endStationSearch, endStationSelect));
+
 
     searchBtn.addEventListener('click', async () => {
         const startStationName = startStationSelect.value;
