@@ -81,20 +81,25 @@
         .chart-container {
             margin-top: 2rem;
         }
+        /* 기존 마커 스타일 */
         .leaflet-marker-icon.line-marker {
-            border: 2px solid white;
+            width: 12px !important;
+            height: 12px !important;
             border-radius: 50%;
+            border: 2px solid white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             font-weight: bold;
             text-align: center;
         }
-        .line1-marker { background-color: var(--line1-color); }
-        .line2-marker { background-color: var(--line2-color); }
-        .line3-marker { background-color: var(--line3-color); }
-        .line4-marker { background-color: var(--line4-color); }
-        .light-rail-marker { background-color: var(--light-rail-color); }
-        .transfer-marker { border: 3px solid #f39c12; }
-        
+        /* 환승역 마커 (태극 문양) 스타일 */
+        .leaflet-marker-icon.transfer-marker-taegeuk {
+            width: 16px !important;
+            height: 16px !important;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #00A1E0 50%, #EF4459 50%); /* 왼쪽 파랑, 오른쪽 빨강 */
+        }
         .result-content {
             font-size: 1.1rem;
         }
@@ -224,7 +229,7 @@
             { scd: '101', snm: '다대포해수욕장', lat: 35.0476, lng: 128.9715 }, { scd: '102', snm: '다대포항', lat: 35.0535, lng: 128.9774 }, { scd: '103', snm: '낫개', lat: 35.0645, lng: 128.9858 }, { scd: '104', snm: '신장림', lat: 35.0747, lng: 128.9934 }, { scd: '105', snm: '장림', lat: 35.0837, lng: 129.0016 }, { scd: '106', snm: '동매', lat: 35.0945, lng: 129.0118 }, { scd: '107', snm: '신평', lat: 35.1065, lng: 129.0197 }, { scd: '108', snm: '하단', lat: 35.1118, lng: 129.0191 }, { scd: '109', snm: '당리', lat: 35.1205, lng: 129.0163 }, { scd: '110', snm: '사하', lat: 35.1287, lng: 129.0195 }, { scd: '111', snm: '괴정', lat: 35.1378, lng: 129.0232 }, { scd: '112', snm: '대티', lat: 35.1437, lng: 129.0239 }, { scd: '113', snm: '서대신', lat: 35.1477, lng: 129.0298 }, { scd: '114', snm: '동대신', lat: 35.1481, lng: 129.0354 }, { scd: '115', snm: '토성', lat: 35.1051, lng: 129.0435 }, { scd: '116', snm: '자갈치', lat: 35.1452, lng: 129.0277 }, { scd: '117', snm: '남포', lat: 35.1378, lng: 129.0366 }, { scd: '118', snm: '중앙', lat: 35.1052, lng: 129.0445 }, { scd: '119', snm: '부산역', lat: 35.1147, lng: 129.0396 }, { scd: '120', snm: '초량', lat: 35.1206, lng: 129.0456 }, { scd: '121', snm: '좌천', lat: 35.1332, lng: 129.0561 }, { scd: '122', snm: '범일', lat: 35.1372, lng: 129.0645 }, { scd: '123', snm: '범내골', lat: 35.1451, lng: 129.0664 }, { scd: '124', snm: '서면', lat: 35.1578, lng: 129.0592 }, { scd: '125', snm: '부전', lat: 35.1663, lng: 129.0638 }, { scd: '126', snm: '양정', lat: 35.1706, lng: 129.0694 }, { scd: '127', snm: '시청', lat: 35.1772, lng: 129.0734 }, { scd: '128', snm: '연산', lat: 35.1884, lng: 129.0784 }, { scd: '129', snm: '교대', lat: 35.2012, lng: 129.0788 }, { scd: '130', snm: '동래', lat: 35.2017, lng: 129.0838 }, { scd: '131', snm: '명륜', lat: 35.2104, lng: 129.0827 }, { scd: '132', snm: '온천장', lat: 35.2152, lng: 129.0877 }, { scd: '133', snm: '부산대', lat: 35.2285, lng: 129.0831 }, { scd: '134', snm: '장전', lat: 35.2343, lng: 129.0911 }, { scd: '135', snm: '구서', lat: 35.2415, lng: 129.0916 }, { scd: '136', snm: '두실', lat: 35.2505, lng: 129.0924 }, { scd: '137', snm: '남산', lat: 35.2599, lng: 129.0927 }, { scd: '138', snm: '범어사', lat: 35.2711, lng: 129.0954 }, { scd: '139', snm: '노포', lat: 35.2892, lng: 129.0929 }
         ],
         '2호선': [
-            { scd: '201', snm: '장산', lat: 35.1729, lng: 129.1764 }, { scd: '202', snm: '중동', lat: 35.1687, lng: 129.1704 }, { scd: '203', snm: '해운대', lat: 35.1633, lng: 129.1627 }, { scd: '204', snm: '동백', lat: 35.1585, lng: 129.1554 }, { scd: '205', snm: '벡스코', lat: 35.1685, lng: 129.1352 }, { scd: '206', snm: '센텀시티', lat: 35.1691, lng: 129.1332 }, { scd: '207', snm: '민락', lat: 35.1611, lng: 129.1245 }, { scd: '208', snm: '수영', lat: 35.1673, lng: 129.1176 }, { scd: '209', snm: '광안', lat: 35.1541, lng: 129.1176 }, { scd: '210', snm: '금련산', lat: 35.1517, lng: 129.1105 }, { scd: '211', snm: '남천', lat: 35.1472, lng: 129.1037 }, { scd: '212', snm: '경성대부경대', lat: 35.1416, lng: 129.1012 }, { scd: '213', snm: '대연', lat: 35.1381, lng: 129.0954 }, { scd: '214', snm: '못골', lat: 35.1337, lng: 129.0903 }, { scd: '215', snm: '지게골', lat: 35.1306, lng: 129.0831 }, { scd: '216', snm: '문현', lat: 35.1274, lng: 129.0768 }, { scd: '217', snm: '국제금융센터·부산은행', lat: 35.1415, lng: 129.0683 }, { scd: '218', snm: '전포', lat: 35.1506, lng: 129.0645 }, { scd: '219', snm: '서면', lat: 35.1578, lng: 129.0592 }, { scd: '220', snm: '부암', lat: 35.1654, lng: 129.0543 }, { scd: '221', snm: '가야', lat: 35.1697, lng: 129.0475 }, { scd: '222', snm: '동의대', lat: 35.1764, lng: 129.0435 }, { scd: '223', snm: '개금', lat: 35.1841, lng: 129.0354 }, { scd: '224', snm: '냉정', lat: 35.1873, lng: 129.0277 }, { scd: '225', snm: '주례', lat: 35.1837, lng: 129.0195 }, { scd: '226', snm: '감전', lat: 35.1754, lng: 129.0097 }, { scd: '227', snm: '사상', lat: 35.1557, lng: 128.9818 }, { scd: '228', snm: '덕포', lat: 35.1664, lng: 128.9959 }, { scd: '229', snm: '모덕', lat: 35.1751, lng: 129.0018 }, { scd: '230', snm: '모라', lat: 35.1856, lng: 128.9955 }, { scd: '231', snm: '구남', lat: 35.1951, lng: 129.0014 }, { scd: '232', snm: '구명', lat: 35.2014, lng: 128.9972 }, { scd: '233', snm: '덕천', lat: 35.2104, lng: 129.0028 }, { scd: '234', snm: '수정', lat: 35.2163, lng: 129.0021 }, { scd: '235', snm: '화명', lat: 35.2241, lng: 129.0045 }, { scd: '236', snm: '율리', lat: 35.2325, lng: 129.0067 }, { scd: '237', snm: '동원', lat: 35.2427, lng: 129.0118 }, { scd: '238', snm: '금곡', lat: 35.2541, lng: 129.0142 }, { scd: '239', snm: '호포', lat: 35.2676, lng: 129.0121 }, { scd: '240', snm: '증산', lat: 35.2783, lng: 129.0084 }, { scd: '241', snm: '부산대양산캠퍼스', lat: 35.2865, lng: 129.0055 }, { scd: '242', snm: '남양산', lat: 35.3021, lng: 129.0135 }, { scd: '243', snm: '양산', lat: 35.3087, lng: 129.0223 }
+            { scd: '201', snm: '장산', lat: 35.1729, lng: 129.1764 }, { scd: '202', snm: '중동', lat: 35.1687, lng: 129.1704 }, { scd: '203', snm: '해운대', lat: 35.1633, lng: 129.1627 }, { scd: '204', snm: '동백', lat: 35.1585, lng: 129.1554 }, { scd: '205', snm: '벡스코', lat: 35.1685, lng: 129.1352 }, { scd: '206', snm: '센텀시티', lat: 35.1691, lng: 129.1332 }, { scd: '207', snm: '민락', lat: 35.1611, lng: 129.1245 }, { scd: '208', snm: '수영', lat: 35.1673, lng: 129.1176 }, { scd: '209', snm: '광안', lat: 35.1541, lng: 129.1176 }, { scd: '210', snm: '금련산', lat: 35.1517, lng: 129.1105 }, { scd: '211', snm: '남천', lat: 35.1472, lng: 129.1037 }, { scd: '212', snm: '경성대부경대', lat: 35.1416, lng: 129.1012 }, { scd: '213', snm: '대연', lat: 35.1381, lng: 129.0954 }, { scd: '214', snm: '못골', lat: 35.1337, lng: 129.0903 }, { scd: '215', snm: '지게골', lat: 35.1306, lng: 129.0831 }, { scd: '216', snm: '문현', lat: 35.1274, lng: 129.0768 }, { scd: '217', snm: '국제금융센터·부산은행', lat: 35.1415, lng: 129.0683 }, { scd: '218', snm: '전포', lat: 35.1506, lng: 129.0645 }, { scd: '219', snm: '서면', lat: 35.1578, lng: 129.0592 }, { scd: '220', snm: '부암', lat: 35.1654, lng: 129.0543 }, { scd: '221', snm: '가야', lat: 35.1697, lng: 129.0475 }, { scd: '222', snm: '동의대', lat: 35.1764, lng: 129.0435 }, { scd: '223', snm: '개금', lat: 35.1841, lng: 129.0354 }, { scd: '224', snm: '냉정', lat: 35.1873, lng: 129.0277 }, { scd: '225', snm: '주례', lat: 35.1837, lng: 129.0195 }, { scd: '226', 'snm': '감전', lat: 35.1754, lng: 129.0097 }, { scd: '227', 'snm': '사상', lat: 35.1557, lng: 128.9818 }, { scd: '228', 'snm': '덕포', lat: 35.1664, lng: 128.9959 }, { scd: '229', 'snm': '모덕', lat: 35.1751, lng: 129.0018 }, { scd: '230', 'snm': '모라', lat: 35.1856, lng: 128.9955 }, { scd: '231', 'snm': '구남', lat: 35.1951, lng: 129.0014 }, { scd: '232', 'snm': '구명', lat: 35.2014, lng: 128.9972 }, { scd: '233', 'snm': '덕천', lat: 35.2104, lng: 129.0028 }, { scd: '234', 'snm': '수정', lat: 35.2163, lng: 129.0021 }, { scd: '235', 'snm': '화명', lat: 35.2241, lng: 129.0045 }, { scd: '236', 'snm': '율리', lat: 35.2325, lng: 129.0067 }, { scd: '237', 'snm': '동원', lat: 35.2427, lng: 129.0118 }, { scd: '238', 'snm': '금곡', lat: 35.2541, lng: 129.0142 }, { scd: '239', 'snm': '호포', lat: 35.2676, lng: 129.0121 }, { scd: '240', 'snm': '증산', lat: 35.2783, lng: 129.0084 }, { scd: '241', 'snm': '부산대양산캠퍼스', lat: 35.2865, lng: 129.0055 }, { scd: '242', 'snm': '남양산', lat: 35.3021, lng: 129.0135 }, { scd: '243', 'snm': '양산', lat: 35.3087, lng: 129.0223 }
         ],
         '3호선': [
             { scd: '301', snm: '수영', lat: 35.1673, lng: 129.1176 }, { scd: '302', snm: '배산', lat: 35.1747, lng: 129.1037 }, { scd: '303', snm: '망미', lat: 35.1845, lng: 129.0965 }, { scd: '304', snm: '종합운동장', lat: 35.1904, lng: 129.0881 }, { scd: '305', snm: '사직', lat: 35.1953, lng: 129.0847 }, { scd: '306', snm: '미남', lat: 35.1979, lng: 129.0664 }, { scd: '307', snm: '덕천', lat: 35.2104, lng: 129.0028 }, { scd: '308', snm: '구포', lat: 35.2073, lng: 128.9959 }, { scd: '309', snm: '강서구청', lat: 35.2045, lng: 128.9818 }, { scd: '310', snm: '체육공원', lat: 35.2098, lng: 128.9712 }, { scd: '311', snm: '대저', lat: 35.2153, lng: 128.9664 }
@@ -258,14 +263,26 @@
     );
     
     allStations.forEach(station => {
+        let customIcon;
         const markerColor = lineColors[station.line] || '#6c757d';
-        const customIcon = L.divIcon({
-            className: `line-marker`,
-            html: `<div style="background-color: ${markerColor}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.2);"></div>`,
-            iconSize: [16, 16],
-            iconAnchor: [8, 8],
-            popupAnchor: [0, -8]
-        });
+
+        if (station.isTransfer) {
+            customIcon = L.divIcon({
+                className: `leaflet-marker-icon transfer-marker-taegeuk`,
+                html: ``, 
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+                popupAnchor: [0, -10]
+            });
+        } else {
+            customIcon = L.divIcon({
+                className: `leaflet-marker-icon line-marker`,
+                html: `<div style="background-color: ${markerColor}; width: 100%; height: 100%; border-radius: 50%;"></div>`,
+                iconSize: [16, 16],
+                iconAnchor: [8, 8],
+                popupAnchor: [0, -8]
+            });
+        }
 
         const marker = L.marker([station.lat, station.lng], { icon: customIcon }).addTo(map);
         const transferText = station.isTransfer ? '<br><b>환승 가능</b> 🔁' : '';
