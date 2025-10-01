@@ -1,1 +1,185 @@
 
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>신세계 그룹 소개 앱</title>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+   /* 기본 스타일 */
+   li { list-style:none; }
+  .picture { list-style:none; padding:0; margin:0; }
+  .picture li { float:left; width:50%;}
+  .picture li a {display:block; margin:5px; border: 1px }
+  .picture li img { display:block; width:50%;  height:auto;}
+  .picture li img:hover { display:block; width:100%;  height:auto;} 
+
+  /* ========================================= */
+  /* 신세계 스타일 붉은색 포인트 CSS (버건디) */
+  /* ========================================= */
+  
+  /* 헤더/푸터 배경색을 신세계 버건디 레드로 변경 */
+  .ui-page-theme-a .ui-header,
+  .ui-page-theme-a .ui-footer,
+  .ui-page-theme-a .ui-bar-a {
+    background-color: #A00000 !important; 
+    border-color: #660000 !important;
+    color: #FFFFFF !important; 
+    text-shadow: 0 1px 0 #333333;
+  }
+  
+  /* 홈 화면 리스트 버튼 스타일 */
+  .ui-page-theme-a .ui-listview > li > .ui-btn {
+      background-color: #FFFFFF; 
+      border-color: #A00000; 
+      color: #333333;
+  }
+  
+  /* 아코디언 메뉴 헤더와 ui-bar-e 배경색을 레드로 변경 */
+  .ui-page-theme-a .ui-bar-e,
+  .ui-collapsible-heading .ui-collapsible-heading-toggle {
+      background-color: #C00000 !important;
+      border-color: #990000 !important;
+      color: #FFFFFF !important;
+  }
+  /* 텍스트 본문 내 강조 부분 스타일 */
+  .highlight {
+      color: #A00000;
+      font-weight: 600; 
+  }
+</style>
+</head>
+
+<body>
+<div data-theme="a">
+	
+	<div data-role="page" id="home">
+		<div data-role="header" data-position="fixed" data-theme="a">
+			<h1>신세계 그룹 소개 앱</h1>
+		</div>
+		
+		<div data-role="content" style="text-align:center">
+				<img src="신세계.jpg" style="width:70%; max-width:300px; height:auto; margin-top: 20px; margin-bottom: 20px;" alt="신세계 그룹 로고">
+			<ul data-role="listview" data-inset="true">
+				<li><a href="#intro">기업 소개 및 역사</a></li>
+				<li><a href="#movie" data-rel="dialog">신세계 홍보 영상</a></li>
+				<li><a href="#wizard3-1" data-rel="dialog">그룹 주요 브랜드</a></li>
+				<li><a href="#gallery">주요 사업장 사진</a></li>
+			</ul>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-theme="a">
+			<h1>Shinsegae Group App</h1>
+		</div>
+	</div>
+	
+	<div data-role="page" id="intro" data-theme="a">
+		<div data-role="header" data-position="fixed" data-theme="a">
+			<a href="#home" data-icon="arrow-l" data-direction="reverse">처음</a>			
+			<h1>기업 소개</h1>
+		</div>
+		
+		<div data-role="content" class="intro-text">
+				<div  style="text-align:center">
+					<img src="bgshinsegae2.png" style="width:100%; max-width:400px; height:auto;" alt="신세계 비전 이미지">
+				</div>			
+			<div data-role="collapsible-set" data-theme="a" data-content-theme="d">
+				<div data-role="collapsible" data-collapsed="false">
+					<h3>그룹 연혁</h3>
+					<p>신세계 그룹의 역사는 <span class="highlight">1930년 한국 최초의 백화점</span>인 미츠코시 경성점에서 시작됩니다. 이후 <span class="highlight">1963년 (주)신세계백화점</span>으로 상호를 변경하며 성장 기반을 다졌고, 1997년 삼성그룹에서 완전히 분리 독립하며 독자적인 유통 기업으로 발돋움했습니다. 2011년에는 백화점과 이마트 부문을 인적 분할하여 전문성을 극대화했습니다.</p>
+				</div>
+				<div data-role="collapsible">
+					<h3>핵심 가치</h3>
+					<p>신세계 그룹은 <span class="highlight">고객 제일주의</span>를 최우선 가치로 삼습니다. 고객의 삶에 최고의 가치를 제공하는 것을 목표로 하며, 이를 위해 <span class="highlight">윤리 경영과 상생 경영</span>을 실천하고 있습니다. 끊임없는 혁신을 통해 대한민국 유통 산업을 선도하고 있습니다.</p>
+				</div>
+				<div data-role="collapsible" >
+					<h3>주요 사업 분야</h3>
+					<p>신세계는 유통업을 중심으로 광범위한 사업 포트폴리오를 구축하고 있습니다. 주요 사업은 <span class="highlight">백화점 (신세계백화점)</span>, <span class="highlight">대형마트 (이마트)</span>, <span class="highlight">복합쇼핑몰 (스타필드)</span>, 온라인 플랫폼 (SSG.COM), 호텔/리조트 (조선호텔앤리조트), 그리고 패션/식음료 분야를 아우르며 고객의 모든 라이프스타일을 만족시키고 있습니다.</p>
+				</div>
+			</div>
+		</div>
+		
+		<div data-role="footer" data-position="fixed" data-theme="a">
+			<h1>Shinsegae Group App</h1>
+		</div>		
+	</div>
+	
+	<div data-role="page" id="movie" data-theme="a">
+		<div data-role="header" data-theme="a">
+			<h1>신세계 홍보 영상</h1>
+		</div>
+		<div data-role="content" >
+			<div class="ui-bar ui-bar-a">신세계 그룹 기업 소개 영상</div><br/>
+			<li><iframe width="100%" height="240" src="https://www.youtube.com/embed/kFCpOlZJQ8A" frameborder="0" allowfullscreen></iframe></li>
+		</div>
+		<div data-role="footer" data-theme="a">
+		</div>
+	</div>
+	
+	<div data-role="page" id="wizard3-1">
+		<div data-role="header">
+			<h1>주요 브랜드: 리테일 & 마트</h1>
+		</div>
+		<div data-role="content">
+			<div class="ui-bar ui-bar-e">신세계백화점 & 이마트</div><br/>
+			<img src="brand-1.jpg" alt="신세계백화점, 이마트" width="100%">
+			<p>
+				<span class="highlight">신세계백화점:</span> 국내 최고의 프리미엄 백화점으로, 본점, 강남점, 센텀시티점 등 핵심 거점을 중심으로 럭셔리 콘텐츠와 차별화된 서비스를 제공합니다. <br><br>
+				<span class="highlight">이마트:</span> 국내 최초의 대형 할인점으로, 품질 좋은 상품을 합리적인 가격에 제공하며 국내 대형 마트 시장을 선도하고 있습니다. 창고형 할인점인 트레이더스도 운영 중입니다.
+			</p>
+		</div>
+		<div data-role="footer">
+			<a href="#home" data-direction="reverse">처음으로</a>
+			<a href="#wizard3-2" data-rel="dialog" data-transition="slide">다음 브랜드</a>
+		</div>
+	</div>
+
+	<div data-role="page" id="wizard3-2">
+		<div data-role="header">
+			<h1>주요 브랜드: 라이프스타일</h1>
+		</div>
+		<div data-role="content">
+			<div class="ui-bar ui-bar-e">스타필드 & 조선호텔앤리조트</div><br/>
+			<img src="brand-2.jpg" alt="스타필드, 조선호텔" width="100%">
+			<p>
+				<span class="highlight">스타필드:</span> 쇼핑, 레저, 엔터테인먼트가 결합된 복합 쇼핑 테마파크입니다. 하남, 고양, 안성 등에서 온 가족이 즐길 수 있는 공간을 제공하며 새로운 쇼핑 문화를 만들어가고 있습니다.<br><br>
+				<span class="highlight">조선호텔앤리조트:</span> 웨스틴 조선, 레스케이프, 그랜드 조선 등 다양한 럭셔리 및 라이프스타일 호텔 브랜드를 운영하며 국내 호텔 산업의 품격을 높이고 있습니다.
+			</p>
+		</div>
+		<div data-role="footer">
+			<a href="#wizard3-1" data-direction="reverse">이전 브랜드</a>
+			<a href="#home">처음으로</a>
+		</div>
+	</div>
+
+	<div data-role="page" id="gallery" data-theme="a">
+		<div data-role="header" data-position="fixed" data-theme="a">
+			<a href="#home" data-icon="arrow-l" data-direction="reverse">처음</a>
+			<h1>주요 사업장 갤러리</h1>
+		</div>
+		<div data-role="content">
+            <ul class="picture">
+				<li><a href="s-1.jpg" rel="external"><img src="s-1.jpg" alt="신세계백화점 본점" /></a></li>	
+				<li><a href="s-2.jpg" rel="external"><img src="s-2.jpg" alt="스타필드 하남" /></a></li>	
+				<li><a href="s-3.jpg" rel="external"><img src="s-3.jpg" alt="이마트 전경" /></a></li>	
+				<li><a href="s-4.jpg" rel="external"><img src="s-4.jpg" alt="신세계 강남점" /></a></a></li>	
+				<li><a href="s-5.jpg" rel="external"><img src="s-5.jpg" alt="조선호텔" /></a></li>	
+				<li><a href="s-6.jpg" rel="external"><img src="s-6.jpg" alt="신세계 센텀시티" /></a></li>	
+				<li><a href="s-7.jpg" rel="external"><img src="s-7.jpg" alt="SSG.COM 물류센터" /></a></li>	
+				<li><a href="s-8.jpg" rel="external"><img src="s-8.jpg" alt="신세계인터내셔날" /></a></li>	
+				<li><a href="s-9.jpg" rel="external"><img src="s-9.jpg" alt="스타필드 고양" /></a></li>	 
+				<li><a href="s-10.jpg" rel="external"><img src="s-10.jpg" alt="와인앤모어" /></a></li>    
+				<li><a href="s-11.jpg" rel="external"><img src="s-11.jpg" alt="신세계푸드" /></a></li>   
+				<li><a href="s-12.jpg" rel="external"><img src="s-12.jpg" alt="신세계면세점" /></a></li>
+            </ul>
+		</div>
+		<div data-role="footer" data-position="fixed" data-theme="a">
+			<h1>Shinsegae Group App</h1>
+		</div>		
+	</div>
+</div>	
+</body>
+</html>
