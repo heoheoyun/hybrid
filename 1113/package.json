@@ -1,0 +1,60 @@
+{
+  "name": "com.androd.babygrowth",
+  "displayName": "우리 아기 성장일지",
+  "version": "1.0.0",
+  "description": "소중한 아기의 성장을 기록하는 앱 - Team AndRod",
+  "main": "index.js",
+  "scripts": {
+    "start": "cordova run android",
+    "build": "cordova build android",
+    "build:release": "cordova build android --release",
+    "clean": "cordova clean",
+    "add-android": "cordova platform add android",
+    "remove-android": "cordova platform remove android",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "baby",
+    "growth",
+    "diary",
+    "androd"
+  ],
+  "author": "Team AndRod",
+  "license": "Apache-2.0",
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "cordova-plugin-android-permissions": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      },
+      "cordova-plugin-device": {},
+      "cordova-plugin-local-notification": {
+        "ANDROIDX_CORE_VERSION": "1.12.0"
+      },
+      "cordova-plugin-androidx-adapter": {},
+      "cordova-plugin-statusbar": {}
+    }
+  },
+  "devDependencies": {
+    "cordova": "^12.0.0",
+    "cordova-android": "^14.0.1",
+    "cordova-plugin-android-permissions": "^1.1.5",
+    "cordova-plugin-androidx-adapter": "^1.1.3",
+    "cordova-plugin-camera": "^7.0.0",
+    "cordova-plugin-file": "^8.0.0",
+    "cordova-plugin-ionic-webview": "^5.0.0",
+    "cordova-plugin-statusbar": "^4.0.0"
+  },
+  "dependencies": {
+    "cordova-plugin-device": "^3.0.0",
+    "cordova-plugin-local-notification": "^1.2.2"
+  }
+}
