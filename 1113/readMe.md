@@ -3,6 +3,8 @@
 
 소중한 아기의 성장 순간을 기록하고 관리하는 하이브리드 모바일 앱입니다.
 
+Claude, ChatGPT, Gemini 를 활용한 하이브리드 앱입니다.
+
 **Developed by Team AndRod** 🚀
 
 ## ✨ 주요 기능
