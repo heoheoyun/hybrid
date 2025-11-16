@@ -1,0 +1,17 @@
+지금까지 만든 '우리 아기 성장일지' 앱 코드에서는 다음과 같은 API(라이브러리 포함)들이 사용되었습니다.
+
+📚 외부 라이브러리 API
+jQuery (v1.11.1) DOM 조작, 이벤트 처리 등 웹페이지의 동적 기능을 담당하는 핵심 라이브러리입니다. ($(), .on(), .val(), .show() 등)
+
+jQuery Mobile (v1.4.5) 앱의 전체적인 UI(페이지, 버튼, 목록, 하단 탭 바, 팝업 등)와 페이지 이동 효과를 구현하는 데 사용된 메인 UI 프레임워크 API입니다. (data-role="page", .listview("refresh") 등)
+
+Chart.js (CDN) '성장 데이터' 페이지에서 키와 몸무게 데이터를 선 그래프로 시각화하기 위해 사용된 차트 라이브러리 API입니다. (new Chart())
+
+🌐 웹 브라우저 내장 API
+Web Storage API (localStorage) 앱의 모든 데이터(아기 정보, 앨범 사진, 성장 기록, 일정)를 브라우저에 영구적으로 저장하고 불러오기 위해 BabyApi 객체 내부에서 사용되었습니다. (localStorage.setItem(), localStorage.getItem())
+
+Media Devices API (navigator.mediaDevices.getUserMedia) '사진 저장' 페이지에서 사용자의 카메라 권한을 요청하고, 후면 카메라의 실시간 영상(<video>)을 웹으로 가져오는 데 사용되었습니다.
+
+Canvas API (.toDataURL()) getUserMedia로 가져온 실시간 영상에서 '사진 찍기' 버튼을 누르는 순간의 프레임을 캡처하여, JPEG 이미지 데이터(Base64)로 변환하고 저장하는 데 사용되었습니다.
+
+Web Notifications API (Notification) '일정 관리' 페이지에서 알림을 'On'으로 설정하고 저장할 때, 사용자에게 알림 권한을 요청(Notification.requestPermission())하고 알림을 띄우는 데 사용되었습니다.

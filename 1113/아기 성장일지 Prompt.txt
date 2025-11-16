@@ -1,0 +1,62 @@
+👶 아기 성장일지 앱 제작 프롬프트 (순서대로)
+
+1단계: 기본 설정 및 구조
+
+1.  "안녕하세요. '우리 아기 성장일지' 앱을 만들고 싶어요. **jQuery Mobile 1.4.5** 버전을 기반으로 한 단일 HTML 파일을 만들어주세요."
+2.  "필요한 CDN 링크를 `<head>`에 추가해주세요. **jQuery 1.11.1**, **jQuery Mobile 1.4.5 (CSS 및 JS)**, 그리고 **Chart.js** 라이브러리가 필요합니다."
+3.  "기본 페이지 6개를 `<body>` 안에 `data-role="page"`로 만들어주세요. ID는 각각 `#home`, `#addPhoto`, `#album`, `#data`, `#schedule`, `#settings`로 합니다."
+4.  "모든 페이지 하단에 `data-role="footer"`와 `data-position="fixed"`를 사용한 **고정 네비게이션 바(navbar)**를 추가해주세요."
+5.  "네비게이션 바에 5개의 탭(홈, 성장 앨범, 성장 데이터, 일정, 설정)을 만들고, 각 페이지에 맞게 `ui-btn-active` 클래스를 적용해주세요."
+
+2단계: Mock API 및 기본 JavaScript 구조
+
+6.  "모든 데이터를 저장할 `<script>` 태그를 `<body>` 맨 끝에 추가해주세요."
+7.  "스크립트 태그 안에, `localStorage`를 사용하는 `BabyApi`라는 Mock API 객체를 만들어주세요. 공통으로 사용할 `get(key, defaultValue)`와 `set(key, data)` 헬퍼 함수가 필요합니다."
+8.  "`BabyApi`에 아기 정보를 저장하고 불러올 `saveBabyInfo`와 `getBabyInfo` 함수를 추가해주세요. 기본값은 이름과 생일은 비어있고, 성별은 'male'로 합니다."
+9.  "`BabyApi`에 앨범, 성장 데이터, 일정 데이터를 저장하고 불러올 함수들도 추가해주세요. (예: `saveAlbumRecord`, `getAlbumRecords`, `saveGrowthData`, `getGrowthData`, `saveSchedule`, `getSchedules`)"
+10. "jQuery의 `$(document).on("pagecontainershow", ...)` 이벤트를 사용하여, 각 페이지가 보일 때 특정 함수를 호출하도록 기본 `switch` 문을 작성해주세요."
+
+3단계: 각 페이지 HTML 콘텐츠 채우기
+
+11. **설정 페이지:** `#settings` 페이지에 아기 이름(`baby-name`), 생일(`baby-birthday`), 성별(`baby-gender` 라디오 버튼)을 입력받는 폼(`id="settings-form"`)을 추가해주세요."
+12. **홈 페이지:** `#home` 페이지에 환영 메시지를 표시할 `<h3>`(`id="welcome-message"`)를 추가해주세요. 그 아래에 '빠른 기록'이라는 제목의 JQM 접이식(`collapsible`) UI를 만들고, 그 안에 '사진/영상', '키/몸무게', '일정' 3개의 버튼을 그리드(`ui-grid-b`)로 배치해주세요."
+13. **데이터 페이지:** `#data` 페이지에 '데이터 입력' 폼(`id="growth-form"`)을 JQM 접이식 UI로 만들어주세요. 그 아래에 Chart.js가 사용할 `<canvas id="growthChart">`를 `div`로 감싸서 추가하고, 맨 아래에 '입력 기록'을 표시할 빈 리스트뷰(`id="growth-history-list"`)를 추가해주세요."
+14. **일정 페이지:** `#schedule` 페이지에 '일정 추가' 팝업(`id="addSchedulePopup"`)을 만들어주세요. 팝업 안에는 '일정 제목', '날짜/시간', '알림 설정'(JQM 슬라이더)을 입력받는 폼(`id="schedule-form"`)이 있어야 합니다."
+15. **앨범 페이지:** `#album` 페이지에 빈 리스트뷰(`id="album-list"`)를 추가해주세요."
+
+4단계: 핵심 JavaScript 로직 구현 (데이터 연동)
+
+16. **설정 로직:** `loadBabyInfo()` 함수를 만들어 `#settings` 페이지가 보일 때 폼을 채우도록 하고, `#settings-form` 제출 시 `BabyApi.saveBabyInfo`를 호출하고 `alert`을 띄우도록 로직을 작성해주세요."
+17. **홈 로직 (D-day):** `updateWelcomeMessage()` 함수를 만들어 `BabyApi.getBabyInfo`로 정보를 가져온 뒤, 생일을 기준으로 "OOO, 태어난 지 X일째"라는 메시지를 `#welcome-message`에 표시하도록 작성해주세요. `pagecontainershow`의 `#home` 케이스에서 이 함수를 호출하세요."
+18. **데이터 로직 (저장):** `#growth-form` 제출 시, `BabyApi.saveGrowthData`를 호출하고 `alert`을 띄운 뒤, `loadGrowthData()` 함수를 호출하도록 로직을 작성해주세요."
+19. **데이터 로직 (차트/목록):** `loadGrowthData()` 함수를 상세하게 작성해주세요. `BabyApi.getGrowthData`로 데이터를 가져와서, `Chart.js`를 사용해 `#growthChart` 캔버스에 키(yHeight)와 몸무게(yWeight)의 2축 라인 그래프를 그리도록 합니다. 동시에 `#growth-history-list`에도 최신순으로 목록을 채워주세요."
+20. **일정 로직 (저장/목록):** `#schedule-form` 제출 로직과 `loadSchedules()` 함수를 작성해주세요. 저장이 성공하면 팝업을 닫고 `loadSchedules()`를 호출하여 `#schedule-list`를 새로고침해야 합니다. `loadSchedules`는 날짜 형식을 알아보기 쉽게 변환해서 목록에 표시해주세요."
+
+5단계: 카메라 기능 및 상세 페이지 구현
+
+21. **카메라 페이지 (HTML):** `#addPhoto` 페이지를 파일 업로드 방식이 아닌 **카메라 API**를 사용하도록 수정합니다. `<input type="file">`을 지우고, `<video id="camera-viewfinder">`, `<button id="capture-btn">`, 숨겨진 `<canvas id="camera-canvas">`, `<img id="preview">`, 그리고 사진 종류와 메모 폼(`id="memo-fields"`)을 추가해주세요."
+22. **카메라 로직 (JS):** `startCamera()`와 `stopCamera()` 함수를 `navigator.mediaDevices.getUserMedia`를 사용해 작성해주세요. `#addPhoto` 페이지가 보일 때(`pagecontainershow`) `startCamera()`를, 떠날 때(`pagecontainerbeforehide`) `stopCamera()`를 호출하게 합니다."
+23. **카메라 로직 (캡처/저장):** `#capture-btn` 클릭 시 `video` 화면을 `canvas`에 그리고, `toDataURL`로 Base64 이미지를 생성하여 `#preview`에 보여준 뒤 카메라를 끄고 메모 폼을 보여주세요. `#photo-form` 제출 시 이 Base64 이미지와 메모를 `BabyApi.saveAlbumRecord`로 저장하고 뒤로 가도록 합니다."
+24. **앨범 로직 (목록):** `loadAlbumRecords()` 함수를 작성해주세요. `BabyApi.getAlbumRecords`로 데이터를 가져와 `#album-list`에 썸네일(`<img>`), 날짜, 메모가 포함된 JQM 리스트뷰를 생성합니다."
+25. **상세 페이지 (HTML):** 앨범과 일정의 상세 보기를 위한 새 페이지 2개(`id="album-detail"`, `id="schedule-detail"`)를 추가해주세요. 각 페이지에는 뒤로 가기 버튼이 있는 헤더, 내용을 채울 `div`(예: `id="album-detail-content"`), 그리고 '삭제하기' 버튼(`id="album-delete-btn"`, `id="schedule-delete-btn"`)이 있는 고정 푸터를 포함합니다."
+26. **상세 페이지 (JS API):** `BabyApi`에 `deleteAlbumRecord(index)`와 `deleteSchedule(index)` 함수를 `splice`를 사용해 추가해주세요."
+
+6단계: 상세/삭제 로직 및 기능 개선
+
+27. **상세 페이지 (이동 로직):** `loadAlbumRecords`와 `loadSchedules`를 수정해서, 생성되는 각 리스트 `<a>` 태그에 `data-index`와 `data-page` 속성을 추가해주세요."
+28. **상세 페이지 (클릭 핸들러):** `"#album-list a, #schedule-list a"`의 클릭 이벤트를 감지하는 핸들러를 추가합니다. 클릭 시 `data-index`를 `$.data(document.body, "selectedIndex", index)`로 저장하고, `data-page`로 페이지를 수동 전환(`pagecontainer("change")`)합니다."
+29. **상세 페이지 (내용 로드):** `loadAlbumDetail()`과 `loadScheduleDetail()` 함수를 작성합니다. `$.data`로 저장된 `selectedIndex`를 가져와 `BabyApi`에서 데이터를 찾은 뒤, 상세 페이지의 `content` 영역에 HTML을 채워 넣습니다. (예: `album-detail`에는 큰 이미지와 메모 표시)"
+30. **상세 페이지 (삭제 로직):** `#album-delete-btn`과 `#schedule-delete-btn`의 클릭 핸들러를 작성합니다. `confirm` 창을 띄운 후, 확인 시 `BabyApi.delete...` 함수를 호출하고 `alert`을 띄운 뒤 뒤로 가기(`pagecontainer("back")`)를 실행합니다."
+31. **성장 데이터 (삭제 기능):** `BabyApi`에 `deleteGrowthData(index)` 함수를 추가합니다. `loadGrowthData` 함수를 수정하여 `#growth-history-list`의 각 `<li>` 항목에 `data-index`를 가진 삭제 버튼(`.delete-growth-item`)을 추가합니다."
+32. **성장 데이터 (삭제 로직):** `.delete-growth-item`의 클릭 이벤트 핸들러를 추가합니다. 클릭 시 `confirm` 창을 띄우고, 확인 시 `BabyApi.deleteGrowthData`를 호출한 뒤, `loadGrowthData()`를 **즉시 다시 호출**하여 목록과 그래프를 새로고침합니다."
+
+7단계: 스타일링 및 최종 수정
+
+33. **플로팅 버튼 (FAB) 스타일:** `<style>` 태그에 `.btn-fab` CSS 클래스를 추가하여, 크고 둥근 버튼이 우측 하단에 고정(fixed)되도록 스타일을 지정해주세요."
+34. **플로팅 버튼 (적용):** `#home` 페이지의 빠른 기록 밑에 있던 '사진 추가' 버튼을 삭제하고, 페이지 최하단에 `.btn-fab` 스타일이 적용된 '사진 추가' 버튼을 추가합니다. `#album` 페이지의 헤더에 있던 '사진 추가' 버튼도 삭제하고, 동일한 `.btn-fab` 버튼으로 교체해주세요."
+35. **홈 (랜덤 사진):** `#home` 페이지 HTML의 '빠른 기록' 섹션 아래에 '오늘의 추억' 섹션과 `<div id="random-photo-container">`를 추가해주세요."
+36. **홈 (랜덤 사진 로직):** `loadRandomPhoto()` 함수를 새로 만드세요. `BabyApi.getAlbumRecords`로 앨범을 가져와 랜덤 인덱스를 뽑은 뒤, 해당 사진과 메모를 `#random-photo-container`에 표시합니다. 사진이 없으면 "저장된 사진이 없음" 메시지를 띄웁니다."
+37. **홈 (랜덤 사진 연동):** `pagecontainershow`의 `#home` 케이스에서 `loadRandomPhoto()`를 호출하도록 추가하고, 28번에서 만든 클릭 핸들러에 `a.random-photo-link`도 포함시켜 랜덤 사진을 클릭해도 상세 페이지로 이동하게 합니다."
+38. **헤더/네비바 스타일:** `<style>` 태그에 `.ui-header`와 `.ui-navbar`의 `background-color`와 `border-color`를 `#e0b071`과 `#66513569`로 변경하는 CSS를 추가해주세요."
+39. **네비바 (활성 버튼) 스타일:** `.ui-navbar li a.ui-btn.ui-btn-active`의 배경색과 글자색을 헤더와 어울리는 어두운 색과 밝은 글자색으로 변경하는 CSS를 추가해주세요."
+40. **삭제 버튼 스타일:** `<style>` 태그에 `.delete-growth-item`의 `color`를 빨간색으로, `text-decoration`을 `none`으로 변경하는 CSS를 `!important`와 함께 추가해주세요. `#album-delete-btn`과 `#schedule-delete-btn`에도 좌우 여백(`margin-left`, `margin-right`)을 추가하여 보기 좋게 수정해주세요."
