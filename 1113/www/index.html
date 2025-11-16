@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>우리 아기 성장일지</title>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script type="text/javascript" src="cordova.js"></script>
+    
+    <style>
+    .ui-header {
+        background-color: #e0b071 !important;
+        border-color: #66513569 !important;
+        color: rgba(255, 255, 255, 0.863) !important;
+        text-shadow: 0 1px 0 #2980b9 !important;
+    }
+
+    #growthChartContainer { 
+        width: 100%; 
+        max-width: 600px; 
+        margin: 15px auto; 
+    }
+
+    #album-list img { 
+        width: 80px; 
+        height: 80px; 
+        object-fit: cover; 
+        margin-right: 10px; 
+    }
+
+    .btn-fab { 
+        position: fixed !important; 
+        right: 20px; 
+        bottom: 70px; 
+        z-index: 100; 
+        padding: 0.8em !important; 
+        border-radius: 50% !important; 
+    }
+
+    .btn-fab.ui-btn-icon-notext::after { 
+        width: 24px !important; 
+        height: 24px !important; 
+        font-size: 24px !important; 
+        margin-left: -12px !important; 
+        margin-top: -12px !important; 
+    }
+
+    #album-detail-content img { 
+        width: 100%; 
+        max-width: 500px; 
+        height: auto; 
+        border: 1px solid #ddd; 
+    }
+
+    .detail-memo { 
+        white-space: pre-wrap; 
+        background-color: #f9f9f9; 
+        padding: 15px; 
+        border-radius: 5px; 
+        margin-top: 10px; 
+    }
+
+    .delete-growth-item { 
+        color: rgba(228, 36, 36, 0.808) !important; 
+        text-decoration: none !important; 
+    }
+
+    #album-delete-btn, 
+    #schedule-delete-btn { 
+        margin-left: 20px !important; 
+        margin-right: 20px !important; 
+    }
+
+    #random-photo-container { 
+        margin-top: 20px; 
+        text-align: center; 
+    }
+
+    #random-photo-container img { 
+        width: 100%; 
+        max-width: 400px; 
+        height: auto; 
+        max-height: 400px; 
+        object-fit: cover; 
+        border-radius: 8px;
+        border: 1px solid #ddd; 
+    }
+
+    #random-photo-container p { 
+        font-style: italic; 
+        color: #555; 
+        margin-top: 5px; 
+    }
+
+    a.random-photo-link { 
+        text-decoration: none; 
+        color: inherit; 
+    }
+
+    .ui-navbar {
+        background-color: #e0b071 !important;
+        border-top-color: #66513569 !important;
+    }
+
+    .ui-navbar li a.ui-btn {
+        background-color: #e0b071 !important;
+        color: #222222 !important;
+        text-shadow: 0 1px 0 white !important;
+    }
+
+    .ui-navbar li a.ui-btn.ui-btn-active {
+        background-color: #66513569 !important;
+        color: rgba(255, 255, 255, 0.863) !important;
+        text-shadow: 0 1px 0 #362c1d69 !important;
+    }
+
+
+    /* ===========================================================
+       🔥 반응형 Safe-area + 널널한 UI 여백 + 자동 콘텐츠 위치 조정
+       =========================================================== */
+
+    /* 헤더를 시스템 상단과 자연스럽게 분리 */
+    .ui-header[data-position="fixed"] {
+        padding-top: max(env(safe-area-inset-top), 1.5vh);
+    }
+
+    /* 푸터를 시스템 하단과 자연스럽게 더 위로 띄움 */
+    .ui-footer[data-position="fixed"] {
+        padding-bottom: max(env(safe-area-inset-bottom), 4.5vh);
+    }
+
+    /* 콘텐츠가 푸터와 겹치지 않도록 여백 확보 */
+    .ui-page .ui-content {
+        padding-bottom: calc(max(env(safe-area-inset-bottom), 4.5vh) + var(--footer-height, 46px));
+    }
+
+
+    /* 헤더·푸터 기본 높이 (반응형 기준값) */
+    .ui-header {
+        --header-height: 38px;
+    }
+
+    .ui-footer {
+        --footer-height: 46px;
+    }
+
+
+</style>
+
+</head>
+<body>
+
+<div data-role="page" id="home">
+    <div data-role="header" data-position="fixed">
+        <h1>우리 아기 성장일지</h1>
+    </div>
+    <div data-role="content">
+        <h3 id="welcome-message">아기 정보를 설정해주세요!</h3>
+        <p>소중한 순간을 기록해보세요.</p>
+        <div data-role="collapsible" data-collapsed="false">
+            <h3>빠른 기록</h3>
+            <div class="ui-grid-b">
+                <div class="ui-block-a"><a href="#addPhoto" data-role="button" data-icon="camera" data-transition="slideup">사진/영상</a></div>
+                <div class="ui-block-b"><a href="#data" data-role="button" data-icon="edit" data-transition="fade">키/몸무게</a></div>
+                <div class="ui-block-c"><a href="#schedule" data-role="button" data-icon="calendar" data-transition="fade">일정</a></div>
+            </div>
+        </div>
+        
+        <div class="ui-body-a ui-corner-all" style="padding: 10px; margin-top: 15px;">
+            <h3>오늘의 추억</h3>
+            <div id="random-photo-container">
+                <p>아직 저장된 사진이 없어요.</p>
+            </div>
+        </div>
+        
+        <a href="#addPhoto" data-role="button" data-icon="camera" data-iconpos="notext" data-transition="slideup" class="btn-fab ui-btn-b">사진 추가</a>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home" class="ui-btn-active ui-state-persist">홈</a></li>
+                <li><a href="#album" data-icon="photo">성장 앨범</a></li>
+                <li><a href="#data" data-icon="bars">성장 데이터</a></li>
+                <li><a href="#schedule" data-icon="calendar">일정</a></li>
+                <li><a href="#settings" data-icon="gear">설정</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="addPhoto">
+    <div data-role="header">
+        <h1>새로운 기록</h1>
+        <a href="#" data-rel="back" data-icon="delete" data-iconpos="notext" class="ui-btn-right">닫기</a>
+    </div>
+    <div data-role="content">
+        <form id="photo-form">
+            
+            <button type="button" onclick="takePicture()" data-icon="camera" data-theme="b">사진 찍기</button>
+            <button type="button" onclick="selectFromGallery()" data-icon="grid" data-theme="a" style="margin-bottom: 20px;">갤러리에서 선택</button>
+
+            <img id="preview" src="" alt="미리보기" style="width:100%; max-width: 300px; display:none; margin-top:10px; border: 1px solid #ddd;">
+            
+            <div id="memo-fields" style="display:none;">
+                <label for="record-type">사진 종류:</label>
+                <select name="record-type" id="record-type">
+                    <option value="default">일반</option>
+                    <option value="smile">웃음</option>
+                    <option value="sleep">수면</option>
+                    <option value="eat">식사</option>
+                    <option value="play">놀이</option>
+                </select>
+                <label for="record-memo">메모:</label>
+                <textarea name="record-memo" id="record-memo"></textarea>
+            </div>
+            
+            <button type="submit" id="save-photo-btn" data-icon="check" style="display:none;">저장하기</button>
+        </form>
+    </div>
+</div>
+
+<div data-role="page" id="album">
+    <div data-role="header" data-position="fixed">
+        <h1>성장 앨범</h1>
+        </div>
+    <div data-role="content">
+        <ul data-role="listview" id="album-list" data-inset="true">
+           </ul>
+        
+        <a href="#addPhoto" data-role="button" data-icon="camera" data-iconpos="notext" data-transition="slideup" class="btn-fab ui-btn-b">사진 추가</a>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">홈</a></li>
+                <li><a href="#album" data-icon="photo" class="ui-btn-active ui-state-persist">성장 앨범</a></li>
+                <li><a href="#data" data-icon="bars">성장 데이터</a></li>
+                <li><a href="#schedule" data-icon="calendar">일정</a></li>
+                <li><a href="#settings" data-icon="gear">설정</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="data">
+    <div data-role="header" data-position="fixed">
+        <h1>성장 데이터</h1>
+    </div>
+    <div data-role="content">
+        <div data-role="collapsible" data-collapsed="false">
+            <h3>데이터 입력</h3>
+            <form id="growth-form">
+                <label for="growth-date">측정일:</label>
+                <input type="date" id="growth-date" name="growth-date" value="">
+                <label for="growth-height">키 (cm):</label>
+                <input type="number" step="0.1" id="growth-height" name="growth-height" placeholder="예: 65.5">
+                <label for="growth-weight">몸무게 (kg):</label>
+                <input type="number" step="0.01" id="growth-weight" name="growth-weight" placeholder="예: 7.2">
+                <button type="submit" id="save-growth-btn" data-icon="check">저장</button>
+            </form>
+        </div>
+        <hr>
+        <h3>성장 그래프</h3>
+        <p>입력된 데이터를 기반으로 성장 곡선이 표시됩니다.</p>
+        <div id="growthChartContainer">
+            <canvas id="growthChart"></canvas>
+        </div>
+        
+        <h3>입력 기록</h3>
+        <ul data-role="listview" id="growth-history-list" data-inset="true">
+           </ul>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">홈</a></li>
+                <li><a href="#album" data-icon="photo">성장 앨범</a></li>
+                <li><a href="#data" data-icon="bars" class="ui-btn-active ui-state-persist">성장 데이터</a></li>
+                <li><a href="#schedule" data-icon="calendar">일정</a></li>
+                <li><a href="#settings" data-icon="gear">설정</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="schedule">
+    <div data-role="header" data-position="fixed">
+        <h1>일정 및 알림</h1>
+    </div>
+    <div data-role="content">
+        <p>예방접종, 병원 방문 등 중요 일정을 관리하세요.</p>
+        <ul data-role="listview" id="schedule-list" data-inset="true">
+        </ul>
+        <a href="#addSchedulePopup" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-icon="plus" data-iconpos="notext" class="btn-fab ui-btn-b">일정 추가</a>
+    </div>
+    <div data-role="popup" id="addSchedulePopup" data-overlay-theme="b" data-theme="a" style="max-width:400px;">
+        <div data-role="header">
+            <h1>새 일정 추가</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <form id="schedule-form">
+                <label for="schedule-title">일정 제목:</label>
+                <input type="text" id="schedule-title" name="schedule-title" placeholder="예: B형 간염 2차">
+                <label for="schedule-date">날짜 및 시간:</label>
+                <input type="datetime-local" id="schedule-date" name="schedule-date">
+                <label for="schedule-alert">알림 설정:</label>
+                <select name="schedule-alert" id="schedule-alert" data-role="slider">
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
+                </select>
+                <button type="submit" id="save-schedule-btn" data-icon="check">일정 저장</button>
+            </form>
+        </div>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">홈</a></li>
+                <li><a href="#album" data-icon="photo">성장 앨범</a></li>
+                <li><a href="#data" data-icon="bars">성장 데이터</a></li>
+                <li><a href="#schedule" data-icon="calendar" class="ui-btn-active ui-state-persist">일정</a></li>
+                <li><a href="#settings" data-icon="gear">설정</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="settings">
+    <div data-role="header" data-position="fixed">
+        <h1>⚙️ 아기 정보</h1>
+    </div>
+    <div data-role="content">
+        <form id="settings-form">
+            <label for="baby-name">아기 이름:</label>
+            <input type="text" id="baby-name" name="baby-name">
+            <label for="baby-birthday">생일:</label>
+            <input type="date" id="baby-birthday" name="baby-birthday">
+            <fieldset data-role="controlgroup" data-type="horizontal">
+                <legend>성별:</legend>
+                <input type="radio" name="baby-gender" id="gender-male" value="male" checked="checked">
+                <label for="gender-male">남자</label>
+                <input type="radio" name="baby-gender" id="gender-female" value="female">
+                <label for="gender-female">여자</label>
+            </fieldset>
+            <button type="submit" id="save-settings-btn" data-icon="check">정보 저장</button>
+        </form>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#home" data-icon="home">홈</a></li>
+                <li><a href="#album" data-icon="photo">성장 앨범</a></li>
+                <li><a href="#data" data-icon="bars">성장 데이터</a></li>
+                <li><a href="#schedule" data-icon="calendar">일정</a></li>
+                <li><a href="#settings" data-icon="gear" class="ui-btn-active ui-state-persist">설정</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="album-detail">
+    <div data-role="header" data-position="fixed">
+        <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">뒤로</a>
+        <h1>상세 보기</h1>
+    </div>
+    <div data-role="content" id="album-detail-content">
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <a href="#" id="album-delete-btn" data-role="button" data-icon="delete" data-theme="b">삭제하기</a>
+    </div>
+</div>
+
+<div data-role="page" id="schedule-detail">
+    <div data-role="header" data-position="fixed">
+        <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">뒤로</a>
+        <h1>일정 상세</h1>
+    </div>
+    <div data-role="content" id="schedule-detail-content">
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <a href="#" id="schedule-delete-btn" data-role="button" data-icon="delete" data-theme="b">일정 삭제</a>
+    </div>
+</div>
+
+
+<script>
+// 전역 변수
+var myGrowthChart;
+var capturedImageURI = null;
+const isCordovaApp = (typeof window.cordova !== 'undefined');
+var isDeviceReady = false; 
+
+if (isCordovaApp) {
+    document.addEventListener('deviceready', function() {
+        isDeviceReady = true;
+        console.log("✅ Cordova Device Ready!");
+        
+        // 🌟 [수정됨] 
+        // StatusBar.overlaysWebView(false) 코드를 제거하여 safe-area CSS가 작동하도록 합니다.
+        // true가 기본값이므로 겹치는 것이 정상이며, CSS가 패딩/마진을 처리합니다.
+        if (window.StatusBar) {
+            StatusBar.backgroundColorByHexString("#e0b071"); // 헤더 색상과 맞춤
+        }
+    }, false);
+} else {
+    isDeviceReady = true; 
+}
+
+function convertFileSrc(fileURI) {
+    if (!fileURI) return '';
+    if (window.Ionic && window.Ionic.WebView && window.Ionic.WebView.convertFileSrc) {
+        return window.Ionic.WebView.convertFileSrc(fileURI);
+    }
+    return fileURI;
+}
+
+function copyToDataDirectory(fileURI, callback) {
+    if (!window.cordova || !window.resolveLocalFileSystemURL) {
+        console.warn("⚠️ cordova-plugin-file이 필요합니다. 원본 URI를 사용합니다.");
+        callback(fileURI);
+        return;
+    }
+    window.resolveLocalFileSystemURL(fileURI, function(fileEntry) {
+        const timestamp = new Date().getTime();
+        const extension = fileEntry.name.split('.').pop() || 'jpg';
+        const newFileName = `baby_photo_${timestamp}.${extension}`;
+        const dataDir = window.cordova.file.dataDirectory;
+        window.resolveLocalFileSystemURL(dataDir, function(dirEntry) {
+            fileEntry.copyTo(
+                dirEntry, 
+                newFileName, 
+                function(newFileEntry) {
+                    console.log("✅ 파일 영구 저장 완료:", newFileEntry.nativeURL);
+                    callback(newFileEntry.nativeURL);
+                },
+                function(error) {
+                    console.error("❌ 파일 복사 실패:", error);
+                    alert("파일 저장 중 오류가 발생했습니다.");
+                    callback(fileURI);
+                }
+            );
+        }, function(error) {
+            console.error("❌ 디렉토리 접근 실패:", error);
+            callback(fileURI);
+        });
+    }, function(error) {
+        console.error("❌ 파일 접근 실패:", error);
+        callback(fileURI);
+    });
+}
+
+// BabyApi (로컬 스토리지 관리 로직 - 변경 없음)
+const BabyApi = {
+    get: function(key, defaultValue) {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : defaultValue;
+    },
+    set: function(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    },
+    saveBabyInfo: function(info) {
+        this.set('babyInfo', info);
+    },
+    getBabyInfo: function() {
+        return this.get('babyInfo', { name: '', birthday: '', gender: 'male' });
+    },
+    saveAlbumRecord: function(record) {
+        const records = this.get('albumRecords', []);
+        records.push(record);
+        records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        this.set('albumRecords', records);
+    },
+    getAlbumRecords: function() {
+        return this.get('albumRecords', []);
+    },
+    deleteAlbumRecord: function(index) {
+        const records = this.get('albumRecords', []);
+        if (index > -1 && index < records.length) {
+            records.splice(index, 1);
+            this.set('albumRecords', records);
+        }
+    },
+    saveGrowthData: function(data) {
+        const growthData = this.get('growthData', []);
+        growthData.push(data);
+        growthData.sort((a, b) => new Date(a.date) - new Date(b.date));
+        this.set('growthData', growthData);
+    },
+    getGrowthData: function() {
+        return this.get('growthData', []);
+    },
+    deleteGrowthData: function(index) {
+        const growthData = this.get('growthData', []);
+        if (index > -1 && index < records.length) {
+            growthData.splice(index, 1); 
+            this.set('growthData', growthData);
+        }
+    },
+    saveSchedule: function(schedule) {
+        const schedules = this.get('schedules', []);
+        schedules.push(schedule);
+        schedules.sort((a, b) => new Date(a.date) - new Date(b.date));
+        this.set('schedules', schedules);
+    },
+    getSchedules: function() {
+        return this.get('schedules', []);
+    },
+    deleteSchedule: function(index) {
+        const schedules = this.get('schedules', []);
+        if (index > -1 && index < records.length) {
+            schedules.splice(index, 1);
+            this.set('schedules', schedules);
+        }
+    }
+};
+
+/**
+ * 🌟 [유지] "사진 찍기" 전용 함수
+ * (수동 권한 요청 로직 제거됨)
+ */
+function takePicture() {
+    $("#preview").attr("src", "").hide(); 
+    $('#memo-fields, #save-photo-btn').hide();
+
+    if (!isCordovaApp || !isDeviceReady) {
+        alert("⚠️ 앱 초기화 중입니다. 잠시 후 다시 시도해 주세요.");
+        return;
+    }
+    if (typeof navigator.camera === 'undefined') {
+        alert("⚠️ cordova-plugin-camera가 로드되지 않았습니다.");
+        return;
+    }
+    
+    runNativePhotoTool(Camera.PictureSourceType.CAMERA);
+}
+
+/**
+ * 🌟 [유지] "갤러리에서 선택" 전용 함수
+ * (수동 권한 요청 로직 제거됨)
+ */
+function selectFromGallery() {
+    $("#preview").attr("src", "").hide(); 
+    $('#memo-fields, #save-photo-btn').hide();
+
+    if (!isCordovaApp || !isDeviceReady) {
+        alert("⚠️ 앱 초기화 중입니다. 잠시 후 다시 시도해 주세요.");
+        return;
+    }
+    if (typeof navigator.camera === 'undefined') {
+        alert("⚠️ cordova-plugin-camera가 로드되지 않았습니다.");
+        return;
+    }
+
+    runNativePhotoTool(Camera.PictureSourceType.PHOTOLIBRARY);
+}
+
+/**
+ * 네이티브 카메라/갤러리 플러그인 실행 (공유 함수, 변경 없음)
+ */
+function runNativePhotoTool(sourceType) {
+    navigator.camera.getPicture(onSuccess, onFail, {
+        quality: 70,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: sourceType, 
+        encodingType: Camera.EncodingType.JPEG,
+        mediaType: Camera.MediaType.PICTURE,
+        cameraDirection: Camera.Direction.BACK,          
+        saveToPhotoAlbum: true, 
+        correctOrientation: true,
+        targetWidth: 1024,
+        targetHeight: 1024
+    });
+}
+
+function onSuccess(imageURI) { 
+    console.log("📸 원본 이미지 URI:", imageURI);
+    
+    copyToDataDirectory(imageURI, function(permanentURI) {
+        capturedImageURI = permanentURI;
+        console.log("💾 영구 저장 URI:", permanentURI);
+        
+        const displaySrc = convertFileSrc(permanentURI); 
+        $("#preview").attr("src", displaySrc).show();
+        
+        $('#memo-fields, #save-photo-btn').show();
+        $('#record-type').selectmenu('refresh');
+    });
+}
+
+function onFail(message) {
+    console.error("❌ 사진 접근 오류:", message);
+    if (!message.includes("cancelled") && !message.includes("Camera cancelled")) {
+         alert("사진 접근 오류: " + message);
+    }
+}
+
+
+// jQuery Mobile 페이지 로드 및 이벤트 핸들러 (변경 없음)
+$(document).on("pagecreate", function() {
+    const today = new Date().toISOString().split('T')[0];
+    $('#growth-date').val(today);
+    
+    $("#settings-form").off("submit").on("submit", function(e) {
+        e.preventDefault();
+        const info = {
+            name: $("#baby-name").val(), 
+            birthday: $("#baby-birthday").val(),
+            gender: $("input[name='baby-gender']:checked").val()
+        };
+        BabyApi.saveBabyInfo(info);
+        alert("아기 정보가 저장되었습니다."); 
+        updateWelcomeMessage();
+    });
+    
+    $("#photo-form").off("submit").on("submit", function(e) {
+        e.preventDefault();
+        if (!capturedImageURI) { 
+            alert("사진을 먼저 찍거나 갤러리에서 선택해주세요."); 
+            return; 
+        } 
+
+        const record = {
+            type: $("#record-type").val(), 
+            memo: $("#record-memo").val(),
+            timestamp: new Date().toISOString(), 
+            imageSrc: capturedImageURI
+        };
+        
+        BabyApi.saveAlbumRecord(record);
+        alert("기록이 저장되었습니다."); 
+        
+        capturedImageURI = null;
+        $("#photo-form")[0].reset();
+        $("#preview").attr("src", "").hide(); 
+        $('#memo-fields, #save-photo-btn').hide();
+        $(":mobile-pagecontainer").pagecontainer("back");
+    });
+    
+    $("#growth-form").off("submit").on("submit", function(e) {
+        e.preventDefault();
+        const data = {
+            date: $("#growth-date").val(),
+            height: $("#growth-height").val(),
+            weight: $("#growth-weight").val()
+        };
+        if (!data.date || (!data.height && !data.weight)) { 
+            alert("날짜와 키 또는 몸무게를 입력해주세요."); 
+            return; 
+        }
+        BabyApi.saveGrowthData(data);
+        alert("성장 데이터가 저장되었습니다."); 
+        $("#growth-form")[0].reset();
+        $('#growth-date').val(today);
+        loadGrowthData(); 
+    });
+    
+    $("#schedule-form").off("submit").on("submit", function(e) {
+        e.preventDefault();
+        const schedule = {
+            title: $("#schedule-title").val(),
+            date: $("#schedule-date").val(),
+            alert: $("#schedule-alert").val()
+        };
+        if (!schedule.title || !schedule.date) { 
+            alert("일정 제목과 날짜를 입력해주세요."); 
+            return; 
+        }
+        BabyApi.saveSchedule(schedule);
+        alert("일정이 저장되었습니다."); 
+        $("#schedule-form")[0].reset();
+        $("#addSchedulePopup").popup("close");
+        loadSchedules();
+        $('#schedule-alert').val('off').slider('refresh');
+        if (schedule.alert === 'on') { 
+            requestNotificationPermission(schedule); 
+        }
+    });
+
+    $(document).on("click", "#album-list a, #schedule-list a, a.random-photo-link", function(e) {
+        e.preventDefault(); 
+        const $link = $(this);
+        const index = $link.data("index"); 
+        const pageId = $link.data("page"); 
+        $.data(document.body, "selectedIndex", index);
+        $(":mobile-pagecontainer").pagecontainer("change", "#" + pageId, {
+            transition: "slide"
+        });
+    });
+    
+    $("#album-delete-btn").on("click", function(e) {
+        e.preventDefault();
+        const index = $(this).data("index");
+        if (confirm("이 기록을 정말 삭제하시겠습니까?")) {
+            BabyApi.deleteAlbumRecord(index);
+            alert("기록이 삭제되었습니다.");
+            $(":mobile-pagecontainer").pagecontainer("back");
+        }
+    });
+    
+    $("#schedule-delete-btn").on("click", function(e) {
+        e.preventDefault();
+        const index = $(this).data("index");
+        if (confirm("이 일정을 정말 삭제하시겠습니까?")) {
+            BabyApi.deleteSchedule(index);
+            alert("일정이 삭제되었습니다.");
+            $(":mobile-pagecontainer").pagecontainer("back");
+        }
+    });
+    
+    $(document).on("click", ".delete-growth-item", function(e) {
+        e.preventDefault();
+        e.stopPropagation(); 
+        const index = $(this).data("index");
+        if (confirm("이 성장 기록을 삭제하시겠습니까?")) {
+            BabyApi.deleteGrowthData(index);
+            loadGrowthData(); 
+        }
+    });
+});
+
+
+$(document).on("pagecontainershow", function(event, ui) {
+    const pageId = ui.toPage.attr("id");
+    switch (pageId) {
+        case "home": 
+            updateWelcomeMessage(); 
+            loadRandomPhoto(); 
+            break;
+        case "album": 
+            loadAlbumRecords(); 
+            break;
+        case "data": 
+            loadGrowthData(); 
+            break;
+        case "schedule": 
+            loadSchedules(); 
+            break;
+        case "settings": 
+            loadBabyInfo(); 
+            break;
+        case "addPhoto": 
+            capturedImageURI = null;
+            $("#preview").attr("src", "").hide(); 
+            $('#memo-fields, #save-photo-btn').hide();
+            break;
+        case "album-detail": 
+            loadAlbumDetail(); 
+            break;
+        case "schedule-detail": 
+            loadScheduleDetail(); 
+            break;
+    }
+});
+
+
+// 나머지 데이터 로드 및 상세 페이지 함수 (변경 없음)
+function updateWelcomeMessage() {
+    const info = BabyApi.getBabyInfo();
+    if (info.name && info.birthday) {
+        const birthDate = new Date(info.birthday);
+        const today = new Date();
+        const diffTime = Math.abs(today - birthDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        $("#welcome-message").html(`귀여운 <strong>${info.name}</strong>`);
+    } else {
+        $("#welcome-message").text("아기 정보를 설정해주세요!");
+    }
+}
+
+function loadBabyInfo() {
+    const info = BabyApi.getBabyInfo();
+    $("#baby-name").val(info.name);
+    $("#baby-birthday").val(info.birthday);
+    $(`input[name='baby-gender'][value='${info.gender}']`).prop("checked", true).checkboxradio("refresh");
+}
+
+function loadAlbumRecords() {
+    const records = BabyApi.getAlbumRecords();
+    const $list = $("#album-list");
+    $list.empty();
+    
+    if (records.length === 0) {
+        $list.append("<li>저장된 기록이 없습니다.</li>");
+    } else {
+        records.forEach((record, index) => {
+            const date = new Date(record.timestamp);
+            const localDate = date.toLocaleDateString();
+            const localTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const displaySrc = convertFileSrc(record.imageSrc);
+
+            $list.append(`
+                <li>
+                    <a href="#" data-index="${index}" data-page="album-detail">
+                        <img src="${displaySrc}" alt="${record.type}">
+                        <h2>${localDate}</h2>
+                        <p><strong>[${record.type}]</strong> ${record.memo || ''}</p>
+                        <p class="ui-li-aside">${localTime}</p>
+                    </a>
+                </li>
+            `);
+        });
+    }
+    $list.listview("refresh");
+}
+
+function loadGrowthData() {
+    const data = BabyApi.getGrowthData();
+    const $list = $("#growth-history-list");
+    $list.empty();
+    
+    if (data.length === 0) {
+        $list.append("<li>입력된 데이터가 없습니다.</li>");
+    } else {
+        [...data].reverse().forEach((item, i) => {
+            const originalIndex = (data.length - 1) - i;
+            $list.append(`
+                <li>
+                    <strong>${item.date}</strong>: 
+                    ${item.height ? item.height + 'cm' : ''} 
+                    ${item.weight ? '/ ' + item.weight + 'kg' : ''}
+                    <a href="#" class="delete-growth-item ui-btn-right" data-index="${originalIndex}" data-role="button" data-icon="delete" data-iconpos="notext">X</a>
+                </li>
+            `);
+        });
+    }
+    $list.listview("refresh");
+    
+    const labels = data.map(item => item.date);
+    const heightData = data.map(item => item.height || null); 
+    const weightData = data.map(item => item.weight || null);
+    
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    if (myGrowthChart) {
+        myGrowthChart.destroy();
+    }
+    
+    myGrowthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: '키 (cm)', 
+                    data: heightData,
+                    borderColor: 'rgb(75, 192, 192)', 
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    yAxisID: 'yHeight', 
+                    spanGaps: true 
+                },
+                {
+                    label: '몸무게 (kg)', 
+                    data: weightData,
+                    borderColor: 'rgb(255, 99, 132)', 
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    yAxisID: 'yWeight', 
+                    spanGaps: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                yHeight: { 
+                    type: 'linear', 
+                    display: true, 
+                    position: 'left', 
+                    title: { display: true, text: '키(cm)' }
+                },
+                yWeight: { 
+                    type: 'linear', 
+                    display: true, 
+                    position: 'right', 
+                    title: { display: true, text: '몸무게(kg)' }, 
+                    grid: { drawOnChartArea: false }
+                }
+            }
+        }
+    });
+}
+
+function loadSchedules() {
+    const schedules = BabyApi.getSchedules();
+    const $list = $("#schedule-list");
+    $list.empty();
+    
+    if (schedules.length === 0) {
+        $list.append("<li>예정된 일정이 없습니다.</li>");
+    } else {
+        schedules.forEach((schedule, index) => {
+            const date = new Date(schedule.date);
+            const localDateTime = date.toLocaleString('ko-KR', {
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                weekday: 'long', 
+                hour: '2-digit', 
+                minute: '2-digit'
+            });
+            
+            $list.append(`
+                <li>
+                    <a href="#" data-index="${index}" data-page="schedule-detail">
+                        <h2>${schedule.title}</h2>
+                        <p>${localDateTime}</p>
+                        <p class="ui-li-aside"><strong>${schedule.alert === 'on' ? '알림 ON' : '알림 OFF'}</strong></p>
+                    </a>
+                </li>
+            `);
+        });
+    }
+    $list.listview("refresh");
+}
+
+function requestNotificationPermission(schedule) {
+    if (!("Notification" in window)) { 
+        console.log("이 브라우저는 데스크톱 알림을 지원하지 않습니다."); 
+    }
+    else if (Notification.permission === "granted") {
+        new Notification(schedule.title, { body: `일정 알림: ${schedule.date}` });
+    }
+    else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                new Notification(schedule.title, { body: `일정 알림: ${schedule.date}` });
+            }
+        });
+    }
+}
+
+function loadAlbumDetail() {
+    const index = $.data(document.body, "selectedIndex");
+    if (index === undefined) { 
+        $(":mobile-pagecontainer").pagecontainer("back"); 
+        return; 
+    }
+    
+    const records = BabyApi.getAlbumRecords();
+    const record = records[index];
+    
+    if (!record) { 
+        alert("데이터를 찾을 수 없습니다."); 
+        $(":mobile-pagecontainer").pagecontainer("back"); 
+        return; 
+    }
+    
+    const $content = $("#album-detail-content");
+    const date = new Date(record.timestamp);
+    const localDateTime = date.toLocaleString('ko-KR');
+    
+    const displaySrc = convertFileSrc(record.imageSrc);
+
+    $content.html(`
+        <img src="${displaySrc}" alt="상세 사진">
+        <h3>[${record.type}]</h3>
+        <p class="detail-memo">${record.memo || '메모 없음'}</p>
+        <hr>
+        <p><small>저장 시간: ${localDateTime}</small></p>
+    `);
+    
+    $("#album-delete-btn").data("index", index);
+}
+
+function loadScheduleDetail() {
+    const index = $.data(document.body, "selectedIndex");
+    if (index === undefined) { 
+        $(":mobile-pagecontainer").pagecontainer("back"); 
+        return; 
+    }
+    
+    const schedules = BabyApi.getSchedules();
+    const schedule = schedules[index];
+    
+    if (!schedule) { 
+        alert("데이터를 찾을 수 없습니다."); 
+        $(":mobile-pagecontainer").pagecontainer("back"); 
+        return; 
+    }
+    
+    const $content = $("#schedule-detail-content");
+    const date = new Date(schedule.date);
+    const localDateTime = date.toLocaleString('ko-KR', {
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        weekday: 'long', 
+        hour: '2-digit', 
+        minute: '2-digit'
+    });
+    
+    const alertStatus = schedule.alert === 'on' ? '알림 ON' : '알림 OFF';
+    
+    $content.html(`
+        <h2>${schedule.title}</h2>
+        <p><strong>일시:</strong> ${localDateTime}</p>
+        <p><strong>알림:</strong> ${alertStatus}</p>
+    `);
+    
+    $("#schedule-delete-btn").data("index", index);
+}
+
+function loadRandomPhoto() {
+    const records = BabyApi.getAlbumRecords();
+    const $container = $("#random-photo-container");
+    
+    if (records.length === 0) {
+        $container.html("<p>아직 저장된 사진이 없어요. 첫 추억을 기록해보세요!</p>");
+    } else {
+        const randomIndex = Math.floor(Math.random() * records.length);
+        const record = records[randomIndex];
+        const memo = record.memo ? `<p>${record.memo}</p>` : "<p>소중한 순간 ✨</p>";
+
+        const displaySrc = convertFileSrc(record.imageSrc);
+
+        $container.html(`
+            <a href="#" class="random-photo-link" data-index="${randomIndex}" data-page="album-detail">
+                <img src="${displaySrc}" alt="랜덤 추억 사진">
+                ${memo}
+            </a>
+        `);
+    }
+}
+</script>
+
+</body>
+</html>
