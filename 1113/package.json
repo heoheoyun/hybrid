@@ -36,9 +36,6 @@
         "ANDROIDX_WEBKIT_VERSION": "1.4.0"
       },
       "cordova-plugin-device": {},
-      "cordova-plugin-local-notification": {
-        "ANDROIDX_CORE_VERSION": "1.12.0"
-      },
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-statusbar": {}
     }
@@ -54,7 +51,6 @@
     "cordova-plugin-statusbar": "^4.0.0"
   },
   "dependencies": {
-    "cordova-plugin-device": "^3.0.0",
-    "cordova-plugin-local-notification": "^1.2.2"
+    "cordova-plugin-device": "^3.0.0"
   }
 }
