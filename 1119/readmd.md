@@ -24,7 +24,7 @@ Claude, ChatGPT, Gemini를 활용한 하이브리드 앱입니다.
 - **스마트 실행**:
   - 웹 환경: 새 브라우저 탭(`_blank`)에서 지도 열기
   - 앱 환경: `window.open(url, '_system')` 통해 시스템의 지도 앱 강제 호출
-- **정확한 위치**: 부산 동의과학대학 컨벤션홀 (부산광역시 부산진구 양지로 54)
+- **정확한 위치**: 예시 장소 (부산광역시 부산진구 양지로 54)
 
 ### 🔔 결혼식 알림 설정 (앱 전용)
 - **네이티브 알림**: Cordova 앱에서만 활성화되는 로컬 알림 기능
@@ -58,12 +58,12 @@ Claude, ChatGPT, Gemini를 활용한 하이브리드 앱입니다.
 - **원클릭 설치**: APK 다운로드 후 간편 설치
 
 ### 📸 갤러리
-- **사진 전시**: 신랑신부의 소중한 순간을 담은 4장의 사진 갤러리
+- **사진 전시**: 4장의 사진 갤러리
 - **그리드 레이아웃**: 2x2 그리드로 깔끔하게 정리된 사진 표시
 
 ### 📞 연락처
-- **빠른 전화**: 신랑(김지훈), 신부(이수진) 전화번호 원터치 연결
-- **전화 아이콘**: FontAwesome 아이콊으로 직관적인 UI 제공
+- **빠른 전화**: 전화번호 원터치 연결
+- **전화 아이콘**: FontAwesome 아이콘으로 직관적인 UI 제공
 
 ## 🛠 기술 스택 (Tech Stack)
 
@@ -139,14 +139,49 @@ cordova run android
 
 ## 📂 프로젝트 구조
 
+### GitHub 레포지토리 파일 구성
+
+```
+Repository/
+├── etc.zip                              # 프로젝트 문서 및 설명
+│   └── etc/
+│       ├── Team Role.txt                # 팀 구성 및 역할 (1KB)
+│       ├── Wedding Invitation Function.txt  # 기능 설명 (3KB)
+│       ├── Wedding Invitation Prompt.txt    # 프롬프트 (8KB)
+│       └── 안드로드 팀 회의록 조안.txt          # 회의록 (1KB)
+│
+├── Wedding Invitation.zip               # 실제 코드 및 리소스
+│   ├── config                           # Cordova 설정 파일 (2KB)
+│   ├── package                          # NPM 패키지 정보 (2KB)
+│   └── www/                             # 웹 리소스 폴더
+│       ├── img1.jpg                     # 갤러리 이미지 1
+│       ├── img2.jpg                     # 갤러리 이미지 2
+│       ├── img3.jpg                     # 갤러리 이미지 3
+│       ├── img4.jpg                     # 갤러리 이미지 4
+│       ├── index                        # 메인 HTML 파일
+│       ├── manifest                     # PWA 매니페스트
+│       ├── map.png                      # 지도 이미지
+│       └── service-worker               # 서비스 워커
+│
+└── Apk.zip                              # Android 설치 파일
+    └── app-debug                        # APK 파일 (35,394KB)
+```
+
+### 앱 내부 구조
+
 ```
 SmartWeddingInvitation/
 ├── config.xml              # Cordova 앱 설정 (Widget ID, 플러그인 정의)
 ├── package.json            # NPM 의존성 및 플러그인 버전 관리
-├── manifest.json           # PWA 매니페스트 (앱 정보, 아이콘, 테마)
-├── service-worker.js       # 오프라인 캐싱 (Cache First 전략)
 ├── www/
-│   └── index.html         # 메인 청첩장 페이지 (단일 HTML 파일)
+│   ├── index.html         # 메인 청첩장 페이지 (단일 HTML 파일)
+│   ├── manifest.json      # PWA 매니페스트
+│   ├── service-worker.js  # 오프라인 캐싱 (Cache First 전략)
+│   ├── img1.jpg           # 갤러리 이미지 1
+│   ├── img2.jpg           # 갤러리 이미지 2
+│   ├── img3.jpg           # 갤러리 이미지 3
+│   ├── img4.jpg           # 갤러리 이미지 4
+│   └── map.png            # 지도 이미지
 ├── platforms/
 │   └── android/           # Android 빌드 파일
 └── plugins/               # Cordova 플러그인
