@@ -1,0 +1,22 @@
+{
+  "name": "지훈&수진 결혼식",
+  "short_name": "결혼초대",
+  "description": "2025년 12월 25일 지훈이와 수진이의 결혼식에 초대합니다.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#ec4899",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2448/2448528.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2448/2448528.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

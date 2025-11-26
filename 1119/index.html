@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>지훈 & 수진의 결혼식</title>
+    
+    <link rel="manifest" href="manifest.json">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2448/2448528.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* 섹션 이동 시 부드러운 스크롤 효과 추가 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            /* 고정 하단 메뉴 공간 확보를 위해 pb-20을 pb-28로 설정 */
+            padding-bottom: 7rem; 
+            font-family: 'Noto Sans KR', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+        .animate-fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .map-btn {
+            transition: transform 0.1s;
+        }
+        .map-btn:active {
+            transform: scale(0.95);
+        }
+        /* 알림 설정 시 버튼 디자인 변경 */
+        #noti-btn[data-state="set"] {
+            background-color: #fce7f3; /* pink-100 */
+        }
+        #noti-btn[data-state="set"] .fa-bell {
+            color: #ec4899; /* pink-500 */
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 pb-28"> 
+
+    <header class="relative h-screen max-h-[600px] w-full overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+             class="absolute w-full h-full object-cover brightness-75" alt="Wedding Background">
+        
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4 animate-fade-in">
+            <p class="text-lg mb-2 tracking-widest">WE ARE GETTING MARRIED</p>
+            <h1 class="text-4xl font-bold mb-4 serif">지훈 <span class="text-pink-200">&</span> 수진</h1>
+            <div class="w-12 h-0.5 bg-white mb-4"></div>
+            <p id="d-day" class="text-xl font-light mb-6">D-30</p>
+            <p class="text-sm opacity-90">2025년 12월 25일 토요일 오후 2시</p>
+            <p class="text-sm opacity-90">부산 동의과학 웨딩홀</p>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto px-6 -mt-10 relative z-10">
+        
+        <div id="installBanner" class="hidden bg-white p-4 rounded-xl shadow-lg mb-6 flex items-center justify-between border border-pink-100">
+            <div class="flex items-center gap-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/2448/2448528.png" class="w-10 h-10 rounded-lg bg-pink-50 p-1">
+                <div class="text-sm">
+                    <p class="font-bold">앱으로 보기</p>
+                    <p class="text-gray-500 text-xs">결혼식 초대장 앱을 설치하여 이용해주세요!</p>
+                </div>
+            </div>
+            <button onclick="installPWA()" class="bg-pink-500 text-white text-xs px-3 py-2 rounded-lg font-bold hover:bg-pink-600">
+                앱 설치
+            </button>
+        </div>
+        
+        <div id="invitation-section" class="bg-white p-8 rounded-t-xl shadow-sm text-center">
+            <i class="fa-solid fa-quote-left text-pink-200 text-2xl mb-4"></i>
+            <p class="text-sm leading-7 text-gray-600 mb-6 serif">
+                서로의 이름을 부르는 것만으로<br>
+                서로에게 위로가 되는 사랑을 시작합니다.<br>
+                변치 않는 마음으로<br>
+                아름다운 가정을 이루겠습니다.
+            </p>
+            <i class="fa-solid fa-quote-right text-pink-200 text-2xl mb-6"></i>
+            
+            <div class="flex justify-center space-x-8 mt-4 mb-8">
+                <div>
+                    <span class="text-gray-400 text-xs block mb-1">GROOM</span>
+                    <strong class="serif">김지훈</strong>
+                    <a href="tel:010-0000-1234" class="text-pink-500 ml-2">
+                        <i class="fa-solid fa-phone text-sm"></i>
+                    </a>
+                </div>
+                <div>
+                    <span class="text-gray-400 text-xs block mb-1">BRIDE</span>
+                    <strong class="serif">이수진</strong>
+                    <a href="tel:010-0000-5678" class="text-pink-500 ml-2">
+                        <i class="fa-solid fa-phone text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="app-features-section" class="bg-white p-6 mt-2 shadow-sm">
+            <h3 class="text-center font-bold text-lg mb-4 serif">스마트 편의 기능</h3>
+            <div class="grid grid-cols-2 gap-4"> 
+                <button onclick="toggleNotification()" id="noti-btn" data-state="unset" class="bg-white p-4 rounded-xl shadow-md flex flex-col items-center justify-center transition-all duration-300 border border-pink-100">
+                    <i class="fa-solid fa-bell text-xl text-pink-500 mb-2"></i>
+                    <span class="font-bold text-sm">결혼식 알림 설정</span>
+                    <span id="noti-status" class="text-xs text-gray-500 mt-1">원하는 시간으로 알림 예약</span>
+                </button>
+                <button onclick="scanQR()" class="bg-white p-4 rounded-xl shadow-md flex flex-col items-center justify-center border border-pink-100">
+                    <i class="fa-solid fa-qrcode text-xl text-pink-500 mb-2"></i>
+                    <span class="font-bold text-sm">식권 QR 스캔</span>
+                    <span class="text-xs text-gray-500 mt-1">참석 확인 (앱 전용)</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="gallery-section" class="bg-white p-6 mt-2 shadow-sm">
+            <h3 class="text-center font-bold text-lg mb-4 serif">갤러리</h3>
+            <div class="grid grid-cols-2 gap-2">
+                <img src="img1.jpg" class="w-full h-auto rounded shadow-md" alt="사진 1">
+                <img src="img2.jpg" class="w-full h-auto rounded shadow-md" alt="사진 2">
+                <img src="img3.jpg" class="w-full h-auto rounded shadow-md" alt="사진 3">
+                <img src="img4.jpg" class="w-full h-auto rounded shadow-md" alt="사진 4">
+            </div>
+        </div>
+
+        <div id="location-section" class="bg-white p-6 mt-2 shadow-sm">
+            <h3 class="text-center font-bold text-lg mb-4 serif">오시는 길</h3>
+            <p class="text-sm text-center mb-2">부산 동의과학 웨딩홀 1층</p>
+
+            <div id="map-area" class="w-full h-48 rounded-lg mb-4 overflow-hidden shadow-inner bg-gray-100 relative">
+                <img src="map.png" class="w-full h-full object-cover" alt="예식장 약도">
+                <div class="absolute bottom-0 left-0 w-full bg-black/50 text-white text-xs p-2 text-center backdrop-blur-sm">
+                    부산광역시 부산진구 양지로 54
+                </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+                <button onclick="openMap('naver')" class="map-btn py-2 bg-[#03C75A] text-white text-xs rounded font-bold">
+                    네이버 지도
+                </button>
+                <button onclick="openMap('kakao')" class="map-btn py-2 bg-[#FEE500] text-stone-800 text-xs rounded font-bold">
+                    카카오 지도
+                </button>
+                <button onclick="openMap('google')" class="map-btn py-2 bg-gray-100 border border-gray-300 text-gray-700 text-xs rounded font-bold">
+                    구글 지도
+                </button>
+            </div>
+        </div>
+
+    </main>
+    
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50 bg-white border-t border-pink-100 shadow-xl">
+        <div class="flex justify-around items-center h-16">
+            <a href="#invitation-section" class="text-center text-pink-500 hover:text-pink-600 transition-colors flex flex-col items-center">
+                <i class="fa-solid fa-envelope-open-text text-xl"></i>
+                <span class="text-xs mt-1">초대글</span>
+            </a>
+            <a href="#app-features-section" class="text-center text-pink-500 hover:text-pink-600 transition-colors flex flex-col items-center">
+                <i class="fa-solid fa-mobile-screen text-xl"></i>
+                <span class="text-xs mt-1">편의 기능</span>
+            </a>
+            <a href="#gallery-section" class="text-center text-pink-500 hover:text-pink-600 transition-colors flex flex-col items-center">
+                <i class="fa-solid fa-camera-retro text-xl"></i>
+                <span class="text-xs mt-1">갤러리</span>
+            </a>
+            <a href="#location-section" class="text-center text-pink-500 hover:text-pink-600 transition-colors flex flex-col items-center">
+                <i class="fa-solid fa-map-location-dot text-xl"></i>
+                <span class="text-xs mt-1">오시는 길</span>
+            </a>
+        </div>
+    </nav>
+
+    <footer class="text-center text-xs text-gray-400 mt-10">
+        © 2025 Jihun & Sujin Wedding Invitation.
+    </footer>
+
+    <script src="cordova.js"></script>
+
+    <script>
+        // --- 하이브리드 앱 분기 처리를 위한 변수 ---
+        const isCordova = !!window.cordova;
+        let deferredPrompt = null;
+        const WEDDING_DATE = new Date('2025-12-25T14:00:00'); // 결혼식 날짜 및 시간
+        const NOTIFICATION_ID = 1; // 알림 ID
+        // APK 다운로드 링크를 상수로 정의
+        const APK_URL = 'https://drive.google.com/uc?export=download&id=1xP79Je-1vZ-Rct8jDYiUDFXqIFr2NRcx'; 
+
+        // --- D-Day 계산 로직 ---
+        function updateDDay() {
+            const now = new Date();
+            const timeDiff = WEDDING_DATE.getTime() - now.getTime();
+            const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            const dDayElement = document.getElementById('d-day');
+            
+            if (days > 0) {
+                dDayElement.textContent = `D-${days}`;
+            } else if (days === 0) {
+                dDayElement.textContent = `D-Day`;
+            } else {
+                dDayElement.textContent = `결혼 ${Math.abs(days)}일째 행복 중!`;
+            }
+        }
+        updateDDay();
+        setInterval(updateDDay, 1000 * 60 * 60); // 1시간마다 업데이트
+
+        // --- PWA/APK 통합 설치 로직 (웹에서만 작동) ---
+        const installBanner = document.getElementById('installBanner');
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // beforeinstallprompt 이벤트 발생 시 deferredPrompt만 저장합니다.
+            deferredPrompt = e;
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt (PWA)');
+                        installBanner.classList.add('hidden');
+                    } else {
+                        // PWA 설치를 거부/닫으면 APK 다운로드를 유도
+                        console.log('User dismissed PWA prompt. Initiating APK download.');
+                        alert("PWA 설치를 건너뛰셨습니다. 풀 기능 사용을 위해 안드로이드 앱 다운로드를 시작합니다.");
+                        window.open(APK_URL, '_system');
+                        installBanner.classList.add('hidden'); // 다운로드 시작 후에도 숨김
+                    }
+                });
+            } else {
+                // PWA가 지원되지 않거나 이미 설치된 경우 (PWA를 바로 설치할 수 없는 경우)
+                alert("앱 설치 옵션을 사용할 수 없습니다. 안드로이드 앱 다운로드를 시작합니다.");
+                window.open(APK_URL, '_system');
+                installBanner.classList.add('hidden');
+            }
+        }
+
+        // --- 지도 링크 로직 ---
+        function openMap(type) {
+            let url;
+            // 실제 예식장 위치 URL을 여기에 넣어주세요
+            const locationName = '부산동의과학대학교컨벤션홀';
+            const locationLat = '35.1764'; 
+            const locationLng = '129.0768';
+            
+            if (type === 'naver') {
+                // 네이버 지도 앱/웹 연결
+                url = `https://naver.me/FBe8e2lR`;
+            } else if (type === 'kakao') {
+                // 카카오 지도 앱/웹 연결
+                url = `https://kko.kakao.com/VbuHOo2YDG`;
+            } else if (type === 'google') {
+                // 구글 지도 앱/웹 연결
+                url = `https://maps.app.goo.gl/0`; 
+            }
+
+            // Cordova 앱이라면 _system으로 외부 앱을 열고, 웹이라면 _blank로 새 탭을 엽니다.
+            window.open(url, isCordova ? '_system' : '_blank');
+        }
+
+        // --- 알림 버튼 상태 업데이트 함수 ---
+        function updateNotificationButton(isScheduled, scheduledTime = null) {
+            const btn = document.getElementById('noti-btn');
+            const statusText = document.getElementById('noti-status');
+            const boldText = btn.querySelector('.font-bold');
+
+            if (isScheduled) {
+                // 예약됨 상태
+                btn.setAttribute('data-state', 'set');
+                const timeStr = scheduledTime ? `${scheduledTime.getMonth() + 1}월 ${scheduledTime.getDate()}일 ${scheduledTime.getHours()}시 ${scheduledTime.getMinutes().toString().padStart(2, '0')}분` : '시간 미정';
+                boldText.textContent = '알림 취소';
+                statusText.textContent = `🔔 ${timeStr}에 알림 예약됨`;
+            } else {
+                // 예약되지 않음 상태
+                btn.setAttribute('data-state', 'unset');
+                boldText.textContent = '결혼식 알림 설정'; // 텍스트를 더 명확하게 변경
+                statusText.textContent = isCordova ? '원하는 시간으로 알림 예약' : '앱 설치 후 사용 가능'; // 텍스트를 더 명확하게 변경
+            }
+        }
+
+        // --- 알림 설정 및 취소 로직 (Date Picker 사용) ---
+        function toggleNotification() {
+            if (!isCordova) {
+                alert("이 기능은 앱 설치(Cordova) 후 사용할 수 있습니다.\n풀 기능 앱을 설치해 주세요.");
+                return;
+            }
+
+            const localNotification = window.cordova.plugins.notification.local;
+            
+            // 1. 예약된 알림이 있는지 확인하고 취소 처리
+            localNotification.isScheduled(NOTIFICATION_ID, function(isScheduled) {
+                if (isScheduled) {
+                    localNotification.cancel(NOTIFICATION_ID, function() {
+                        updateNotificationButton(false);
+                        alert("결혼식 알림이 취소되었습니다.");
+                    });
+                    return;
+                }
+
+                // 2. 예약된 알림이 없다면 Date Picker를 띄워서 시간 설정
+                window.datePicker.show({
+                    date: WEDDING_DATE,
+                    mode: 'datetime',
+                    androidTheme: window.datePicker.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT
+                }, function(selectedTime) {
+                    if (selectedTime instanceof Date) {
+                        // 선택된 시간이 현재 시간보다 이전이라면 알림을 설정하지 않습니다.
+                        if (selectedTime.getTime() < new Date().getTime()) {
+                            alert("선택한 시간이 현재보다 이전입니다. 미래 시간을 선택해 주세요.");
+                            return;
+                        }
+
+                        // 알림 예약
+                        localNotification.schedule({
+                            id: NOTIFICATION_ID,
+                            title: "🤵🏻👰🏻 지훈 & 수진 결혼식 리마인더",
+                            text: "곧 결혼식이 시작됩니다! 잊지 마세요!",
+                            trigger: { at: selectedTime },
+                            foreground: true
+                        }, function() {
+                            // 예약 성공
+                            updateNotificationButton(true, selectedTime);
+                            alert(`${selectedTime.getMonth() + 1}월 ${selectedTime.getDate()}일 ${selectedTime.getHours()}시 ${selectedTime.getMinutes().toString().padStart(2, '0')}분으로 알림이 예약되었습니다.`);
+                        });
+                    }
+                    // 취소 시 콜백이 실행되지 않거나, selectedTime이 null/undefined일 수 있음
+                }, function (error) {
+                    console.log('Date Picker Error: ' + error);
+                });
+            });
+        }
+
+        // --- QR 스캔 / 카메라 (Cordova Only) ---
+        function scanQR() {
+            if (isCordova) {
+                if (!navigator.camera) {
+                    alert("카메라 플러그인(cordova-plugin-camera)이 없습니다.");
+                    return;
+                }
+                
+                navigator.camera.getPicture((imageData) => {
+                    // 성공 시: QR 코드 스캔 성공 로직 대신 시뮬레이션
+                    alert("사진 촬영 완료! (QR 스캔 시뮬레이션)");
+                }, (err) => {
+                    // 오류 시: 사용자가 취소하거나 오류 발생
+                    alert("카메라 작업 취소 또는 오류 발생.");
+                    console.error("Camera Error: " + err);
+                }, {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.CAMERA // 카메라 바로 실행
+                });
+
+            } else {
+                alert("이 기능은 앱 설치(Cordova) 후 사용할 수 있습니다.\n풀 기능 앱을 설치해 주세요.");
+            }
+        }
+
+        // --- Cordova 준비 완료 이벤트 ---
+        document.addEventListener('deviceready', function() {
+            const localNotification = window.cordova.plugins.notification.local;
+            
+            if (localNotification) {
+                // 1. 알림 권한 요청
+                localNotification.hasPermission(function (granted) {
+                    if (!granted) {
+                        localNotification.requestPermission();
+                    }
+                });
+
+                // 2. 초기 알림 상태 확인 및 버튼 업데이트
+                localNotification.isScheduled(NOTIFICATION_ID, function(isScheduled) {
+                    if (isScheduled) {
+                        localNotification.get(NOTIFICATION_ID, function(notification) {
+                            const scheduledTime = notification && notification.trigger && notification.trigger.at 
+                                                  ? new Date(notification.trigger.at) 
+                                                  : null;
+                            updateNotificationButton(true, scheduledTime);
+                        });
+                    } else {
+                        updateNotificationButton(false);
+                    }
+                });
+            } else {
+                // 웹 환경 (Cordova Ready가 안 됨)에서도 버튼 상태를 '앱 설치 후 사용 가능'으로 업데이트
+                updateNotificationButton(false); 
+            }
+        }, false);
+        
+        // --- Service Worker 등록 (PWA 필수) ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('SW registered:', reg))
+                    .catch(err => console.log('SW failed:', err));
+            });
+        }
+        
+        // 사용자 요청 반영: Cordova 앱이 아니면 (PC 웹, 모바일 웹) beforeinstallprompt 이벤트와 
+        // 관계없이 배너를 무조건 표시합니다.
+        if (!isCordova && installBanner) {
+            installBanner.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
