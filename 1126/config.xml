@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.androd.busanguide" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>부산 AI 가이드</name>
+    <description>Gemini와 공공데이터를 활용한 AI 여행 가이드 앱입니다.</description>
+    <author email="dev@androd.com" href="https://androd.com">
+        안드로드 팀
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <plugin name="cordova-plugin-network-information" />
+    <plugin name="cordova-plugin-inappbrowser" />
+    <preference name="android-enable-androidx" value="true" />
+    <preference name="android-minSdkVersion" value="24" />
+    <preference name="android-targetSdkVersion" value="35" />
+    <preference name="DefaultBackgroundColor" value="0xFFFFFFFF" />
+    <preference name="LoadUrlTimeoutValue" value="60000" />
+    <preference name="AllowingInsecureHTTPLoads" value="true" />
+    <preference name="android-hardwareAccelerated" value="true" />
+</widget>

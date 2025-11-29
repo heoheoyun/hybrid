@@ -1,0 +1,31 @@
+{
+  "name": "com.androd.busanguide",
+  "displayName": "부산 AI 가이드",
+  "version": "1.0.0",
+  "description": "Gemini와 공공데이터를 활용한 AI 여행 가이드 앱입니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "안드로드 팀",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cordova-plugin-inappbrowser": "*",
+    "cordova-plugin-network-information": "*"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-inappbrowser": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "devDependencies": {
+    "cordova-android": "^14.0.1"
+  }
+}
