@@ -1,0 +1,575 @@
+tech stack
+
+Type Script
+React
+Vite
+tailwindCSS
+
+prompt
+
+- Perplexity
+
+1. 지금부터 나는 NVIDIA 주식 투자자들을 위한 NVIDIA 관련 최신 정보, 실시간 주가 정보, 자사 제품 소개 및 기술 소개를 하는 웹, 앱 사이트를 만들 거야
+너는 기획을 부탁해
+사이트 제목은 NVIDIA Asset 으로 해주고, 디자인 NVIDIA의 퍼스널 컬러를 따와서
+조화롭게 하여 Technology 하게 디자인 해줘
+
+2. 그리고 한국인들이 이용할 사이트 이기 때문에 주요 단어들을 제외하고는 한국어로 표시해주고
+실시간 주가 정보와 자사 제품 소개 및 기술 소개를 실시간으로 가져오려고 해
+어떻게 하는게 좋아?
+
+3. 하나의 프롬프트로 통합 시켜줘
+
+- lovable
+
+1. Create a comprehensive financial investment platform called "NVIDIA Asset" - a web application for Korean investors interested in NVIDIA stock, products, and technology.
+
+=== PROJECT OVERVIEW ===
+
+Target Users: Korean NVIDIA investors and technology enthusiasts
+Primary Language: Korean UI with English technical terms (e.g., "GPU", "P/E Ratio", "AI", "GeForce RTX")
+Purpose: Real-time stock information, product showcase, company news, and investor resources
+
+=== DESIGN SYSTEM ===
+
+Color Palette:
+- Primary: NVIDIA Green #76B900 (buttons, accents, positive changes)
+- Secondary: Black #000000 (text, headers)
+- Background: Dark Gray #1A1A1A (main background)
+- Surface: White #FFFFFF with 10% opacity (cards, content areas)
+- Accent Red: #FF4444 (negative price changes)
+- Gradient: Linear gradient from #76B900 to #000000 for hero sections
+
+Visual Style:
+- Dark mode by default with technology-focused aesthetic
+- Glassmorphism effects (backdrop-blur, subtle borders)
+- Modern sans-serif typography (use Inter or similar)
+- Smooth animations and transitions (300ms ease-in-out)
+- Responsive design: Mobile (320px+), Tablet (768px+), Desktop (1024px+)
+
+=== TECHNOLOGY STACK ===
+
+Frontend: React 18 with TypeScript
+UI Framework: shadcn/ui components with Tailwind CSS
+State Management: React Query (TanStack Query) for API data caching
+Charts: Recharts for stock visualizations
+Icons: Lucide React
+Animations: Framer Motion for scroll animations
+HTTP Client: Axios with interceptors
+WebSocket: Socket.io-client for real-time updates
+
+=== PAGE STRUCTURE ===
+
+Create 5 main pages with React Router:
+
+1. "/" - Dashboard (메인 대시보드)
+2. "/stock" - Real-time Stock (실시간 주가 정보)
+3. "/company" - Company Info (기업 정보)
+4. "/products" - Products & Tech (제품 및 기술)
+5. "/news" - News (뉴스 & 인사이트)
+
+=== NAVIGATION ===
+
+Header Component:
+- Logo: "NVIDIA Asset" text with NVIDIA Green accent
+- Navigation menu: 메인 대시보드 | 실시간 주가 | 기업 정보 | 제품 및 기술 | 뉴스
+- Live stock ticker on right side: "NVDA $195.21 +2.34% ▲"
+- Hamburger menu for mobile with slide-in drawer
+- Sticky header with backdrop blur on scroll
+
+Footer:
+- Links: 이용약관 | 개인정보처리방침 | 문의하기
+- Copyright: "© 2025 NVIDIA Asset. All rights reserved."
+- Social icons: GitHub, Twitter, Email
+
+=== PAGE 1: DASHBOARD (/) ===
+
+Hero Section:
+- Full-width gradient background (#76B900 to #000000)
+- Centered content:
+  * Large heading: "NVIDIA 투자자를 위한 종합 플랫폼"
+  * Subheading: "실시간 주가 정보, 제품 기술, 투자자 자료를 한 곳에서"
+  * Real-time price display: Large "$195.21" with animated counter
+  * Change badge: "+$4.56 (+2.34%)" in green with upward arrow
+  * Timestamp: "2025-11-06 15:30 KST 기준"
+- Subtle particle animation background (optional)
+
+Key Metrics Grid (4 cards in 2x2 on desktop, stacked on mobile):
+Card 1 - "실시간 주가":
+  - Current price with mini sparkline chart (last 24 hours)
+  - Color: NVIDIA Green line
+  - Format: "$195.21"
+
+Card 2 - "52주 최고/최저":
+  - High: $212.19 (달성일: 2025-08-15)
+  - Low: $86.62 (달성일: 2024-12-20)
+  - Progress bar visualization
+
+Card 3 - "P/E Ratio":
+  - Value: 55.46
+  - Comparison to industry average: "업계 평균 35.2"
+  - Badge: "고평가" or "저평가"
+
+Card 4 - "거래량":
+  - Volume: 45.2M
+  - Change: "+12.5%" in green
+  - Bar chart showing last 5 days
+
+Quick Access Section:
+- 4 large action buttons in grid:
+  1. "재무제표 보기" → Links to /company
+  2. "제품 둘러보기" → Links to /products
+  3. "최신 뉴스" → Links to /news
+  4. "주가 알림 설정" → Opens modal
+- Each button: Icon, Korean label, hover effect with scale(1.05)
+
+Stock Chart Section:
+- Heading: "주가 추이"
+- Time range tabs: 1일 | 1주 | 1개월 | 1년
+- Interactive line chart with Recharts:
+  * X-axis: Time labels
+  * Y-axis: Price in dollars
+  * Tooltip on hover showing exact price and timestamp
+  * Gradient fill under line (NVIDIA Green with opacity)
+  * Responsive height: 400px desktop, 250px mobile
+
+Recent News Preview:
+- Heading: "최신 NVIDIA 소식"
+- 3 news cards in horizontal scroll on mobile, grid on desktop:
+  * Image thumbnail (16:9 ratio, placeholder)
+  * Category badge: "제품 출시" / "기업 실적" / "기술 혁신"
+  * Title in Korean (2 lines max, ellipsis)
+  * Date: "2025-11-05"
+  * Read time: "3분 소요"
+- "더 보기 >" button linking to /news
+
+=== PAGE 2: REAL-TIME STOCK (/stock) ===
+
+Layout: Sticky header ticker + Main chart (70%) + Sidebar (30%) on desktop, stacked on mobile
+
+Sticky Live Ticker:
+- Always visible at top below main header
+- Large price: "$195.21"
+- Change: "+$4.56 (+2.34%)" with animated flash effect on update
+- Market status badge: "장중" (green) or "장마감" (gray)
+- Next market time: "다음 개장: 2025-11-07 09:30 EST"
+- Auto-update every 5 seconds with WebSocket (mock data for now)
+
+Main Chart Section:
+- Time range selector buttons: 1일 | 1주 | 1개월 | 3개월 | 6개월 | 1년 | 5년 | 전체
+- Chart type toggle: 선형 (Line) | 캔들스틱 (Candlestick) | 영역 (Area)
+- Technical indicators checkboxes:
+  * 50일 이동평균선 (50 MA): $182.87
+  * 200일 이동평균선 (200 MA): $148.89
+  * RSI (Relative Strength Index)
+  * 거래량 (Volume) overlay
+- Large Recharts component:
+  * Responsive: Height 500px desktop, 300px mobile
+  * NVIDIA Green colors for lines
+  * Zoom controls: +/- buttons, Reset view
+  * Crosshair tooltip with all data points
+- Loading skeleton while fetching data
+
+Sidebar (Info Panel):
+Section 1 - "키 통계":
+- Grid layout (2 columns):
+  * 시가 (Open): $194.50
+  * 고가 (High): $196.30
+  * 저가 (Low): $193.20
+  * 거래량 (Volume): 45.2M
+  * 평균 거래량: 50.1M
+  * 시가총액 (Market Cap): $4.75T
+  * P/E Ratio: 55.46
+  * EPS: $3.52
+  * 배당수익률: 0.03%
+  * Beta: 1.67
+  * 52주 최고가: $212.19
+  * 52주 최저가: $86.62
+- Use mono font for numbers
+
+Section 2 - "가격 알림 설정":
+- Input field: "목표 가격 입력" placeholder
+- Select dropdown: "가격이 이상일 때" / "가격이 이하일 때"
+- "알림 추가" button (NVIDIA Green)
+- List of active alerts with delete icon
+- Local storage persistence
+
+Section 3 - "시장 상태":
+- Large status indicator:
+  * Green pulse dot + "장중 거래" if open
+  * Gray dot + "장마감" if closed
+- Market hours: "09:30 - 16:00 EST (월-금)"
+- Countdown timer to next open/close
+
+=== PAGE 3: COMPANY INFO (/company) ===
+
+Page Header:
+- Title: "NVIDIA 기업 정보"
+- Subtitle: "투자자를 위한 재무 및 IR 자료"
+
+Tabs Navigation:
+- 개요 (Overview)
+- 재무제표 (Financials)
+- IR 자료 (Investor Relations)
+- 주주정보 (Shareholder Info)
+
+Tab 1 - Overview:
+- Company description in Korean (3-4 paragraphs)
+- CEO: Jensen Huang with photo placeholder
+- Founded: 1993
+- Headquarters: Santa Clara, California
+- Employees: 29,600+
+- Vision statement box with quote styling
+
+Tab 2 - Financials:
+- Quarter selector: Q1 2025 | Q2 2025 | Q3 2025 | Q4 2025
+- Key financial cards:
+  * Revenue (매출): $30.0B
+  * Net Income (순이익): $16.6B
+  * Gross Margin (매출총이익률): 75.1%
+  * Operating Margin (영업이익률): 62.1%
+- Earnings Per Share chart (last 8 quarters)
+- Download buttons: "재무제표 PDF 다운로드" | "실적 발표 자료"
+
+Tab 3 - IR Materials:
+- Accordion list of documents:
+  * "2024 연차보고서" - 2024-12-31
+  * "Q3 2025 실적발표" - 2025-08-20
+  * "주주총회 자료" - 2025-06-15
+- Each item: Document icon, title, date, download button
+
+Tab 4 - Shareholder Info:
+- Dividend history table (last 5 years)
+- Stock split history
+- Major shareholders pie chart
+- Analyst coverage: Buy/Hold/Sell ratings distribution
+
+=== PAGE 4: PRODUCTS & TECH (/products) ===
+
+Page Header:
+- Title: "NVIDIA 혁신 기술 & 제품"
+- Subtitle: "세계를 변화시키는 AI와 GPU 기술"
+- Search bar: "제품 검색..." with magnifying glass icon
+
+Filter Pills (horizontal scroll on mobile):
+- 전체 (All) [Default selected]
+- AI & Data Center
+- Gaming & Graphics
+- Autonomous Vehicles
+- Professional Visualization
+- Click to filter, pill highlights with NVIDIA Green
+
+Product Grid (Masonry layout with 3 columns desktop, 2 tablet, 1 mobile):
+
+Each Product Card:
+- Image placeholder (aspect ratio 4:3) with NVIDIA logo watermark
+- Product name in English (large font): "GeForce RTX 4090"
+- Korean subtitle: "최고 성능의 게이밍 그래픽카드"
+- Category badge: "Gaming & Graphics"
+- Key specs list (3-4 items):
+  * CUDA 코어: 16,384
+  * 메모리: 24GB GDDR6X
+  * 부스트 클럭: 2.52 GHz
+  * TDP: 450W
+- "자세히 보기" button
+- Hover effects:
+  * Card lifts with shadow
+  * NVIDIA Green border glow
+  * Scale(1.03) transform
+
+Featured Products Carousel:
+- Section heading: "주목할 만한 제품"
+- 3 large cards with auto-scroll (5s interval):
+  1. H100 GPU - "차세대 AI 데이터센터 슈퍼칩"
+  2. GeForce RTX 50 Series - "Blackwell 아키텍처의 게이밍 혁신"
+  3. NVIDIA Cosmos - "물리 AI 개발 플랫폼"
+- Each card: Hero image, description, CTA button
+
+Technology Timeline (Optional Section):
+- Horizontal scrollable timeline
+- Milestones: 1999 GeForce 256 → 2006 CUDA → 2020 Ampere → 2024 Blackwell
+- Each node: Year, icon, brief description
+- Click to expand modal with full details
+
+Product Comparison Tool:
+- Floating button: "제품 비교하기 (0)"
+- Click opens bottom sheet modal
+- Select 2-3 products from dropdown
+- Show side-by-side comparison table:
+  * Specs rows: CUDA 코어, 메모리, 클럭, TDP, 가격
+  * Highlight differences with color coding
+
+=== PAGE 5: NEWS (/news) ===
+
+Page Header:
+- Title: "NVIDIA 최신 뉴스 & 인사이트"
+- Subtitle: "제품, 기술, 투자자 정보 업데이트"
+
+Filter Chips:
+- 전체 (All) [Default]
+- 제품 출시 (Product Launch)
+- 기업 실적 (Earnings)
+- 기술 혁신 (Technology)
+- 파트너십 (Partnerships)
+
+Sort Dropdown:
+- 최신순 (Newest First)
+- 조회수순 (Most Viewed)
+- 카테고리별 (By Category)
+
+Featured News (Top of page):
+- Large hero card spanning full width
+- Featured image (16:9 ratio, large)
+- "주요 뉴스" badge
+- Headline in large font
+- Summary (3-4 lines)
+- "전문 읽기" button
+- Animated gradient border
+
+News Article Grid (2 columns desktop, 1 mobile):
+
+Each Article Card:
+- Thumbnail image (16:9 ratio, placeholder)
+- Category badge colored by type:
+  * 제품 출시: Blue
+  * 기업 실적: Green
+  * 기술 혁신: Purple
+  * 파트너십: Orange
+- Headline (2 lines max with ellipsis)
+- Publication date: "2025-11-05"
+- Brief summary (3 lines with ellipsis)
+- Source badge: "NVIDIA 공식" or "외부 뉴스"
+- Read time: "3분 소요"
+- Bookmark icon button (toggle saved state)
+- Hover effect: Card lifts with shadow
+
+Sidebar (Desktop only):
+Section 1 - "인기 뉴스":
+- List of 5 top articles
+- Small thumbnail + title only
+- Click to navigate
+
+Section 2 - "관련 키워드":
+- Tag cloud with frequently used keywords:
+  * AI, GPU, GeForce, RTX, CUDA, Blackwell, H100, 실적, 주가
+- Click tag to filter news
+- Font size varies by frequency
+
+Section 3 - "구독하기":
+- "RSS 피드 구독" button with RSS icon
+- "이메일 알림 받기" input + submit button
+
+Pagination:
+- "더 보기" button at bottom (loads 10 more articles)
+- Loading spinner while fetching
+- "페이지 상단으로" floating button (appears after 500px scroll)
+
+=== DATA STRUCTURE & API INTEGRATION ===
+
+Create TypeScript interfaces for:
+
+StockData:
+- symbol: string (e.g., "NVDA")
+- price: number
+- change: number
+- changePercent: number
+- volume: number
+- marketCap: number
+- peRatio: number
+- eps: number
+- high52Week: number
+- low52Week: number
+- timestamp: string (ISO format)
+
+NewsArticle:
+- id: number
+- title: string
+- titleKo: string (Korean title)
+- summary: string
+- summaryKo: string
+- content: string
+- contentKo: string
+- category: "product" | "earnings" | "technology" | "partnership"
+- publishedDate: string
+- imageUrl: string
+- source: string
+- readTime: number (minutes)
+- views: number
+
+Product:
+- id: number
+- name: string (English, e.g., "GeForce RTX 4090")
+- nameKo: string (Korean subtitle)
+- category: "ai" | "gaming" | "automotive" | "professional"
+- description: string
+- descriptionKo: string
+- imageUrl: string
+- specs: object with key-value pairs
+- releaseDate: string
+- price?: number
+
+API Service Layer:
+Create src/services/api.ts with:
+- axios instance with baseURL
+- Request/response interceptors
+- Error handling with toast notifications
+- Rate limiting logic
+
+Mock Data:
+For initial development, create mock data in src/data/mockData.ts:
+- mockStockData: StockData object with realistic NVDA values
+- mockNews: NewsArticle[] array with 20 sample articles in Korean
+- mockProducts: Product[] array with 15 NVIDIA products
+- mockFinancials: Quarterly financial data
+
+React Query Setup:
+- Configure QueryClient in src/main.tsx
+- Custom hooks:
+  * useStockData() - refetchInterval: 60000 (1 minute)
+  * useNewsData(category?: string) - staleTime: 600000 (10 minutes)
+  * useProducts(category?: string) - staleTime: 3600000 (1 hour)
+  * useFinancials() - staleTime: 86400000 (1 day)
+
+=== WEBSOCKET REAL-TIME UPDATES ===
+
+Create WebSocket service for live stock updates:
+
+src/services/websocket.ts:
+- Socket.io-client connection to mock server
+- Auto-reconnect with exponential backoff
+- Event listeners: 'stock-update', 'market-status'
+- Custom hook useWebSocket() returning connection state
+
+Dashboard & Stock page integration:
+- Show connection indicator: Green dot (connected) / Red dot (disconnected)
+- Animate price changes with flash effect:
+  * Green flash for increase
+  * Red flash for decrease
+- Sound notification option (toggle in UI)
+- Browser notification for >2% price movement
+
+Fallback: If WebSocket unavailable, poll every 10 seconds
+
+=== ANIMATIONS & UX ENHANCEMENTS ===
+
+Use Framer Motion for:
+- Fade-in on scroll for sections
+- Stagger animation for news cards and product grid
+- Number counter animation for stock price
+- Smooth page transitions (slide effect)
+- Modal animations (scale + fade)
+
+Loading States:
+- Skeleton loaders matching card layouts
+- Shimmer effect on placeholders
+- Progress bar in header during data fetch
+- Suspense boundaries for code-split routes
+
+Error Handling:
+- Global error boundary with friendly message
+- Toast notifications (use Sonner library)
+- Retry buttons on failed API calls
+- Offline mode indicator
+
+Accessibility:
+- Proper ARIA labels on all interactive elements
+- Keyboard navigation support (Tab, Enter, Esc)
+- Focus indicators with NVIDIA Green outline
+- Alt text for all images
+- Skip navigation link
+- Color contrast ratio ≥ 4.5:1
+- Screen reader announcements for dynamic content
+
+=== RESPONSIVE DESIGN BREAKPOINTS ===
+
+Mobile (320px - 767px):
+- Single column layout
+- Hamburger menu navigation
+- Stacked cards
+- Horizontal scroll for charts
+- Bottom navigation bar (optional)
+- Touch-optimized button sizes (min 44px)
+
+Tablet (768px - 1023px):
+- 2 column grid for cards
+- Collapsible sidebar
+- Optimized chart sizes
+
+Desktop (1024px+):
+- Full navigation menu
+- Sidebar layouts
+- 3-4 column grids
+- Hover effects enabled
+
+=== DEPLOYMENT PREPARATION ===
+
+Environment Variables:
+- VITE_API_BASE_URL
+- VITE_WEBSOCKET_URL
+- VITE_STOCK_API_KEY
+- VITE_APP_ENV
+
+Build Configuration:
+- TypeScript strict mode enabled
+- ESLint + Prettier configured
+- Vite optimizations
+- Code splitting by route
+- Image optimization (WebP format)
+
+SEO & Meta Tags:
+- Dynamic page titles: "NVIDIA Asset - [Page Name]"
+- Meta descriptions in Korean
+- Open Graph tags for social sharing
+- Favicon with NVIDIA colors
+
+Performance Targets:
+- Lighthouse score >90
+- First Contentful Paint <1.5s
+- Time to Interactive <3.5s
+- Lazy load images below fold
+
+=== ADDITIONAL FEATURES ===
+
+1. Dark/Light Mode Toggle (Optional):
+   - Add toggle in header
+   - Persist preference in localStorage
+   - Smooth transition between themes
+
+2. Bookmarks/Watchlist:
+   - Save favorite news articles
+   - Store in localStorage
+   - "저장된 항목" page
+
+3. Price Alerts:
+   - Set target price thresholds
+   - Browser notifications
+   - Email alerts (placeholder)
+
+4. Share Buttons:
+   - Share news articles on social media
+   - Copy link functionality
+   - WhatsApp, Twitter, Facebook icons
+
+5. Language Toggle (Future):
+   - Switch between Korean/English
+   - Use i18n library
+   - Persist preference
+
+=== IMPLEMENTATION NOTES ===
+
+- Start with Dashboard page first, then build other pages incrementally
+- Use shadcn/ui components: Button, Card, Badge, Tabs, Dialog, Skeleton
+- Implement responsive navigation before individual pages
+- Mock all API calls initially, structure for easy backend integration later
+- Focus on clean, maintainable TypeScript code with proper typing
+- Add comments in Korean for Korean developers
+- Use consistent naming conventions: camelCase for functions, PascalCase for components
+- Follow React best practices: Hooks, composition, memoization where needed
+
+Build this as a production-ready, professional application with smooth UX, beautiful design using NVIDIA's brand colors, and code structure ready for backend integration with Spring Boot APIs.
+
+2. 주가차트 필터 기능 추가, 기업 정보 메뉴 IR자료 실제 자료 다운로드 추가, 제품 및 기술 실제 이미지 추가 및 자세히 보기 탭 기능 개발, 뉴스 메뉴 기사 클릭 시 뉴스 페이지 개발
+
+3. 제품 비교 기능추가, 주가 알림 기능 구현, 북마크 저장 기능, 애니메이션 추가,  메인 대시보드 페이지 "NVIDIA 투자자를 위한 종합 플랫폼" 레이아웃 백그라운드에 그라데이션 색상과 이미지를 조합하여 디자인 적으로 더 NVIDIA스럽게 변경,  "최신 NVIDIA 소식" 에 있는 메뉴들에도 이미지 추가
+
+4. 제품 비교 기능, 주가 알림, 북마크 저장, 애니메이션, 대시보드 히어로 디자인 개선, 뉴스 이미지 추가를 모두 구현
