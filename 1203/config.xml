@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.hy.simplemanager" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>간편 가전제품 메모</name>
+    <description>가전제품 메모 및 알림 관리 애플리케이션입니다.</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+
+    <plugin name="cordova-plugin-device" />
+    <plugin name="cordova-plugin-local-notification" />
+    <plugin name="cordova-plugin-camera" />
+    <plugin name="cordova-plugin-statusbar" />
+    <plugin name="cordova-plugin-file" />
+    <plugin name="cordova-plugin-datepicker"/>
+    
+    <platform name="android">
+        <preference name="android-targetSdkVersion" value="35" />
+        <preference name="android-enable-androidx" value="true" />
+        <preference name="android-minSdkVersion" value="24" />
+
+        <preference name="StatusBarOverlaysWebView" value="false" />
+        <preference name="StatusBarBackgroundColor" value="#1A73E8" />
+        <preference name="StatusBarStyle" value="lightcontent" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest" 
+                     xmlns:android="http://schemas.android.com/apk/res/android"> 
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+        </config-file>
+    </platform>
+</widget>

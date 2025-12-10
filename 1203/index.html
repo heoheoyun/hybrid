@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>간편 가전제품 메모</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+
+    <div class="header" id="app-header">
+        <div class="app-title">가전제품 관리</div>
+
+        <div class="filter-container">
+            <div class="search-group">
+                <span class="material-symbols-rounded">search</span>
+                <input type="text" id="search-text" class="search-input" placeholder="제품명 검색" oninput="filterProductsList()">
+            </div>
+
+            <div class="category-filter-group">
+                <select id="filter-type-category" class="filter-select" onchange="filterProductsList()">
+                    <option value="">종류 (전체)</option>
+                    </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+
+        <div id="home-view" class="view active">
+            <div class="content">
+                <div id="product-list">
+                    <p class="empty-message">등록된 제품이 없습니다</p>
+                </div>
+            </div>
+
+            <div class="fab-container">
+                 <div class="fab fab-expired" onclick="openExpiredMemoView()">
+                    <span class="material-symbols-rounded">auto_delete</span>
+                    <span id="expired-count" class="badge">0</span>
+                </div>
+                <div class="fab fab-memo" onclick="openModal('memo-modal')">
+                    <span class="material-symbols-rounded">edit_note</span>
+                </div>
+                <div class="fab fab-product" onclick="openModal('product-modal')">
+                    <span class="material-symbols-rounded">add</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="product-modal" class="view modal-view">
+            <div class="modal-header">
+                <span class="material-symbols-rounded" onclick="closeModal()">close</span>
+                <h3 id="product-modal-title">새 제품 등록</h3>
+                </div>
+            <div class="content">
+                <form id="product-form">
+                    <input type="hidden" id="product-id">
+                    <div class="form-group">
+                        <label for="product-name">제품명</label>
+                        <input type="text" id="product-name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-type">종류</label>
+                        <select id="product-type" class="form-control" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purchase-date-display">구입 날짜</label>
+                        <div class="date-input-group" onclick="showDatePicker('purchase-date-display', 'purchase-date-value')">
+                            <input type="text" id="purchase-date-display" class="form-control" placeholder="날짜 선택" readonly>
+                            <span class="material-symbols-rounded">calendar_month</span>
+                        </div>
+                        <input type="hidden" id="purchase-date-value">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="purchase-price">구입 가격 (선택 사항)</label>
+                        <input type="number" id="purchase-price" class="form-control" placeholder="숫자만 입력">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="warranty-period">보증 기간 (년, 선택 사항)</label>
+                        <input type="number" id="warranty-period" class="form-control" placeholder="숫자만 입력" min="0" step="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>이미지 첨부 (보증서/설명서)</label>
+                        <div class="image-attach-group">
+                            <div id="image-status" style="flex-grow: 1; color: #8A8A8A;" data-path="">이미지 첨부 (선택 사항)</div>
+                            <div class="btn-secondary btn-small" style="background-color: var(--color-success);" onclick="captureImage()">
+                                <span class="material-symbols-rounded">photo_camera</span> 첨부
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>유지보수 알림 설정</label>
+                        <div class="alarm-settings">
+                            <p style="font-size: 12px; color: #8A8A8A; margin-top: 0;">필터 교체, 청소 등 주기적 관리가 필요한 경우 설정하세요.</p>
+                            
+                            <div class="multi-select-item">
+                                <input type="radio" id="periodic-alarm" name="alarm-choice" value="periodic" checked onchange="toggleAlarmInput()">
+                                <label for="periodic-alarm" style="flex-grow: 1;">주기적 알림</label>
+                            </div>
+                            <div id="periodic-alarm-group" class="settings-group" style="padding-left: 16px;">
+                                <div class="form-group" style="margin-bottom: 8px;">
+                                    <label for="alarm-frequency">주기 (일)</label>
+                                    <input type="number" id="alarm-frequency" class="form-control" value="30" min="1" step="1">
+                                </div>
+                            </div>
+
+                            <div class="multi-select-item">
+                                <input type="radio" id="specific-alarm" name="alarm-choice" value="specific" onchange="toggleAlarmInput()">
+                                <label for="specific-alarm" style="flex-grow: 1;">특정 날짜 알림</label>
+                            </div>
+                            <div id="specific-alarm-group" class="settings-group" style="display: none; padding-left: 16px;">
+                                <div class="form-group">
+                                    <label for="specific-date-display">알림 날짜</label>
+                                    <div class="date-input-group" onclick="showDatePicker('specific-date-display', 'specific-date-value')">
+                                        <input type="text" id="specific-date-display" class="form-control" placeholder="날짜 선택" readonly>
+                                        <span class="material-symbols-rounded">calendar_month</span>
+                                    </div>
+                                    <input type="hidden" id="specific-date-value">
+                                </div>
+                            </div>
+                            
+                            <div class="multi-select-item">
+                                <input type="radio" id="no-alarm" name="alarm-choice" value="none" onchange="toggleAlarmInput()">
+                                <label for="no-alarm" style="flex-grow: 1;">알림 없음</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="form-actions">
+                    <div id="delete-product-btn" class="btn-secondary" style="background-color: var(--color-expired); margin-right: auto; display: none;" onclick="deleteProduct()">
+                        <span class="material-symbols-rounded">delete</span> 삭제
+                    </div>
+                    <div class="btn-secondary" onclick="closeModal()">
+                        <span class="material-symbols-rounded">cancel</span> 취소
+                    </div>
+                    <div class="btn-action" onclick="saveProduct()">
+                        <span class="material-symbols-rounded">save</span> 저장
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="detail-view" class="view">
+            <div class="header">
+                <span class="material-symbols-rounded" onclick="switchView('home-view')">arrow_back</span>
+                <h3 id="detail-product-name">제품 상세</h3>
+                <span class="material-symbols-rounded" onclick="openModal('product-modal', currentDetailProductId)">edit</span>
+            </div>
+            <div class="content detail-content">
+                <div class="detail-card">
+                    <div class="detail-section">
+                        <h4>제품 정보</h4>
+                        <p><strong>종류:</strong> <span id="detail-product-type"></span></p>
+                        <p><strong>구입일:</strong> <span id="detail-purchase-date"></span></p>
+                        <p><strong>구입 가격:</strong> <span id="detail-purchase-price"></span></p>
+                        <p><strong>보증 기간:</strong> <span id="detail-warranty-period"></span></p>
+                        <p><strong>알림 설정:</strong> <span id="detail-alarm-info"></span></p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h4>첨부 이미지</h4>
+                        <img id="detail-image" src="img/placeholder.jpg" alt="첨부 이미지" style="width: 100%; height: auto; border-radius: 8px; margin-top: 8px; display: none;">
+                    </div>
+                </div>
+
+                <div class="detail-card">
+                    <h4>제품 메모 목록</h4>
+                    <div id="detail-memo-list">
+                        <p class="empty-message">등록된 메모가 없습니다.</p>
+                    </div>
+                </div>
+
+                <div class="btn-action" style="background-color: var(--color-secondary); margin-top: 24px;" onclick="openMemoModalForDetail()">
+                    <span class="material-symbols-rounded">add</span> 새 메모 추가
+                </div>
+            </div>
+        </div>
+
+        <div id="memo-modal" class="view modal-view">
+            <div class="modal-header">
+                <span class="material-symbols-rounded" onclick="closeModal()">close</span>
+                <h3 id="memo-modal-title">새 메모 작성</h3>
+                </div>
+            <div class="content">
+                <form id="memo-form">
+                    <input type="hidden" id="memo-id">
+                    <input type="hidden" id="memo-linked-product-id">
+
+                    <div class="form-group">
+                        <label for="memo-content">메모 내용</label>
+                        <textarea id="memo-content" class="form-control" rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memo-expiry-date-display">메모 만료 날짜 (선택 사항)</label>
+                        <p style="font-size: 12px; color: #8A8A8A; margin-top: -4px; margin-bottom: 8px;">날짜를 설정하면, 해당 날짜 이후 **만료 메모** 목록으로 자동 이동합니다.</p>
+                        <div class="date-input-group" onclick="showDatePicker('memo-expiry-date-display', 'memo-expiry-date-value')">
+                            <input type="text" id="memo-expiry-date-display" class="form-control" placeholder="만료 날짜 선택" readonly>
+                            <span class="material-symbols-rounded">calendar_month</span>
+                        </div>
+                        <input type="hidden" id="memo-expiry-date-value">
+                    </div>
+
+                    <div class="form-group">
+                        <label>이 메모를 연결할 가전제품 (다중 선택 가능)</label>
+                        <div id="product-select-list" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; padding: 4px;">
+                            <p style="text-align: center; color: #aaa;">제품 목록 로딩 중...</p>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="form-actions">
+                    <div id="memo-delete-btn" class="btn-secondary" style="background-color: var(--color-expired); margin-right: auto; display: none;" onclick="deleteMemo()">
+                        <span class="material-symbols-rounded">delete</span> 삭제
+                    </div>
+                    <div class="btn-secondary" onclick="closeModal()">
+                        <span class="material-symbols-rounded">cancel</span> 취소
+                    </div>
+                    <div class="btn-action" onclick="saveMemo()">
+                        <span class="material-symbols-rounded">save</span> 저장
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="expired-memo-view" class="view modal-view">
+            <div class="modal-header">
+                <span class="material-symbols-rounded" onclick="switchView('home-view')">arrow_back</span>
+                <h3>기간 만료 메모</h3>
+                <span id="expired-memo-edit-btn" class="material-symbols-rounded edit-btn" onclick="toggleExpiredMemoEditMode(true)">edit</span>
+            </div>
+            <div class="content">
+                <p id="expired-memo-notice" style="font-size: 14px; color: var(--color-expired);">
+                    <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">warning</span>
+                    관리 기간이 지난 메모 목록입니다. **항목을 클릭하여 수정하거나, 모달에서 수동으로 삭제할 수 있습니다.**
+                </p>
+                <div id="expired-memo-list">
+                </div>
+            </div>
+
+            <div id="expired-memo-actions" class="form-actions" style="display: none;">
+                <div class="btn-secondary" onclick="toggleExpiredMemoEditMode(false)">
+                    <span class="material-symbols-rounded">cancel</span> 취소
+                </div>
+                <div class="btn-action" style="background-color: var(--color-expired);" onclick="deleteSelectedExpiredMemos()">
+                    <span class="material-symbols-rounded">delete</span> 선택 삭제
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+/* 기본 설정 및 색상 변수 */
+:root {
+    --color-primary: #4285F4;        /* Google Blue 계열 */
+    --color-secondary: #00A19D;      /* 청록색 계열 (메모 버튼) */
+    --color-warning: #FFA000;        /* 주황색 */
+    --color-success: #34A853;        /* Google Green 계열 (카메라 버튼) */
+    --color-expired: #D93025;        /* Google Red 계열 (만료/삭제) */
+    
+    --color-background: #F8F9FA;     /* 밝은 회색 배경 */
+    --color-card-bg: #fff;           /* 카드/모달 배경색 */
+    --color-text-dark: #202124;      /* 기본 텍스트 색상 */
+    --color-text-light: #5F6368;     /* 보조/라벨 텍스트 색상 */
+    --color-border: #E0E0E0;         /* 부드러운 경계선 색상 */
+    
+    --spacing-unit: 8px;             /* 8pt 그리드 기준 단위 */
+}
+
+/* --- 글로벌 스타일 --- */
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); 
+    box-sizing: border-box;
+    /* 텍스트 렌더링 품질 개선 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Malgun Gothic', 'Arial', sans-serif; 
+    background-color: var(--color-background);
+    color: var(--color-text-dark);
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    overflow: hidden; 
+    user-select: none; 
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+h3 {
+    font-size: 18px; 
+    font-weight: 600; 
+    color: var(--color-text-dark);
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* --- 레이아웃 컨테이너 --- */
+.app-container {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden; 
+}
+
+.view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(100%);
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.view.active {
+    transform: translateX(0);
+    z-index: 20; 
+}
+
+.modal-view {
+    z-index: 30; 
+}
+
+.view .content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: calc(2 * var(--spacing-unit)); /* 16px */
+}
+
+/* --- 헤더 및 필터/검색 (App Bar) --- */
+.header {
+    padding: calc(2 * var(--spacing-unit)); 
+    background-color: var(--color-primary); 
+    color: white; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+    position: sticky;
+    top: 0;
+}
+
+/* 모달 진입 시 헤더 영역 숨김 */
+.header.modal-active .filter-container {
+    display: none;
+}
+.header.modal-active .app-title {
+    margin-bottom: 0;
+}
+
+.app-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: calc(2 * var(--spacing-unit));
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
+}
+
+.search-group {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 0 var(--spacing-unit);
+    color: var(--color-text-dark); 
+}
+
+.search-group .material-symbols-rounded {
+    font-size: 20px;
+    color: var(--color-text-light);
+}
+
+/* ⚠️ 검색창 높이 증가 적용 */
+.search-input {
+    flex-grow: 1;
+    border: none;
+    /* 상하 14px, 좌우 12px 패딩 적용 (기존 12px에서 높이 증가) */
+    padding: 14px var(--spacing-unit) * 1.5; 
+    background-color: transparent;
+    font-size: 16px;
+    color: var(--color-text-dark);
+}
+.search-input:focus {
+    outline: none;
+}
+
+.category-filter-group {
+    display: flex;
+    gap: var(--spacing-unit);
+}
+
+.filter-select {
+    flex-grow: 1; 
+    padding: var(--spacing-unit);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 14px;
+    appearance: none; 
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+.filter-select option {
+    background: var(--color-primary); 
+    color: white;
+}
+
+/* 상세 뷰/모달 헤더 (정렬 개선) */
+.modal-header, .detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px var(--spacing-unit); /* 상하 12px, 좌우 8px */
+    background-color: var(--color-card-bg);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.modal-header h3, .detail-header h3 {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0 8px; /* 버튼과의 여백 확보 */
+}
+
+.modal-header span, .detail-header span {
+    cursor: pointer;
+    color: var(--color-text-light);
+    font-size: 24px;
+    padding: 4px; 
+    transition: color 0.1s;
+    flex-shrink: 0;
+}
+
+/* ⚠️ 저장/수정 아이콘 스타일은 이제 하단 버튼에 집중됩니다. (헤더 아이콘 제거됨) */
+
+
+/* --- 제품 리스트 --- */
+#product-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
+}
+
+.product-card {
+    background-color: var(--color-card-bg);
+    border-radius: 12px;
+    padding: calc(2 * var(--spacing-unit));
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.product-card:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+    flex-grow: 1;
+}
+
+.product-card h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 4px 0;
+    color: var(--color-text-dark);
+}
+
+.category-info {
+    font-size: 14px;
+    color: var(--color-primary);
+    margin: 0 0 4px 0;
+}
+
+.product-stats {
+    display: flex;
+    gap: calc(2 * var(--spacing-unit));
+    margin-left: 16px;
+    font-size: 12px;
+    color: var(--color-text-light);
+}
+
+.edit-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* --- 폼 스타일 (정렬 개선) --- */
+.form-group {
+    margin-bottom: 16px; /* 간격 통일 */
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px; /* 라벨과 입력 필드 사이 간격 줄임 */
+    color: var(--color-text-light);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px; /* 패딩 통일 */
+    border: 1px solid var(--color-border);
+    border-radius: 6px; /* 모서리 둥글기 통일 */
+    font-size: 16px;
+    background-color: var(--color-card-bg);
+    transition: border-color 0.2s;
+    color: var(--color-text-dark);
+}
+.form-control[type="date"] {
+    appearance: none; /* 크롬/엣지에서 날짜 입력 필드 기본 스타일 제거 */
+}
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    outline: none;
+}
+
+.image-attach-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 1px dashed var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-background);
+}
+.btn-small {
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    height: auto !important;
+    width: auto !important;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+/* 알림 설정 체크박스/라디오 스타일 */
+.alarm-settings {
+    background-color: var(--color-background);
+    padding: var(--spacing-unit) * 1.5;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.multi-select-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-unit) 0;
+    cursor: pointer;
+}
+.multi-select-item label {
+    font-weight: normal;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+.settings-group {
+    padding: var(--spacing-unit) 0;
+}
+
+
+/* --- 버튼 스타일 명확화 (재적용) --- */
+
+/* 폼 액션 버튼 그룹 (하단 고정) */
+.form-actions {
+    display: flex;
+    gap: 12px; /* 버튼 간 간격 */
+    justify-content: flex-end;
+    align-items: center;
+    padding: calc(2 * var(--spacing-unit)); /* 16px */
+    background-color: var(--color-card-bg);
+    border-top: 1px solid var(--color-border);
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+}
+.form-actions > div {
+    flex: 1; 
+}
+
+/* 🚀 버튼 기본 스타일 명확화 */
+.btn-secondary, .btn-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px; /* 텍스트와 아이콘 사이 간격 */
+    padding: 10px 16px; /* 패딩 증가 */
+    border-radius: 8px; /* 둥근 모서리 추가 */
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s, transform 0.1s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 버튼처럼 보이도록 그림자 추가 */
+    height: auto;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* 🔵 주 액션 버튼 (저장) */
+.btn-action {
+    color: white; /* 텍스트 흰색 */
+    background-color: var(--color-primary); /* 강조 색상 */
+    border: none;
+}
+
+.btn-action:hover {
+    background-color: #3f79e9; /* 약간 어둡게 */
+}
+
+.btn-action:active {
+    transform: translateY(1px); /* 누르는 효과 */
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* ⚪ 보조 액션 버튼 (취소, 삭제) */
+.btn-secondary {
+    color: var(--color-text-dark); 
+    background-color: var(--color-background); /* 배경색 지정 */
+    border: 1px solid var(--color-border); /* 테두리 추가 */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 보조 버튼에도 그림자 추가 */
+}
+
+.btn-secondary:hover {
+    background-color: #f0f0f0; 
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- 제품 상세 뷰 (정렬 개선) --- */
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: calc(2 * var(--spacing-unit));
+}
+
+.detail-card {
+    background-color: var(--color-card-bg);
+    border-radius: 12px;
+    padding: calc(2 * var(--spacing-unit));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.detail-card h4 {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-text-dark);
+    margin: 0 0 calc(1.5 * var(--spacing-unit)) 0;
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.detail-section p {
+    font-size: 14px;
+    margin: 8px 0;
+    color: var(--color-text-dark);
+    display: flex; /* Flexbox 적용 */
+    align-items: flex-start;
+    line-height: 1.5;
+}
+.detail-section strong {
+    color: var(--color-text-light);
+    font-weight: 500;
+    width: 100px; /* 라벨 너비 고정 */
+    flex-shrink: 0; 
+    display: inline-block;
+    margin-right: 8px;
+}
+.detail-section span {
+    flex-grow: 1; /* 값은 남은 공간 모두 차지 */
+}
+
+/* 메모 목록 스타일 */
+.memo-item {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: var(--spacing-unit) * 1.5;
+    margin-bottom: var(--spacing-unit);
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 수직 중앙 정렬 */
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.memo-item:active {
+    background-color: #eee;
+}
+
+.memo-content-area {
+    flex-grow: 1;
+    margin-right: 8px;
+}
+
+.memo-actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.memo-action-icon {
+    font-size: 20px;
+    color: var(--color-text-light);
+    margin-left: 8px;
+}
+
+/* 만료 메모 스타일 */
+.expired-memo-item {
+    border-left: 4px solid var(--color-expired);
+}
+
+.expired-memo-item .memo-action-icon {
+    display: block; /* 기본적으로 edit 아이콘 표시 */
+}
+
+.expired-memo-item.edit-mode .memo-action-icon {
+    display: none; /* 편집 모드일 때 edit 아이콘 숨김 */
+}
+.expired-memo-item .memo-actions input.expired-memo-checkbox {
+    margin-left: 16px;
+    display: none; /* 기본 숨김 */
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-expired);
+}
+.expired-memo-item.edit-mode .memo-actions input.expired-memo-checkbox {
+    display: block !important;
+}
+
+
+/* --- FABs (Floating Action Buttons) 및 뱃지 --- */
+.fab-container { 
+    position: fixed; 
+    bottom: 24px; 
+    right: 24px; 
+    z-index: 30; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px;
+    align-items: flex-end;
+}
+.fab { 
+    width: 52px;
+    height: 52px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    cursor: pointer; 
+    position: relative;
+    color: white;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.fab-product { background-color: var(--color-primary); }
+.fab-memo { background-color: var(--color-secondary); }
+.fab-expired { background-color: var(--color-expired); }
+
+.fab span { font-size: 24px; } 
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: var(--color-expired);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 10px;
+    text-align: center;
+    line-height: 1.2;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: none; 
+}
